@@ -25,6 +25,7 @@
 		566BC27F1931C0FF00E99813 /* WTCityMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 566BC27D1931C0FF00E99813 /* WTCityMainViewController.xib */; };
 		566BC2851931FF6000E99813 /* WTCityInfoCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 566BC2841931FF6000E99813 /* WTCityInfoCellView.xib */; };
 		566BC2881932069000E99813 /* WTCityInfoCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 566BC2871932069000E99813 /* WTCityInfoCellView.m */; };
+		6D3516B21933011B00A751B8 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D3516B11933011B00A751B8 /* bg.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		566BC2841931FF6000E99813 /* WTCityInfoCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WTCityInfoCellView.xib; sourceTree = "<group>"; };
 		566BC2861932069000E99813 /* WTCityInfoCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTCityInfoCellView.h; sourceTree = "<group>"; };
 		566BC2871932069000E99813 /* WTCityInfoCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTCityInfoCellView.m; sourceTree = "<group>"; };
+		6D3516B11933011B00A751B8 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 		566BC2461931B16800E99813 /* Weather */ = {
 			isa = PBXGroup;
 			children = (
+				6D3516B01933011B00A751B8 /* Resource */,
 				566BC24F1931B16800E99813 /* AppDelegate.h */,
 				566BC2501931B16800E99813 /* AppDelegate.m */,
 				566BC2471931B16800E99813 /* Supporting Files */,
@@ -166,6 +169,14 @@
 				566BC26D1931B16900E99813 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6D3516B01933011B00A751B8 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				6D3516B11933011B00A751B8 /* bg.png */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,6 +256,7 @@
 				566BC2571931B16800E99813 /* Default-568h@2x.png in Resources */,
 				566BC27F1931C0FF00E99813 /* WTCityMainViewController.xib in Resources */,
 				566BC2851931FF6000E99813 /* WTCityInfoCellView.xib in Resources */,
+				6D3516B21933011B00A751B8 /* bg.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +465,7 @@
 				566BC2771931B16900E99813 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		566BC2781931B16900E99813 /* Build configuration list for PBXNativeTarget "WeatherTests" */ = {
 			isa = XCConfigurationList;
@@ -461,6 +474,7 @@
 				566BC27A1931B16900E99813 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

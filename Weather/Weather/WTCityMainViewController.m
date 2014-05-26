@@ -40,25 +40,36 @@
 - (void)dealloc {
     [_cityMainTableView release];
     [_cityMainView release];
+    [_bgView release];
+    [_theLastCell release];
     [super dealloc];
 }
 
 -(NSInteger) tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"WTCityInfoCellViewIdentifier";
-    WTCityInfoCellView *cell = (WTCityInfoCellView *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"WTCityInfoCellView" owner:nil options:nil];
-        cell = [array objectAtIndex:0];
+    
+    if (indexPath.row == 2) {
+        static NSString *CellIdentifier = @"WTLastCellIdentifier";
+        UITableViewCell *cell = (WTCityInfoCellView *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = _theLastCell;
+        }
+        return cell;
+    }else{
+        static NSString *CellIdentifier = @"WTCityInfoCellViewIdentifier";
+        WTCityInfoCellView *cell = (WTCityInfoCellView *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"WTCityInfoCellView" owner:nil options:nil];
+            cell = [array objectAtIndex:0];
+        }
+        return cell;
     }
-
-    return cell;
 }
 
 @end

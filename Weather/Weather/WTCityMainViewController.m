@@ -48,18 +48,14 @@
 -(NSInteger) tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return 10;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if (indexPath.row == 2) {
-        static NSString *CellIdentifier = @"WTLastCellIdentifier";
-        UITableViewCell *cell = (WTCityInfoCellView *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (cell == nil) {
-            cell = _theLastCell;
-        }
+    if (indexPath.row == 9) {
+        UITableViewCell* cell = _theLastCell;
         return cell;
     }else{
         static NSString *CellIdentifier = @"WTCityInfoCellViewIdentifier";

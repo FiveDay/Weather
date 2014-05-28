@@ -7,7 +7,13 @@
 //
 
 #import "WTCityInfoCellView.h"
+#import "WTCityMainViewController.h"
 
+@interface WTCityInfoCellView ()
+{
+    float currentScale;
+}
+@end
 @implementation WTCityInfoCellView
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -34,12 +40,43 @@
 
     // Configure the view for the selected state
 }
+- (IBAction)pinchHandler:(id)sender {
+    WTCityMainViewController* mainCtller = self.cellOwner;
+    
+    UIPinchGestureRecognizer* pinchRecg = (UIPinchGestureRecognizer*)sender;
+    
+    if (pinchRecg.state == UIGestureRecognizerStateBegan
+        && currentScale!=0.0) {
+        pinchRecg.scale = currentScale;
+    } else if (pinchRecg.state == UIGestureRecognizerStateEnded && pinchRecg.scale<=1.0){
+        currentScale = 1.0;
+        self.transform = CGAffineTransformMakeScale(1.0, 1.0);
+        
+        
+        [mainCtller saveCellNumberInPinching:self];
+        
+        [mainCtller.cityMainTableView reloadData];
+    }
+    
+    if (pinchRecg.scale != NAN && /*pinchRecg.scale != 0.0 &&*/ pinchRecg.scale >= 0.9) {
+        
+        
+        self.transform = CGAffineTransformMakeScale(1.0, pinchRecg.scale);
+        
+        
+        [mainCtller saveCellNumberInPinching:self];
+        
+        [mainCtller.cityMainTableView reloadData];
+    }
+}
 
 - (void)dealloc {
     [_ampm release];
     [_time release];
     [_cityName release];
     [_temperature release];
+    [_cellPinchGesture release];
+    [_cellOwner release];
     [super dealloc];
 }
 @end

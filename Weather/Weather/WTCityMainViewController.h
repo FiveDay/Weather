@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@class WTCityInfoCellView;
 
 @interface WTCityMainViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 @property (retain, nonatomic) IBOutlet UITableView *cityMainTableView;
 @property (retain, nonatomic) IBOutlet UIView *cityMainView;
 @property (retain, nonatomic) IBOutlet UIImageView *bgView;
 @property (retain, nonatomic) IBOutlet UITableViewCell *theLastCell;
+- (void)saveCellNumberInPinching:(WTCityInfoCellView*)cell;
 @end

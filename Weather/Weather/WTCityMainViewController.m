@@ -11,7 +11,10 @@
 #import "WTCityInfoCellView.h"
 
 @interface WTCityMainViewController ()
-
+{
+    NSIndexPath* cellNumberInPinching;
+    int cellNumberInPinchingHeight;
+}
 @end
 
 @implementation WTCityMainViewController
@@ -45,6 +48,14 @@
     [super dealloc];
 }
 
+#pragma mark MemberFunctions
+- (void)saveCellNumberInPinching:(WTCityInfoCellView*)cell
+{
+    cellNumberInPinching = [self.cityMainTableView indexPathForCell:cell];
+    cellNumberInPinchingHeight = cell.frame.size.height;
+}
+
+#pragma mark UITableViewDelegate
 -(NSInteger) tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section
 {
@@ -61,11 +72,20 @@
         static NSString *CellIdentifier = @"WTCityInfoCellViewIdentifier";
         WTCityInfoCellView *cell = (WTCityInfoCellView *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"WTCityInfoCellView" owner:nil options:nil];
+            NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"WTCityInfoCellView" owner:self options:nil];
             cell = [array objectAtIndex:0];
         }
         return cell;
     }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == cellNumberInPinching.row && indexPath.section == cellNumberInPinching.section) {
+        //pinching cell.
+        return cellNumberInPinchingHeight;
+    }
+    
+    return 88;
+}
 @end

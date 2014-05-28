@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface WTCityInfoCellView : UITableViewCell
+@property (unsafe_unretained, nonatomic) IBOutlet id cellOwner;
 @property (retain, nonatomic) IBOutlet UILabel *ampm;
 @property (retain, nonatomic) IBOutlet UILabel *time;
 @property (retain, nonatomic) IBOutlet UILabel *cityName;
 @property (retain, nonatomic) IBOutlet UILabel *temperature;
+@property (retain, nonatomic) IBOutlet UIPinchGestureRecognizer *cellPinchGesture;
 @end

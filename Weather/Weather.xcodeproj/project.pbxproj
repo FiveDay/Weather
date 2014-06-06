@@ -26,6 +26,8 @@
 		566BC2851931FF6000E99813 /* WTCityInfoCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 566BC2841931FF6000E99813 /* WTCityInfoCellView.xib */; };
 		566BC2881932069000E99813 /* WTCityInfoCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 566BC2871932069000E99813 /* WTCityInfoCellView.m */; };
 		6D3516B21933011B00A751B8 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D3516B11933011B00A751B8 /* bg.png */; };
+		6D44AEDB19378E8D0093FFEF /* c.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D44AED919378E8D0093FFEF /* c.png */; };
+		6D44AEDC19378E8D0093FFEF /* f.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D44AEDA19378E8D0093FFEF /* f.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +67,8 @@
 		566BC2861932069000E99813 /* WTCityInfoCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTCityInfoCellView.h; sourceTree = "<group>"; };
 		566BC2871932069000E99813 /* WTCityInfoCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTCityInfoCellView.m; sourceTree = "<group>"; };
 		6D3516B11933011B00A751B8 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
+		6D44AED919378E8D0093FFEF /* c.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = c.png; sourceTree = "<group>"; };
+		6D44AEDA19378E8D0093FFEF /* f.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +178,8 @@
 		6D3516B01933011B00A751B8 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				6D44AED919378E8D0093FFEF /* c.png */,
+				6D44AEDA19378E8D0093FFEF /* f.png */,
 				6D3516B11933011B00A751B8 /* bg.png */,
 			);
 			path = Resource;
@@ -257,6 +263,8 @@
 				566BC27F1931C0FF00E99813 /* WTCityMainViewController.xib in Resources */,
 				566BC2851931FF6000E99813 /* WTCityInfoCellView.xib in Resources */,
 				6D3516B21933011B00A751B8 /* bg.png in Resources */,
+				6D44AEDB19378E8D0093FFEF /* c.png in Resources */,
+				6D44AEDC19378E8D0093FFEF /* f.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,6 +14,7 @@
 {
     NSIndexPath* cellNumberInPinching;
     int cellNumberInPinchingHeight;
+    int idx;
 }
 @end
 
@@ -45,6 +46,7 @@
     [_cityMainView release];
     [_bgView release];
     [_theLastCell release];
+    [_cAndFButton release];
     [super dealloc];
 }
 
@@ -53,6 +55,16 @@
 {
     cellNumberInPinching = [self.cityMainTableView indexPathForCell:cell];
     cellNumberInPinchingHeight = cell.frame.size.height;
+}
+- (IBAction)cfBtnClicked:(id)sender {
+    UIButton* btn = (UIButton*)sender;
+    if ((++idx)%2 == 0) {
+        //f.png;
+        [sender setBackgroundImage:[UIImage imageNamed:@"f.png"]];
+    }else{
+        //c.png;
+        [sender setBackgroundImage:[UIImage imageNamed:@"c.png"]];
+    }
 }
 
 #pragma mark UITableViewDelegate

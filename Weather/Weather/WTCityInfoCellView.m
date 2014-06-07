@@ -25,15 +25,6 @@
     return self;
 }
 
-- (id)init
-{
-    if (self=[super init]) {
-        
-    }
-    
-    return self;
-}
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
@@ -41,7 +32,6 @@
     // Configure the view for the selected state
 }
 - (IBAction)pinchHandler:(id)sender {
-    WTCityMainViewController* mainCtller = self.cellOwner;
     
     UIPinchGestureRecognizer* pinchRecg = (UIPinchGestureRecognizer*)sender;
     
@@ -51,22 +41,13 @@
     } else if (pinchRecg.state == UIGestureRecognizerStateEnded && pinchRecg.scale<=1.0){
         currentScale = 1.0;
         self.transform = CGAffineTransformMakeScale(1.0, 1.0);
-        
-        
-        [mainCtller saveCellNumberInPinching:self];
-        
-        [mainCtller.cityMainTableView reloadData];
+        [_delegate cellSizeChanged:(UITableViewCell*)pinchRecg.view];
     }
     
     if (pinchRecg.scale != NAN && /*pinchRecg.scale != 0.0 &&*/ pinchRecg.scale >= 0.9) {
-        
-        
         self.transform = CGAffineTransformMakeScale(1.0, pinchRecg.scale);
-        
-        
-        [mainCtller saveCellNumberInPinching:self];
-        
-        [mainCtller.cityMainTableView reloadData];
+        [_delegate cellSizeChanged:(UITableViewCell*)pinchRecg.view];
+
     }
 }
 
@@ -75,8 +56,6 @@
     [_time release];
     [_cityName release];
     [_temperature release];
-    [_cellPinchGesture release];
-    [_cellOwner release];
     [super dealloc];
 }
 @end

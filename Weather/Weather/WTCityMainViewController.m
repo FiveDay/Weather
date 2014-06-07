@@ -12,9 +12,9 @@
 
 @interface WTCityMainViewController ()
 {
-    NSIndexPath* cellNumberInPinching;
-    int cellNumberInPinchingHeight;
+    UITableViewCell* _cellOfSizeChanged;
     int idx;
+    NSIndexPath* _pathOfSizeChanged;
 }
 @end
 
@@ -50,20 +50,14 @@
     [super dealloc];
 }
 
-#pragma mark MemberFunctions
-- (void)saveCellNumberInPinching:(WTCityInfoCellView*)cell
-{
-    cellNumberInPinching = [self.cityMainTableView indexPathForCell:cell];
-    cellNumberInPinchingHeight = cell.frame.size.height;
-}
 - (IBAction)cfBtnClicked:(id)sender {
     UIButton* btn = (UIButton*)sender;
     if ((++idx)%2 == 0) {
         //f.png;
-        [sender setBackgroundImage:[UIImage imageNamed:@"f.png"]];
+        [btn setImage:[UIImage imageNamed:@"f.png"] forState:UIControlStateNormal];
     }else{
         //c.png;
-        [sender setBackgroundImage:[UIImage imageNamed:@"c.png"]];
+        [btn setImage:[UIImage imageNamed:@"c.png"] forState:UIControlStateNormal];
     }
 }
 
@@ -71,13 +65,13 @@
 -(NSInteger) tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if (indexPath.row == 9) {
+    if (indexPath.row == 4) {
         UITableViewCell* cell = _theLastCell;
         return cell;
     }else{
@@ -86,18 +80,32 @@
         if (cell == nil) {
             NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"WTCityInfoCellView" owner:self options:nil];
             cell = [array objectAtIndex:0];
+            cell.delegate = self;
         }
         return cell;
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    if (indexPath.row == cellNumberInPinching.row && indexPath.section == cellNumberInPinching.section) {
-        //pinching cell.
-        return cellNumberInPinchingHeight;
+    if (indexPath.row == 4) {
+        return tableView.frame.size.height - 88*4;
     }
-    
+
+    if (_cellOfSizeChanged != nil ) {
+        //NSIndexPath * pathOfCellChanged =  [tableView indexPathForCell:_cellOfSizeChanged];
+        if(indexPath.row == _pathOfSizeChanged.row){
+            return _cellOfSizeChanged.frame.size.height;
+        }
+    }
     return 88;
+}
+
+#pragma mark WTCityInfoCellDelegate
+- (void)cellSizeChanged:(UITableViewCell*)cell
+{
+    _cellOfSizeChanged = cell;
+    _pathOfSizeChanged = [_cityMainTableView indexPathForCell:_cellOfSizeChanged];
+    [_cityMainTableView reloadData];
 }
 @end

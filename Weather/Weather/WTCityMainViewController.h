@@ -7,13 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-@class WTCityInfoCellView;
+#import "WTCityInfoCellView.h"
 
-@interface WTCityMainViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface WTCityMainViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, WTCityInfoCellDelegate>
 @property (retain, nonatomic) IBOutlet UITableView *cityMainTableView;
 @property (retain, nonatomic) IBOutlet UIView *cityMainView;
 @property (retain, nonatomic) IBOutlet UIImageView *bgView;
 @property (retain, nonatomic) IBOutlet UITableViewCell *theLastCell;
 @property (retain, nonatomic) IBOutlet UIButton *cAndFButton;
-- (void)saveCellNumberInPinching:(WTCityInfoCellView*)cell;
 @end

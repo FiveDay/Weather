@@ -16,7 +16,6 @@
 		566BC2531931B16800E99813 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 566BC2521931B16800E99813 /* Default.png */; };
 		566BC2551931B16800E99813 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 566BC2541931B16800E99813 /* Default@2x.png */; };
 		566BC2571931B16800E99813 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 566BC2561931B16800E99813 /* Default-568h@2x.png */; };
-		566BC2651931B16800E99813 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 566BC2641931B16800E99813 /* SenTestingKit.framework */; };
 		566BC2661931B16900E99813 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 566BC2401931B16800E99813 /* UIKit.framework */; };
 		566BC2671931B16900E99813 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 566BC2421931B16800E99813 /* Foundation.framework */; };
 		566BC26F1931B16900E99813 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 566BC26D1931B16900E99813 /* InfoPlist.strings */; };
@@ -56,7 +55,6 @@
 		566BC2541931B16800E99813 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		566BC2561931B16800E99813 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		566BC2631931B16800E99813 /* WeatherTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		566BC2641931B16800E99813 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		566BC26C1931B16900E99813 /* WeatherTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WeatherTests-Info.plist"; sourceTree = "<group>"; };
 		566BC26E1931B16900E99813 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		566BC2701931B16900E99813 /* WeatherTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WeatherTests.h; sourceTree = "<group>"; };
@@ -88,7 +86,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				566BC2651931B16800E99813 /* SenTestingKit.framework in Frameworks */,
 				566BC2661931B16900E99813 /* UIKit.framework in Frameworks */,
 				566BC2671931B16900E99813 /* Foundation.framework in Frameworks */,
 			);
@@ -122,7 +119,6 @@
 				566BC2401931B16800E99813 /* UIKit.framework */,
 				566BC2421931B16800E99813 /* Foundation.framework */,
 				566BC2441931B16800E99813 /* CoreGraphics.framework */,
-				566BC2641931B16800E99813 /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -225,7 +221,7 @@
 			name = WeatherTests;
 			productName = WeatherTests;
 			productReference = 566BC2631931B16800E99813 /* WeatherTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -233,6 +229,7 @@
 		566BC2351931B16800E99813 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastTestingUpgradeCheck = 0600;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = zzyy;
 			};
@@ -431,13 +428,13 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Weather/Weather-Prefix.pch";
 				INFOPLIST_FILE = "WeatherTests/WeatherTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
@@ -448,13 +445,13 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Weather/Weather-Prefix.pch";
 				INFOPLIST_FILE = "WeatherTests/WeatherTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};

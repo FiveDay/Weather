@@ -6,8 +6,8 @@
 //  Copyright (c) 2014年 zzyy. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface WeatherTests : SenTestCase
+@interface WeatherTests : XCTestCase
 
 @end

@@ -34,19 +34,22 @@
 
 - (IBAction)tapGestureAction:(id)sender {
     
-    UITapGestureRecognizer* tapGesRec = (UITapGestureRecognizer*)sender;
-    
     [UIView beginAnimations:@"move" context:nil];
-    [UIView setAnimationDuration:4];
+    [UIView setAnimationDuration:0.5];
     [UIView setAnimationDelegate:self];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     //改变它的frame的x,y的值
-    self.frame=CGRectMake(0,0, self.frame.size.width,548);
-    [UIView commitAnimations];
 
-    
-    [_delegate cellSizeChanged:(UITableViewCell*)tapGesRec.view];
+    self.frame = CGRectMake(self.frame.origin.x, 0, self.frame.size.width,548);
+    [UIView commitAnimations];
+    [_delegate cellSizeChanged:self];
+
 }
 
+//- (void)drawRect:(CGRect)rect
+//{
+//    [_delegate cellSizeChanged:self];
+//}
 - (void)dealloc {
     [_ampm release];
     [_time release];

@@ -31,24 +31,20 @@
 
     // Configure the view for the selected state
 }
-- (IBAction)pinchHandler:(id)sender {
-    
-    UIPinchGestureRecognizer* pinchRecg = (UIPinchGestureRecognizer*)sender;
-    
-    if (pinchRecg.state == UIGestureRecognizerStateBegan
-        && currentScale!=0.0) {
-        pinchRecg.scale = currentScale;
-    } else if (pinchRecg.state == UIGestureRecognizerStateEnded && pinchRecg.scale<=1.0){
-        currentScale = 1.0;
-        self.transform = CGAffineTransformMakeScale(1.0, 1.0);
-        [_delegate cellSizeChanged:(UITableViewCell*)pinchRecg.view];
-    }
-    
-    if (pinchRecg.scale != NAN && /*pinchRecg.scale != 0.0 &&*/ pinchRecg.scale >= 0.9) {
-        self.transform = CGAffineTransformMakeScale(1.0, pinchRecg.scale);
-        [_delegate cellSizeChanged:(UITableViewCell*)pinchRecg.view];
 
-    }
+- (IBAction)tapGestureAction:(id)sender {
+    
+    UITapGestureRecognizer* tapGesRec = (UITapGestureRecognizer*)sender;
+    
+    [UIView beginAnimations:@"move" context:nil];
+    [UIView setAnimationDuration:4];
+    [UIView setAnimationDelegate:self];
+    //改变它的frame的x,y的值
+    self.frame=CGRectMake(0,0, self.frame.size.width,548);
+    [UIView commitAnimations];
+
+    
+    [_delegate cellSizeChanged:(UITableViewCell*)tapGesRec.view];
 }
 
 - (void)dealloc {

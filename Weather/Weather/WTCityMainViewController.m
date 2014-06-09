@@ -46,7 +46,7 @@
     [_cityMainView release];
     [_bgView release];
     [_theLastCell release];
-    [_cAndFButton release];
+    [_cityDetailInfoScrl release];
     [super dealloc];
 }
 
@@ -93,7 +93,6 @@
     }
 
     if (_cellOfSizeChanged != nil ) {
-        //NSIndexPath * pathOfCellChanged =  [tableView indexPathForCell:_cellOfSizeChanged];
         if(indexPath.row == _pathOfSizeChanged.row){
             return _cellOfSizeChanged.frame.size.height;
         }

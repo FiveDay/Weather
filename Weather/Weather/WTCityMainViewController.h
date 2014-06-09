@@ -14,5 +14,5 @@
 @property (retain, nonatomic) IBOutlet UIView *cityMainView;
 @property (retain, nonatomic) IBOutlet UIImageView *bgView;
 @property (retain, nonatomic) IBOutlet UITableViewCell *theLastCell;
-@property (retain, nonatomic) IBOutlet UIButton *cAndFButton;
+@property (retain, nonatomic) IBOutlet UIScrollView *cityDetailInfoScrl;
 @end

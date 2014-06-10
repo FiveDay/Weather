@@ -7,12 +7,12 @@
 //
 
 #import "WTCityMainViewController.h"
-
 #import "WTCityInfoCellView.h"
 
-@interface WTCityMainViewController ()
+@interface WTCityMainViewController () <UITableViewDataSource, UITableViewDelegate, WTCityInfoCellDelegate>
+
 {
-    UITableViewCell* _cellOfSizeChanged;
+    WTCityInfoCellView* _cellOfSizeChanged;
     int idx;
     NSIndexPath* _pathOfSizeChanged;
 }
@@ -101,10 +101,12 @@
 }
 
 #pragma mark WTCityInfoCellDelegate
-- (void)cellSizeChanged:(UITableViewCell*)cell
+- (void)cellSizeChanged:(WTCityInfoCellView*)cell
 {
     _cellOfSizeChanged = cell;
     _pathOfSizeChanged = [_cityMainTableView indexPathForCell:_cellOfSizeChanged];
-    [_cityMainTableView reloadData];
+    
+    [_cityMainTableView beginUpdates];
+    [_cityMainTableView endUpdates];
 }
 @end

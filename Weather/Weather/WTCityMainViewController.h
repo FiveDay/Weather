@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "WTCityInfoCellView.h"
 
-@interface WTCityMainViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, WTCityInfoCellDelegate>
+@interface WTCityMainViewController : UIViewController
+
 @property (retain, nonatomic) IBOutlet UITableView *cityMainTableView;
 @property (retain, nonatomic) IBOutlet UIView *cityMainView;
 @property (retain, nonatomic) IBOutlet UIImageView *bgView;

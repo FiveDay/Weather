@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class WTCityInfoCellView;
 @protocol WTCityInfoCellDelegate <NSObject>
-- (void)cellSizeChanged:(UITableViewCell*)cell;
+- (void)cellSizeChanged:(WTCityInfoCellView*)cell;
 @end
-
 
 @interface WTCityInfoCellView : UITableViewCell
 @property (retain, nonatomic) IBOutlet UILabel *ampm;
@@ -21,3 +21,5 @@
 
 @property (assign, nonatomic) id<WTCityInfoCellDelegate> delegate;
 @end
+
+

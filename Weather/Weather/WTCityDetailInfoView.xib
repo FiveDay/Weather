@@ -1930,23 +1930,23 @@
 						<string key="theLastCell">UITableViewCell</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="bgView" id="234575850">
+						<object class="IBToOneOutletInfo" key="bgView" id="184562915">
 							<string key="name">bgView</string>
 							<string key="candidateClassName">UIImageView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="cityDetailInfoScrl" id="590548959">
+						<object class="IBToOneOutletInfo" key="cityDetailInfoScrl" id="670683275">
 							<string key="name">cityDetailInfoScrl</string>
 							<string key="candidateClassName">UIScrollView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="cityMainTableView" id="500637365">
+						<object class="IBToOneOutletInfo" key="cityMainTableView" id="174296818">
 							<string key="name">cityMainTableView</string>
 							<string key="candidateClassName">UITableView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="cityMainView" id="23995084">
+						<object class="IBToOneOutletInfo" key="cityMainView" id="344027927">
 							<string key="name">cityMainView</string>
 							<string key="candidateClassName">UIView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="theLastCell" id="617679908">
+						<object class="IBToOneOutletInfo" key="theLastCell" id="938462795">
 							<string key="name">theLastCell</string>
 							<string key="candidateClassName">UITableViewCell</string>
 						</object>
@@ -1964,7 +1964,7 @@
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
 						<string key="NS.key.0">cfBtnClicked:</string>
-						<object class="IBActionInfo" key="NS.object.0" id="1000705208">
+						<object class="IBActionInfo" key="NS.object.0" id="134189605">
 							<string key="name">cfBtnClicked:</string>
 							<string key="candidateClassName">id</string>
 						</object>
@@ -1983,7 +1983,7 @@
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
 						<string key="NS.key.0">cfBtnClicked:</string>
-						<reference key="NS.object.0" ref="1000705208"/>
+						<reference key="NS.object.0" ref="134189605"/>
 					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="bgView">UIImageView</string>
@@ -1993,11 +1993,11 @@
 						<string key="theLastCell">UITableViewCell</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<reference key="bgView" ref="234575850"/>
-						<reference key="cityDetailInfoScrl" ref="590548959"/>
-						<reference key="cityMainTableView" ref="500637365"/>
-						<reference key="cityMainView" ref="23995084"/>
-						<reference key="theLastCell" ref="617679908"/>
+						<reference key="bgView" ref="184562915"/>
+						<reference key="cityDetailInfoScrl" ref="670683275"/>
+						<reference key="cityMainTableView" ref="174296818"/>
+						<reference key="cityMainView" ref="344027927"/>
+						<reference key="theLastCell" ref="938462795"/>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>

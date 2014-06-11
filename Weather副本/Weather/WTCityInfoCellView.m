@@ -46,6 +46,10 @@
 
 }
 
+//- (void)drawRect:(CGRect)rect
+//{
+//    [_delegate cellSizeChanged:self];
+//}
 - (void)dealloc {
     [_ampm release];
     [_time release];

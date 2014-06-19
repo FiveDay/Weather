@@ -17,6 +17,8 @@
     NSIndexPath* _pathOfSizeChanged;
     NSIndexPath* selectedPath;
     BOOL extended;
+    UIPinchGestureRecognizer* scrollViewPinch;
+    CGFloat lastPinchScale;
 }
 @end
 
@@ -36,7 +38,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self.view addSubview:_cityDetailInfoScrl];
-    _cityDetailInfoScrl.alpha = 0.0;
+    _cityDetailInfoScrl.alpha = 0;
+    
+    scrollViewPinch = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(pinchHandler:)];
+    [_cityDetailInfoScrl addGestureRecognizer:scrollViewPinch];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,12 +51,48 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)pinchHandler:(id)sender
+{
+    UIPinchGestureRecognizer* pinch = (UIPinchGestureRecognizer*)sender;
+    
+    if (pinch.state == UIGestureRecognizerStateBegan) {
+        
+    }
+    
+    if (pinch.state == UIGestureRecognizerStateChanged) {
+        
+        _cityDetailInfoScrl.transform = CGAffineTransformMakeScale(1.0, (pinch.scale));
+        
+        
+        
+        lastPinchScale = pinch.scale;
+    }
+    
+    if (pinch.state == UIGestureRecognizerStateEnded) {
+        [UIView animateWithDuration:0.5 animations:^{
+            _cityDetailInfoScrl.alpha = 0.0;
+            _cityMainTableView.alpha = 1.0;
+            _cityDetailInfoScrl.bounds = CGRectMake(0, 0, _cityDetailInfoScrl.frame.size.width, 88);
+            [_cityMainTableView beginUpdates];
+            [_cityMainTableView endUpdates];
+        } completion:^(BOOL finished){
+            extended = NO;
+            _cityMainTableView.scrollEnabled = YES;
+            _cityDetailInfoScrl.bounds = CGRectMake(0, 0, _cityDetailInfoScrl.frame.size.width, 548);
+            lastPinchScale = 1.;
+            _cityDetailInfoScrl.transform = CGAffineTransformMakeScale(1.0, 1.0);
+            _cityDetailInfoScrlPageCtl.hidden = YES;
+        }];
+    }
+}
+
 - (void)dealloc {
     [_cityMainTableView release];
     [_cityMainView release];
     [_bgView release];
     [_theLastCell release];
     [_cityDetailInfoScrl release];
+    [_cityDetailInfoScrlPageCtl release];
     [super dealloc];
 }
 
@@ -69,6 +111,26 @@
 -(NSInteger) tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section
 {
+    //update _cityDetailInfoScrl contentSize
+#if 0
+    int iCityFocusedCount = [_cityMainTableView numberOfRowsInSection:0];
+    
+    if (_cityDetailInfoScrlPageCtl.numberOfPages != iCityFocusedCount) {
+        _cityDetailInfoScrl.contentSize = (CGSize){self.view.bounds.size.width*iCityFocusedCount,self.view.bounds.size.height};
+        _cityDetailInfoScrlPageCtl.numberOfPages = iCityFocusedCount;
+    }
+    
+    
+    _cityDetailInfoScrlPageCtl.currentPage = 0;//selectedPath.row;
+#else
+    int iCityFocusedCount = 4;
+    
+    if (_cityDetailInfoScrlPageCtl.numberOfPages != iCityFocusedCount) {
+        _cityDetailInfoScrl.contentSize = (CGSize){self.view.bounds.size.width*iCityFocusedCount,self.view.bounds.size.height};
+        _cityDetailInfoScrlPageCtl.numberOfPages = iCityFocusedCount;
+    }
+#endif
+    
     return 4;
 }
 
@@ -110,24 +172,16 @@
     [selectedPath release];
     selectedPath = indexPath;
     [selectedPath retain];
+    
+    _cityDetailInfoScrlPageCtl.hidden = NO;
+    _cityDetailInfoScrlPageCtl.currentPage = indexPath.row;
+    [self.view bringSubviewToFront:_cityDetailInfoScrlPageCtl];
+    
+    [self createCityDetailInfoScrlContent];
 
     _cellOfSizeChanged = [tableView cellForRowAtIndexPath:indexPath];
-    
-#if 0
-    
-    [UIView beginAnimations:@"fff" context:nil];
-    [UIView setAnimationDuration:0.5];
-    int offset = 88 * (selectedPath.row);
-    tableView.contentOffset = (CGPoint){0,offset};
-    
-    [tableView beginUpdates];
-    [tableView endUpdates];
-    
-    [UIView commitAnimations];
-    
-#else
 
-    [UIView animateKeyframesWithDuration:0.5 delay:0 options:UIViewKeyframeAnimationOptionCalculationModePaced animations:^{
+    [UIView animateWithDuration:0.5 animations:^{
         
         int offset = 88 * (selectedPath.row);
         tableView.contentOffset = (CGPoint){0,offset};
@@ -145,12 +199,9 @@
     }completion:^(BOOL finished){
         extended = YES;
         tableView.scrollEnabled = NO;
-
-        
-        
+        _cityDetailInfoScrl.contentOffset = (CGPoint){(_cityDetailInfoScrlPageCtl.currentPage)*_cityDetailInfoScrl.frame.size.width,0};
     }];
-    
-#endif
+
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
@@ -169,7 +220,7 @@
     {
         if (selectedPath.row == indexPath.row)
         {
-            return 548;
+            return extended?88:548;
         }
     }
     return 88;
@@ -181,5 +232,41 @@
     _cellOfSizeChanged = cell;
     _pathOfSizeChanged = [_cityMainTableView indexPathForCell:_cellOfSizeChanged];
     [_cityMainTableView reloadData];
+}
+
+#pragma mark UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if ([scrollView isEqual:_cityDetailInfoScrl]) {
+         
+        int index = fabs(scrollView.contentOffset.x) /scrollView.frame.size.width;
+        
+        if ((index) == _cityDetailInfoScrlPageCtl.currentPage)
+        {
+            
+        }else{
+            _cityDetailInfoScrlPageCtl.currentPage = index;
+            
+            int secCount = selectedPath.section;
+            [selectedPath release];
+            selectedPath = [NSIndexPath indexPathForRow:index inSection:secCount];
+            [selectedPath retain];
+            
+        }
+        
+        
+        return ;
+    }
+    
+    return ;
+}
+
+#pragma mark init ScrollView
+- (void)createCityDetailInfoScrlContent
+{
+    UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(100, 100, 100, 40)];
+    [lab setText:@"sadfasd"];
+    
+    [_cityDetailInfoScrl addSubview:lab];
 }
 @end

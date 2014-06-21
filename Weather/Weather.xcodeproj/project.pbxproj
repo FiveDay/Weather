@@ -24,8 +24,11 @@
 		566BC27E1931C0FF00E99813 /* WTCityMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 566BC27C1931C0FF00E99813 /* WTCityMainViewController.m */; };
 		566BC27F1931C0FF00E99813 /* WTCityMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 566BC27D1931C0FF00E99813 /* WTCityMainViewController.xib */; };
 		566BC2851931FF6000E99813 /* WTCityInfoCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 566BC2841931FF6000E99813 /* WTCityInfoCellView.xib */; };
-		566BC2881932069000E99813 /* WTCityInfoCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 566BC2871932069000E99813 /* WTCityInfoCellView.m */; };
 		569771A119444435006FD282 /* WTCityDetailInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 569771A019444435006FD282 /* WTCityDetailInfoView.xib */; };
+		56B116DE195538D200C6D563 /* WTClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B116D9195538D200C6D563 /* WTClient.m */; };
+		56B116DF195538D200C6D563 /* WTDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B116DB195538D200C6D563 /* WTDataModel.m */; };
+		56B116E0195538D200C6D563 /* WTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B116DD195538D200C6D563 /* WTManager.m */; };
+		56B116E21955391700C6D563 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56B116E11955391700C6D563 /* CoreLocation.framework */; };
 		6D3516B21933011B00A751B8 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D3516B11933011B00A751B8 /* bg.png */; };
 		6D44AEDB19378E8D0093FFEF /* c.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D44AED919378E8D0093FFEF /* c.png */; };
 		6D44AEDC19378E8D0093FFEF /* f.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D44AEDA19378E8D0093FFEF /* f.png */; };
@@ -65,9 +68,14 @@
 		566BC27C1931C0FF00E99813 /* WTCityMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTCityMainViewController.m; sourceTree = "<group>"; };
 		566BC27D1931C0FF00E99813 /* WTCityMainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WTCityMainViewController.xib; sourceTree = "<group>"; };
 		566BC2841931FF6000E99813 /* WTCityInfoCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WTCityInfoCellView.xib; sourceTree = "<group>"; };
-		566BC2861932069000E99813 /* WTCityInfoCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTCityInfoCellView.h; sourceTree = "<group>"; };
-		566BC2871932069000E99813 /* WTCityInfoCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTCityInfoCellView.m; sourceTree = "<group>"; };
 		569771A019444435006FD282 /* WTCityDetailInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WTCityDetailInfoView.xib; sourceTree = "<group>"; };
+		56B116D8195538D200C6D563 /* WTClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTClient.h; sourceTree = "<group>"; };
+		56B116D9195538D200C6D563 /* WTClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTClient.m; sourceTree = "<group>"; };
+		56B116DA195538D200C6D563 /* WTDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTDataModel.h; sourceTree = "<group>"; };
+		56B116DB195538D200C6D563 /* WTDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTDataModel.m; sourceTree = "<group>"; };
+		56B116DC195538D200C6D563 /* WTManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTManager.h; sourceTree = "<group>"; };
+		56B116DD195538D200C6D563 /* WTManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTManager.m; sourceTree = "<group>"; };
+		56B116E11955391700C6D563 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		6D3516B11933011B00A751B8 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		6D44AED919378E8D0093FFEF /* c.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = c.png; sourceTree = "<group>"; };
 		6D44AEDA19378E8D0093FFEF /* f.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f.png; sourceTree = "<group>"; };
@@ -79,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56B116E21955391700C6D563 /* CoreLocation.framework in Frameworks */,
 				566BC2411931B16800E99813 /* UIKit.framework in Frameworks */,
 				566BC2431931B16800E99813 /* Foundation.framework in Frameworks */,
 				566BC2451931B16800E99813 /* CoreGraphics.framework in Frameworks */,
@@ -121,6 +130,7 @@
 		566BC23F1931B16800E99813 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				56B116E11955391700C6D563 /* CoreLocation.framework */,
 				566BC2401931B16800E99813 /* UIKit.framework */,
 				566BC2421931B16800E99813 /* Foundation.framework */,
 				566BC2441931B16800E99813 /* CoreGraphics.framework */,
@@ -132,17 +142,13 @@
 		566BC2461931B16800E99813 /* Weather */ = {
 			isa = PBXGroup;
 			children = (
+				56B116D519552D7200C6D563 /* Controller */,
+				56B116D719552D8100C6D563 /* View */,
+				56B116D619552D7B00C6D563 /* Model */,
 				6D3516B01933011B00A751B8 /* Resource */,
 				566BC24F1931B16800E99813 /* AppDelegate.h */,
 				566BC2501931B16800E99813 /* AppDelegate.m */,
 				566BC2471931B16800E99813 /* Supporting Files */,
-				566BC27B1931C0FF00E99813 /* WTCityMainViewController.h */,
-				566BC27C1931C0FF00E99813 /* WTCityMainViewController.m */,
-				566BC27D1931C0FF00E99813 /* WTCityMainViewController.xib */,
-				566BC2841931FF6000E99813 /* WTCityInfoCellView.xib */,
-				566BC2861932069000E99813 /* WTCityInfoCellView.h */,
-				566BC2871932069000E99813 /* WTCityInfoCellView.m */,
-				569771A019444435006FD282 /* WTCityDetailInfoView.xib */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
@@ -178,6 +184,38 @@
 				566BC26D1931B16900E99813 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		56B116D519552D7200C6D563 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				566BC27B1931C0FF00E99813 /* WTCityMainViewController.h */,
+				566BC27C1931C0FF00E99813 /* WTCityMainViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		56B116D619552D7B00C6D563 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				56B116D8195538D200C6D563 /* WTClient.h */,
+				56B116D9195538D200C6D563 /* WTClient.m */,
+				56B116DA195538D200C6D563 /* WTDataModel.h */,
+				56B116DB195538D200C6D563 /* WTDataModel.m */,
+				56B116DC195538D200C6D563 /* WTManager.h */,
+				56B116DD195538D200C6D563 /* WTManager.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		56B116D719552D8100C6D563 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				566BC27D1931C0FF00E99813 /* WTCityMainViewController.xib */,
+				566BC2841931FF6000E99813 /* WTCityInfoCellView.xib */,
+				569771A019444435006FD282 /* WTCityDetailInfoView.xib */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		6D3516B01933011B00A751B8 /* Resource */ = {
@@ -338,10 +376,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56B116E0195538D200C6D563 /* WTManager.m in Sources */,
 				566BC24D1931B16800E99813 /* main.m in Sources */,
 				566BC2511931B16800E99813 /* AppDelegate.m in Sources */,
+				56B116DE195538D200C6D563 /* WTClient.m in Sources */,
 				566BC27E1931C0FF00E99813 /* WTCityMainViewController.m in Sources */,
-				566BC2881932069000E99813 /* WTCityInfoCellView.m in Sources */,
+				56B116DF195538D200C6D563 /* WTDataModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

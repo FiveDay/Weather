@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WTCityInfoCellView.h"
 
-@interface WTCityMainViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, WTCityInfoCellDelegate,UIScrollViewDelegate>
+@interface WTCityMainViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
+
 @property (retain, nonatomic) IBOutlet UITableView *cityMainTableView;
 @property (retain, nonatomic) IBOutlet UIView *cityMainView;
 @property (retain, nonatomic) IBOutlet UIImageView *bgView;
-@property (retain, nonatomic) IBOutlet UIView *theLastCell;
+@property (retain, nonatomic) IBOutlet UIView *footView;
 @property (retain, nonatomic) IBOutlet UIPageControl *cityDetailInfoScrlPageCtl;
 @property (retain, nonatomic) IBOutlet UIScrollView *cityDetailInfoScrl;
+
 @end

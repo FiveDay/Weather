@@ -7,8 +7,7 @@
 //
 
 #import "WTCityMainViewController.h"
-
-#import "WTCityInfoCellView.h"
+#import "WTManager.h"
 
 @interface WTCityMainViewController ()
 {
@@ -17,8 +16,8 @@
     NSIndexPath* _pathOfSizeChanged;
     NSIndexPath* selectedPath;
     BOOL extended;
-    UIPinchGestureRecognizer* scrollViewPinch;
     CGFloat lastPinchScale;
+    IBOutlet UILabel *_cityName;
 }
 @end
 
@@ -37,12 +36,18 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self.view addSubview:_cityDetailInfoScrl];
     _cityDetailInfoScrl.alpha = 0;
+    [self.view addSubview:_cityDetailInfoScrl];
     
-    scrollViewPinch = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(pinchHandler:)];
-    [_cityDetailInfoScrl addGestureRecognizer:scrollViewPinch];
+    [[RACObserve([WTManager sharedManager], currentDataModel)
+      deliverOn:RACScheduler.mainThreadScheduler]
+     subscribeNext:^(WTDataModel *newDataModel) {
+         NSIndexPath *path=[NSIndexPath indexPathForRow:0 inSection:0];
+         [_cityMainTableView reloadRowsAtIndexPaths:@[path] withRowAnimation:(UITableViewRowAnimationNone)];
+     }];
     
+    [[WTManager sharedManager] findCurrentLocation];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -51,7 +56,18 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)pinchHandler:(id)sender
+- (void)dealloc {
+    [_cityMainTableView release];
+    [_cityMainView release];
+    [_bgView release];
+    [_footView release];
+    [_cityDetailInfoScrl release];
+    [_cityDetailInfoScrlPageCtl release];
+    [_cityName release];
+    [super dealloc];
+}
+
+- (IBAction)pinchHandler:(id)sender
 {
     UIPinchGestureRecognizer* pinch = (UIPinchGestureRecognizer*)sender;
     
@@ -86,17 +102,8 @@
     }
 }
 
-- (void)dealloc {
-    [_cityMainTableView release];
-    [_cityMainView release];
-    [_bgView release];
-    [_theLastCell release];
-    [_cityDetailInfoScrl release];
-    [_cityDetailInfoScrlPageCtl release];
-    [super dealloc];
-}
-
-- (IBAction)cfBtnClicked:(id)sender {
+- (IBAction)cfBtnClicked:(id)sender
+{
     UIButton* btn = (UIButton*)sender;
     if ((++idx)%2 == 0) {
         //f.png;
@@ -108,8 +115,7 @@
 }
 
 #pragma mark UITableViewDelegate
--(NSInteger) tableView:(UITableView *)tableView
- numberOfRowsInSection:(NSInteger)section
+-(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //update _cityDetailInfoScrl contentSize
 #if 0
@@ -136,35 +142,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-//    if (indexPath.row == 4) {
-//        UITableViewCell* cell = _theLastCell;
-//        return cell;
-//    }else
-    {
-        static NSString *CellIdentifier = @"WTCityInfoCellViewIdentifier";
-        WTCityInfoCellView *cell = (WTCityInfoCellView *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (cell == nil) {
-            NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"WTCityInfoCellView" owner:self options:nil];
-            cell = [array objectAtIndex:0];
-            cell.delegate = self;
-        }
-        return cell;
+    static NSString *CellIdentifier = @"WTCityInfoCellViewIdentifier";
+    UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"WTCityInfoCellView" owner:self options:nil];
+        cell = [array objectAtIndex:0];
     }
-}
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-//    int iCellNotReuseMaxCount = (tableView.frame.size.height / 88)+1;
-//    if (iCellNotReuseMaxCount < 7) {
-//        return
-//    }
-    return _theLastCell.frame.size.height;
-}
+    _cityName.text = [WTManager sharedManager].currentDataModel.locationName;
 
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    return _theLastCell;
+
+    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -206,16 +194,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-//    if (indexPath.row == 4) {
-//        return tableView.frame.size.height - 88*4;
-//    }
-
-//    if (_cellOfSizeChanged != nil ) {
-//        if(indexPath.row == _pathOfSizeChanged.row){
-//            return 548;//_cellOfSizeChanged.frame.size.height;
-//        }
-//    }
-    
     if (_cellOfSizeChanged != nil)
     {
         if (selectedPath.row == indexPath.row)
@@ -224,14 +202,6 @@
         }
     }
     return 88;
-}
-
-#pragma mark WTCityInfoCellDelegate
-- (void)cellSizeChanged:(UITableViewCell*)cell
-{
-    _cellOfSizeChanged = cell;
-    _pathOfSizeChanged = [_cityMainTableView indexPathForCell:_cellOfSizeChanged];
-    [_cityMainTableView reloadData];
 }
 
 #pragma mark UIScrollViewDelegate

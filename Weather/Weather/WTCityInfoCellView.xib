@@ -15,7 +15,6 @@
 			<string>IBProxyObject</string>
 			<string>IBUILabel</string>
 			<string>IBUITableViewCell</string>
-			<string>IBUITapGestureRecognizer</string>
 			<string>IBUIView</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
@@ -205,49 +204,16 @@
 				<reference key="IBUIContentView" ref="105164308"/>
 				<string key="IBUIReuseIdentifier">WTCityInfoCellViewIdentifier</string>
 			</object>
-			<object class="IBUITapGestureRecognizer" id="468730234"/>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<array class="NSMutableArray" key="connectionRecords">
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">ampm</string>
-						<reference key="source" ref="509457081"/>
-						<reference key="destination" ref="954473594"/>
-					</object>
-					<int key="connectionID">51</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">time</string>
-						<reference key="source" ref="509457081"/>
-						<reference key="destination" ref="223067616"/>
-					</object>
-					<int key="connectionID">52</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">cityName</string>
-						<reference key="source" ref="509457081"/>
+						<string key="label">_cityName</string>
+						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="781806323"/>
 					</object>
-					<int key="connectionID">53</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">temperature</string>
-						<reference key="source" ref="509457081"/>
-						<reference key="destination" ref="352713354"/>
-					</object>
-					<int key="connectionID">54</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">tapGestureAction:</string>
-						<reference key="source" ref="468730234"/>
-						<reference key="destination" ref="509457081"/>
-					</object>
-					<int key="connectionID">85</int>
+					<int key="connectionID">87</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -776,14 +742,10 @@
 						<reference key="object" ref="974100238"/>
 						<reference key="parent" ref="116488803"/>
 					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">82</int>
-						<reference key="object" ref="468730234"/>
-						<reference key="parent" ref="0"/>
-					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
+				<string key="-1.CustomClassName">WTCityMainViewController</string>
 				<string key="-1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="-2.CustomClassName">UIResponder</string>
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -820,7 +782,7 @@
 				<string key="26.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="27.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="28.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="3.CustomClassName">WTCityInfoCellView</string>
+				<string key="3.IBPersistedLastKnownCanvasPosition">{129, 185}</string>
 				<string key="3.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<array class="NSMutableArray" key="3.IBViewMetadataConstraints">
 					<reference ref="230835959"/>
@@ -845,7 +807,6 @@
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="82.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<array class="NSMutableArray" key="9.IBViewMetadataConstraints">
 					<reference ref="583609601"/>
@@ -857,7 +818,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">85</int>
+			<int key="maxID">87</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -870,81 +831,111 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">WTCityInfoCellView</string>
-					<string key="superclassName">UITableViewCell</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">tapGestureAction:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">tapGestureAction:</string>
-						<object class="IBActionInfo" key="NS.object.0" id="271669140">
-							<string key="name">tapGestureAction:</string>
+					<string key="className">WTCityMainViewController</string>
+					<string key="superclassName">UIViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="cfBtnClicked:">id</string>
+						<string key="pinchHandler:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="cfBtnClicked:" id="48732398">
+							<string key="name">cfBtnClicked:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-					</object>
+						<object class="IBActionInfo" key="pinchHandler:" id="64359303">
+							<string key="name">pinchHandler:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="ampm">UILabel</string>
-						<string key="cityName">UILabel</string>
-						<string key="temperature">UILabel</string>
-						<string key="time">UILabel</string>
+						<string key="_cityName">UILabel</string>
+						<string key="bgView">UIImageView</string>
+						<string key="cityDetailInfoScrl">UIScrollView</string>
+						<string key="cityDetailInfoScrlPageCtl">UIPageControl</string>
+						<string key="cityMainTableView">UITableView</string>
+						<string key="cityMainView">UIView</string>
+						<string key="footView">UIView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="ampm" id="579626682">
-							<string key="name">ampm</string>
+						<object class="IBToOneOutletInfo" key="_cityName" id="464620247">
+							<string key="name">_cityName</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="cityName" id="671305420">
-							<string key="name">cityName</string>
-							<string key="candidateClassName">UILabel</string>
+						<object class="IBToOneOutletInfo" key="bgView" id="782672780">
+							<string key="name">bgView</string>
+							<string key="candidateClassName">UIImageView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="temperature" id="768039990">
-							<string key="name">temperature</string>
-							<string key="candidateClassName">UILabel</string>
+						<object class="IBToOneOutletInfo" key="cityDetailInfoScrl" id="497620650">
+							<string key="name">cityDetailInfoScrl</string>
+							<string key="candidateClassName">UIScrollView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="time" id="254556198">
-							<string key="name">time</string>
-							<string key="candidateClassName">UILabel</string>
+						<object class="IBToOneOutletInfo" key="cityDetailInfoScrlPageCtl" id="735381805">
+							<string key="name">cityDetailInfoScrlPageCtl</string>
+							<string key="candidateClassName">UIPageControl</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cityMainTableView" id="274022848">
+							<string key="name">cityMainTableView</string>
+							<string key="candidateClassName">UITableView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="cityMainView" id="980168582">
+							<string key="name">cityMainView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="footView" id="455285628">
+							<string key="name">footView</string>
+							<string key="candidateClassName">UIView</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/WTCityInfoCellView.h</string>
+						<string key="minorKey">./Classes/WTCityMainViewController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">WTCityInfoCellView</string>
-					<string key="superclassName">UITableViewCell</string>
+					<string key="className">WTCityMainViewController</string>
+					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="ampm">UILabel</string>
-						<string key="cityName">UILabel</string>
-						<string key="temperature">UILabel</string>
-						<string key="time">UILabel</string>
+						<string key="bgView">UIImageView</string>
+						<string key="cityDetailInfoScrl">UIScrollView</string>
+						<string key="cityDetailInfoScrlPageCtl">UIPageControl</string>
+						<string key="cityMainTableView">UITableView</string>
+						<string key="cityMainView">UIView</string>
+						<string key="footView">UIView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<reference key="ampm" ref="579626682"/>
-						<reference key="cityName" ref="671305420"/>
-						<reference key="temperature" ref="768039990"/>
-						<reference key="time" ref="254556198"/>
+						<reference key="bgView" ref="782672780"/>
+						<reference key="cityDetailInfoScrl" ref="497620650"/>
+						<reference key="cityDetailInfoScrlPageCtl" ref="735381805"/>
+						<reference key="cityMainTableView" ref="274022848"/>
+						<reference key="cityMainView" ref="980168582"/>
+						<reference key="footView" ref="455285628"/>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Weather/WTCityInfoCellView.h</string>
+						<string key="minorKey">Weather/WTCityMainViewController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">WTCityInfoCellView</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">tapGestureAction:</string>
-						<string key="NS.object.0">id</string>
+					<string key="className">WTCityMainViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="cfBtnClicked:">id</string>
+						<string key="pinchHandler:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<reference key="cfBtnClicked:" ref="48732398"/>
+						<reference key="pinchHandler:" ref="64359303"/>
+					</dictionary>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">_cityName</string>
+						<string key="NS.object.0">UILabel</string>
 					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">tapGestureAction:</string>
-						<reference key="NS.object.0" ref="271669140"/>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">_cityName</string>
+						<reference key="NS.object.0" ref="464620247"/>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Weather/WTCityInfoCellView.m</string>
+						<string key="minorKey">Weather/WTCityMainViewController.m</string>
 					</object>
 				</object>
 			</array>

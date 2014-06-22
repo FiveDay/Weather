@@ -67,14 +67,12 @@
     }]; 
 }
 
-- (RACSignal *)fetchCurrentConditionsForLocation:(CLLocationCoordinate2D)coordinate {
-    // 1
+- (RACSignal *)fetchCurrentConditionsForLocation:(CLLocationCoordinate2D)coordinate
+{
     NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=imperial",coordinate.latitude, coordinate.longitude];
     NSURL *url = [NSURL URLWithString:urlString];
     
-    // 2
     return [[self fetchJSONFromURL:url] map:^(NSDictionary *json) {
-        // 3
         return [MTLJSONAdapter modelOfClass:[WTDataModel class] fromJSONDictionary:json error:nil];
     }];
 }

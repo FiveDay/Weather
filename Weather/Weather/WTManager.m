@@ -12,11 +12,11 @@
 
 @interface WTManager ()
 
-// 1
-@property (nonatomic, strong, readwrite) WTDataModel *currentDataModel;
 @property (nonatomic, strong, readwrite) CLLocation *currentLocation;
 
-// 2
+@property (nonatomic, strong, readwrite) WTDataModel *currentDataModel;
+@property (nonatomic, strong, readwrite) NSMutableArray *focusDataModelList;
+
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, assign) BOOL isFirstUpdate;
 @property (nonatomic, strong) WTClient *client;
@@ -25,7 +25,9 @@
 
 @implementation WTManager
 
-+ (instancetype)sharedManager {
++ (instancetype)sharedManager
+{
+    
     static id _sharedManager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -35,22 +37,34 @@
     return _sharedManager;
 }
 
-- (id)init {
+- (id)init
+{
     if (self = [super init]) {
+        
         _locationManager = [[CLLocationManager alloc] init];
         _locationManager.delegate = self;
         _client = [[WTClient alloc] init];
+        
+        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *path = [rootPath stringByAppendingPathComponent:@"currentDataModelFile.dat"];
+        NSData *data = [NSData dataWithContentsOfFile:path];//读取文件
+        if (data) {
+            self.currentDataModel = [NSKeyedUnarchiver unarchiveObjectWithData:data];;
+        }
         
         [[[[RACObserve(self, currentLocation)
 
             ignore:nil]
            // Flatten and subscribe to all 3 signals when currentLocation updates
            flattenMap:^(CLLocation *newLocation) {
-               return [RACSignal merge:@[
-                                         [self updateCurrentConditions],
-//                                         [self updateDailyForecast],
-//                                         [self updateHourlyForecast]
-                                         ]];
+               
+               if (newLocation.coordinate.latitude != self.currentLocation.coordinate.latitude
+                   ||newLocation.coordinate.longitude != self.currentLocation.coordinate.longitude) {
+                   return [RACSignal merge:@[
+                                             [self updateCurrentConditions],
+                                             ]];
+               }
+               return [RACSignal empty];
            }] deliverOn:RACScheduler.mainThreadScheduler]
          subscribeError:^(NSError *error) {
 //             [TSMessage showNotificationWithTitle:@"Error"
@@ -62,14 +76,21 @@
     return self;
 }
 
-- (RACSignal *)updateCurrentConditions {
+- (RACSignal *)updateCurrentConditions
+{
     return [[self.client fetchCurrentConditionsForLocation:self.currentLocation.coordinate] doNext:^(WTDataModel *dataModel) {
         self.currentDataModel = dataModel;
+        
+        NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *path = [rootPath stringByAppendingPathComponent:@"currentDataModelFile.dat"];
+        NSData  *data = [NSKeyedArchiver archivedDataWithRootObject:dataModel];
+        [data writeToFile:path atomically:YES];
     }];
 }
 
 
-- (void)findCurrentLocation {
+- (void)findCurrentLocation
+{
     self.isFirstUpdate = YES;
     CLLocation *location = [[CLLocation alloc]initWithLatitude:39.15 longitude:116.05];
     self.currentLocation = location;
@@ -77,8 +98,8 @@
 }
 
 #pragma mark CLLocationManagerDelegate
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    // 1
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
     if (self.isFirstUpdate) {
         self.isFirstUpdate = NO;
         return;
@@ -86,9 +107,7 @@
     
     CLLocation *location = [locations lastObject];
     
-    // 2
     if (location.horizontalAccuracy > 0) {
-        // 3
         self.currentLocation = location;
         [self.locationManager stopUpdatingLocation];
     }

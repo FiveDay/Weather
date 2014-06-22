@@ -15,8 +15,11 @@
 @interface WTManager : NSObject <CLLocationManagerDelegate>
 
 @property (nonatomic, strong, readonly) CLLocation *currentLocation;
+
 @property (nonatomic, strong, readonly) WTDataModel *currentDataModel;
+@property (nonatomic, strong, readonly) NSMutableArray *focusDataModelList;
 
 + (instancetype)sharedManager;
+
 - (void)findCurrentLocation;
 @end

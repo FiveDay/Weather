@@ -36,17 +36,20 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    _cityMainTableView.tableFooterView = _footView;
     _cityDetailInfoScrl.alpha = 0;
     [self.view addSubview:_cityDetailInfoScrl];
+    
+    [[WTManager sharedManager] findCurrentLocation];
     
     [[RACObserve([WTManager sharedManager], currentDataModel)
       deliverOn:RACScheduler.mainThreadScheduler]
      subscribeNext:^(WTDataModel *newDataModel) {
-         NSIndexPath *path=[NSIndexPath indexPathForRow:0 inSection:0];
-         [_cityMainTableView reloadRowsAtIndexPaths:@[path] withRowAnimation:(UITableViewRowAnimationNone)];
+         if (newDataModel) {
+             NSIndexPath *path=[NSIndexPath indexPathForRow:0 inSection:0];
+             [_cityMainTableView reloadRowsAtIndexPaths:@[path] withRowAnimation:(UITableViewRowAnimationNone)];
+         }
      }];
-    
-    [[WTManager sharedManager] findCurrentLocation];
 
 }
 
@@ -67,77 +70,20 @@
     [super dealloc];
 }
 
-- (IBAction)pinchHandler:(id)sender
-{
-    UIPinchGestureRecognizer* pinch = (UIPinchGestureRecognizer*)sender;
-    
-    if (pinch.state == UIGestureRecognizerStateBegan) {
-        
-    }
-    
-    if (pinch.state == UIGestureRecognizerStateChanged) {
-        
-        _cityDetailInfoScrl.transform = CGAffineTransformMakeScale(1.0, (pinch.scale));
-        
-        
-        
-        lastPinchScale = pinch.scale;
-    }
-    
-    if (pinch.state == UIGestureRecognizerStateEnded) {
-        [UIView animateWithDuration:0.5 animations:^{
-            _cityDetailInfoScrl.alpha = 0.0;
-            _cityMainTableView.alpha = 1.0;
-            _cityDetailInfoScrl.bounds = CGRectMake(0, 0, _cityDetailInfoScrl.frame.size.width, 88);
-            [_cityMainTableView beginUpdates];
-            [_cityMainTableView endUpdates];
-        } completion:^(BOOL finished){
-            extended = NO;
-            _cityMainTableView.scrollEnabled = YES;
-            _cityDetailInfoScrl.bounds = CGRectMake(0, 0, _cityDetailInfoScrl.frame.size.width, 548);
-            lastPinchScale = 1.;
-            _cityDetailInfoScrl.transform = CGAffineTransformMakeScale(1.0, 1.0);
-            _cityDetailInfoScrlPageCtl.hidden = YES;
-        }];
-    }
-}
-
-- (IBAction)cfBtnClicked:(id)sender
-{
-    UIButton* btn = (UIButton*)sender;
-    if ((++idx)%2 == 0) {
-        //f.png;
-        [btn setImage:[UIImage imageNamed:@"f.png"] forState:UIControlStateNormal];
-    }else{
-        //c.png;
-        [btn setImage:[UIImage imageNamed:@"c.png"] forState:UIControlStateNormal];
-    }
-}
-
 #pragma mark UITableViewDelegate
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //update _cityDetailInfoScrl contentSize
-#if 0
-    int iCityFocusedCount = [_cityMainTableView numberOfRowsInSection:0];
+
+    int iCurCityNum = 1;
+
+    int iCityFocusedCount = iCurCityNum;
     
     if (_cityDetailInfoScrlPageCtl.numberOfPages != iCityFocusedCount) {
         _cityDetailInfoScrl.contentSize = (CGSize){self.view.bounds.size.width*iCityFocusedCount,self.view.bounds.size.height};
         _cityDetailInfoScrlPageCtl.numberOfPages = iCityFocusedCount;
     }
     
-    
-    _cityDetailInfoScrlPageCtl.currentPage = 0;//selectedPath.row;
-#else
-    int iCityFocusedCount = 4;
-    
-    if (_cityDetailInfoScrlPageCtl.numberOfPages != iCityFocusedCount) {
-        _cityDetailInfoScrl.contentSize = (CGSize){self.view.bounds.size.width*iCityFocusedCount,self.view.bounds.size.height};
-        _cityDetailInfoScrlPageCtl.numberOfPages = iCityFocusedCount;
-    }
-#endif
-    
-    return 4;
+    return iCityFocusedCount;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -149,7 +95,12 @@
         cell = [array objectAtIndex:0];
     }
 
-    _cityName.text = [WTManager sharedManager].currentDataModel.locationName;
+    if ([WTManager sharedManager].currentDataModel.locationName) {
+        _cityName.text = [WTManager sharedManager].currentDataModel.locationName;
+    }else{
+        _cityName.text = @"--";
+    }
+
 
 
     return cell;
@@ -238,5 +189,52 @@
     [lab setText:@"sadfasd"];
     
     [_cityDetailInfoScrl addSubview:lab];
+}
+
+- (IBAction)pinchHandler:(id)sender
+{
+    UIPinchGestureRecognizer* pinch = (UIPinchGestureRecognizer*)sender;
+    
+    if (pinch.state == UIGestureRecognizerStateBegan) {
+        
+    }
+    
+    if (pinch.state == UIGestureRecognizerStateChanged) {
+        
+        _cityDetailInfoScrl.transform = CGAffineTransformMakeScale(1.0, (pinch.scale));
+        
+        
+        
+        lastPinchScale = pinch.scale;
+    }
+    
+    if (pinch.state == UIGestureRecognizerStateEnded) {
+        [UIView animateWithDuration:0.5 animations:^{
+            _cityDetailInfoScrl.alpha = 0.0;
+            _cityMainTableView.alpha = 1.0;
+            _cityDetailInfoScrl.bounds = CGRectMake(0, 0, _cityDetailInfoScrl.frame.size.width, 88);
+            [_cityMainTableView beginUpdates];
+            [_cityMainTableView endUpdates];
+        } completion:^(BOOL finished){
+            extended = NO;
+            _cityMainTableView.scrollEnabled = YES;
+            _cityDetailInfoScrl.bounds = CGRectMake(0, 0, _cityDetailInfoScrl.frame.size.width, 548);
+            lastPinchScale = 1.;
+            _cityDetailInfoScrl.transform = CGAffineTransformMakeScale(1.0, 1.0);
+            _cityDetailInfoScrlPageCtl.hidden = YES;
+        }];
+    }
+}
+
+- (IBAction)cfBtnClicked:(id)sender
+{
+    UIButton* btn = (UIButton*)sender;
+    if ((++idx)%2 == 0) {
+        //f.png;
+        [btn setImage:[UIImage imageNamed:@"f.png"] forState:UIControlStateNormal];
+    }else{
+        //c.png;
+        [btn setImage:[UIImage imageNamed:@"c.png"] forState:UIControlStateNormal];
+    }
 }
 @end

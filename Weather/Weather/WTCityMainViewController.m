@@ -8,6 +8,7 @@
 
 #import "WTCityMainViewController.h"
 #import "WTManager.h"
+#import "WTCitySearchViewController.h"
 
 @interface WTCityMainViewController ()
 {
@@ -236,5 +237,11 @@
         //c.png;
         [btn setImage:[UIImage imageNamed:@"c.png"] forState:UIControlStateNormal];
     }
+}
+- (IBAction)openSearchView:(id)sender {
+    WTCitySearchViewController* controller = [[WTCitySearchViewController alloc]initWithNibName:@"WTCitySearchViewController" bundle:nil];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
+    controller = nil;
 }
 @end

@@ -14,12 +14,17 @@
 
 @interface WTManager : NSObject <CLLocationManagerDelegate>
 
-@property (nonatomic, strong, readonly) CLLocation *currentLocation;
+@property (nonatomic, strong, readonly) CLLocation* currentLocation;
+@property (nonatomic, strong, readwrite) NSString   *searchKey;
+@property (nonatomic, assign, readonly) BOOL isSearchResult;
+@property (nonatomic, assign, readwrite) BOOL isAddFousData;
 
-@property (nonatomic, strong, readonly) WTDataModel *currentDataModel;
+@property (nonatomic, strong, readonly) WTDataModel* currentDataModel;
 @property (nonatomic, strong, readonly) NSMutableArray *focusDataModelList;
+@property (nonatomic, strong, readonly) NSMutableArray* searchDataModeList;
 
 + (instancetype)sharedManager;
 
 - (void)findCurrentLocation;
+
 @end

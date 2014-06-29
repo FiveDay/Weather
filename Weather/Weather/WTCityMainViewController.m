@@ -51,6 +51,11 @@
              [_cityMainTableView reloadRowsAtIndexPaths:@[path] withRowAnimation:(UITableViewRowAnimationNone)];
          }
      }];
+    [[RACObserve([WTManager sharedManager], isAddFousData)
+      deliverOn:RACScheduler.mainThreadScheduler]
+     subscribeNext:^(id isAddFousData) {
+             [_cityMainTableView reloadData];
+     }];
 
 }
 
@@ -71,13 +76,12 @@
     [super dealloc];
 }
 
-#pragma mark UITableViewDelegate
+#pragma mark UITableViewDataSource
+
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
-    int iCurCityNum = 1;
-
-    int iCityFocusedCount = iCurCityNum;
+    int iCityFocusedCount = [[WTManager sharedManager].focusDataModelList count];
     
     if (_cityDetailInfoScrlPageCtl.numberOfPages != iCityFocusedCount) {
         _cityDetailInfoScrl.contentSize = (CGSize){self.view.bounds.size.width*iCityFocusedCount,self.view.bounds.size.height};
@@ -96,8 +100,8 @@
         cell = [array objectAtIndex:0];
     }
 
-    if ([WTManager sharedManager].currentDataModel.locationName) {
-        _cityName.text = [WTManager sharedManager].currentDataModel.locationName;
+    if ([[[WTManager sharedManager].focusDataModelList objectAtIndex:indexPath.row] locationName]) {
+        _cityName.text = [[[WTManager sharedManager].focusDataModelList objectAtIndex:indexPath.row] locationName];
     }else{
         _cityName.text = @"--";
     }
@@ -106,6 +110,20 @@
 
     return cell;
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
+{
+    if (_cellOfSizeChanged != nil)
+    {
+        if (selectedPath.row == indexPath.row)
+        {
+            return extended?88:548;
+        }
+    }
+    return 88;
+}
+
+#pragma mark UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -144,19 +162,10 @@
 
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
-{
-    if (_cellOfSizeChanged != nil)
-    {
-        if (selectedPath.row == indexPath.row)
-        {
-            return extended?88:548;
-        }
-    }
-    return 88;
-}
+
 
 #pragma mark UIScrollViewDelegate
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if ([scrollView isEqual:_cityDetailInfoScrl]) {
@@ -184,6 +193,7 @@
 }
 
 #pragma mark init ScrollView
+
 - (void)createCityDetailInfoScrlContent
 {
     UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(100, 100, 100, 40)];
@@ -227,6 +237,7 @@
     }
 }
 
+#pragma mark Action
 - (IBAction)cfBtnClicked:(id)sender
 {
     UIButton* btn = (UIButton*)sender;
@@ -238,6 +249,7 @@
         [btn setImage:[UIImage imageNamed:@"c.png"] forState:UIControlStateNormal];
     }
 }
+
 - (IBAction)openSearchView:(id)sender {
     WTCitySearchViewController* controller = [[WTCitySearchViewController alloc]initWithNibName:@"WTCitySearchViewController" bundle:nil];
     [self.navigationController pushViewController:controller animated:YES];

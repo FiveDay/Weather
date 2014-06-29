@@ -14,4 +14,5 @@
 
 - (RACSignal *)fetchJSONFromURL:(NSURL *)url;
 - (RACSignal *)fetchCurrentConditionsForLocation:(CLLocationCoordinate2D)coordinate;
+- (RACSignal *)fetchCityDataByCityName:(NSString*)cityName;
 @end

@@ -20,11 +20,16 @@
 - (id)init {
     if (self = [super init]) {
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-        _session = [NSURLSession sessionWithConfiguration:config];
+        self.session = [NSURLSession sessionWithConfiguration:config];
     }
     return self;
 }
 
+- (void)dealloc
+{
+    [super dealloc];
+    [_session release];
+}
 - (RACSignal *)fetchJSONFromURL:(NSURL *)url {
     NSLog(@"Fetching: %@",url.absoluteString);
     
@@ -69,11 +74,22 @@
 
 - (RACSignal *)fetchCurrentConditionsForLocation:(CLLocationCoordinate2D)coordinate
 {
-    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=imperial",coordinate.latitude, coordinate.longitude];
+    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=imperial&APPID=803c78e7b841660c417c8dd875b30d73",coordinate.latitude, coordinate.longitude];
     NSURL *url = [NSURL URLWithString:urlString];
     
     return [[self fetchJSONFromURL:url] map:^(NSDictionary *json) {
         return [MTLJSONAdapter modelOfClass:[WTDataModel class] fromJSONDictionary:json error:nil];
     }];
+}
+
+- (RACSignal *)fetchCityDataByCityName:(NSString*)cityName
+{
+    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?q=%@&APPID=803c78e7b841660c417c8dd875b30d73",cityName];
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    return [[self fetchJSONFromURL:url] map:^(NSDictionary *json) {
+        return [MTLJSONAdapter modelOfClass:[WTDataModel class] fromJSONDictionary:json error:nil];
+    }];
+
 }
 @end

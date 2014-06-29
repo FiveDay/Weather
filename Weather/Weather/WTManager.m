@@ -14,8 +14,11 @@
 
 @property (nonatomic, strong, readwrite) CLLocation *currentLocation;
 
+@property (nonatomic, assign, readwrite) BOOL isSearchResult;
+
 @property (nonatomic, strong, readwrite) WTDataModel *currentDataModel;
 @property (nonatomic, strong, readwrite) NSMutableArray *focusDataModelList;
+@property (nonatomic, strong, readwrite) NSMutableArray* searchDataModeList;
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, assign) BOOL isFirstUpdate;
@@ -40,6 +43,8 @@
 - (id)init
 {
     if (self = [super init]) {
+        _searchDataModeList = [[NSMutableArray alloc] init];
+        _focusDataModelList = [[NSMutableArray alloc] init];
         
         _locationManager = [[CLLocationManager alloc] init];
         _locationManager.delegate = self;
@@ -49,7 +54,8 @@
         NSString *path = [rootPath stringByAppendingPathComponent:@"currentDataModelFile.dat"];
         NSData *data = [NSData dataWithContentsOfFile:path];//读取文件
         if (data) {
-            self.currentDataModel = [NSKeyedUnarchiver unarchiveObjectWithData:data];;
+            self.currentDataModel = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            [self.focusDataModelList addObject:_currentDataModel];
         }
         
         [[[[RACObserve(self, currentLocation)
@@ -58,27 +64,40 @@
            // Flatten and subscribe to all 3 signals when currentLocation updates
            flattenMap:^(CLLocation *newLocation) {
                
-               if (newLocation.coordinate.latitude != self.currentLocation.coordinate.latitude
-                   ||newLocation.coordinate.longitude != self.currentLocation.coordinate.longitude) {
-                   return [RACSignal merge:@[
-                                             [self updateCurrentConditions],
-                                             ]];
-               }
+
+            return [RACSignal merge:@[
+                                        [self updateCurrentConditions],
+                                    ]];
                return [RACSignal empty];
            }] deliverOn:RACScheduler.mainThreadScheduler]
          subscribeError:^(NSError *error) {
-//             [TSMessage showNotificationWithTitle:@"Error"
-//                                         subtitle:@"There was a problem fetching the latest weather."
-//                                             type:TSMessageNotificationTypeError];
+
+         }];
+        
+        [[[[RACObserve(self, searchKey)
+            
+            ignore:nil]
+           // Flatten and subscribe to all 3 signals when currentLocation updates
+           flattenMap:^(NSString *searchKey) {
+               
+               
+               return [RACSignal merge:@[
+                                         [self searchByCityName:searchKey],
+                                         ]];
+               return [RACSignal empty];
+           }] deliverOn:RACScheduler.mainThreadScheduler]
+         subscribeError:^(NSError *error) {
+             
          }];
     }
 
     return self;
 }
-
+#pragma mark Internal function
 - (RACSignal *)updateCurrentConditions
 {
-    return [[self.client fetchCurrentConditionsForLocation:self.currentLocation.coordinate] doNext:^(WTDataModel *dataModel) {
+    return [[self.client fetchCurrentConditionsForLocation:self.currentLocation.coordinate] doNext:^(WTDataModel* dataModel) {
+        [self.focusDataModelList replaceObjectAtIndex:0 withObject:dataModel];
         self.currentDataModel = dataModel;
         
         NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
@@ -87,15 +106,24 @@
         [data writeToFile:path atomically:YES];
     }];
 }
+- (RACSignal*)searchByCityName:(NSString*)cityName
+{
+    return [[self.client fetchCityDataByCityName:cityName] doNext:^(WTDataModel* dataModel) {
+        [self.searchDataModeList removeAllObjects];
+        [self.searchDataModeList addObject:dataModel];
+        self.isSearchResult = YES;
+    }];
+}
 
-
+#pragma mark Interface function
 - (void)findCurrentLocation
 {
     self.isFirstUpdate = YES;
     CLLocation *location = [[CLLocation alloc]initWithLatitude:39.15 longitude:116.05];
     self.currentLocation = location;
-    [self.locationManager startUpdatingLocation];
+    //[self.locationManager startUpdatingLocation];
 }
+
 
 #pragma mark CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations

@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WTCitySearchViewController">
             <connections>
+                <outlet property="searchResults" destination="2Yy-Me-hG5" id="qgm-3A-sJW"/>
                 <outlet property="view" destination="iN0-l3-epB" id="qRp-7i-jQB"/>
             </connections>
         </placeholder>
@@ -23,12 +24,23 @@
                 <searchBar appearanceType="aqua" contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gi7-FF-Wja">
                     <rect key="frame" x="0.0" y="47" width="320" height="44"/>
                     <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="EJq-zb-i9b"/>
+                    </connections>
                 </searchBar>
+                <tableView appearanceType="aqua" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2Yy-Me-hG5">
+                    <rect key="frame" x="0.0" y="91" width="320" height="477"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="9oj-W3-gYv"/>
+                        <outlet property="delegate" destination="-1" id="X2T-pG-wpE"/>
+                    </connections>
+                </tableView>
             </subviews>
             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-            <point key="canvasLocation" x="260" y="224"/>
+            <point key="canvasLocation" x="-770" y="202"/>
         </view>
     </objects>
 </document>

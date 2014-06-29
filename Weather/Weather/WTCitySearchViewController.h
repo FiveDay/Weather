@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WTCitySearchViewController : UIViewController
+@interface WTCitySearchViewController : UIViewController <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @end

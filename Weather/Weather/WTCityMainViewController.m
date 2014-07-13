@@ -38,10 +38,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     _cityMainTableView.tableFooterView = _footView;
-    _cityDetailInfoScrl.alpha = 0;
-    [self.view addSubview:_cityDetailInfoScrl];
+    _backgroundCityDetailView.alpha = 0;
+    [self.view addSubview:_backgroundCityDetailView];
     
-    [[WTManager sharedManager] findCurrentLocation];
+//    [[WTManager sharedManager] findCurrentLocation];
     
     [[RACObserve([WTManager sharedManager], currentDataModel)
       deliverOn:RACScheduler.mainThreadScheduler]
@@ -73,6 +73,8 @@
     [_cityDetailInfoScrl release];
     [_cityDetailInfoScrlPageCtl release];
     [_cityName release];
+    [_cityDetailInfoScrl release];
+    [_backgroundCityDetailView release];
     [super dealloc];
 }
 
@@ -131,9 +133,9 @@
     selectedPath = indexPath;
     [selectedPath retain];
     
-    _cityDetailInfoScrlPageCtl.hidden = NO;
+    //_cityDetailInfoScrlPageCtl.hidden = NO;
     _cityDetailInfoScrlPageCtl.currentPage = indexPath.row;
-    [self.view bringSubviewToFront:_cityDetailInfoScrlPageCtl];
+    //[self.view bringSubviewToFront:_cityDetailInfoScrlPageCtl];
     
     [self createCityDetailInfoScrlContent];
 
@@ -149,7 +151,7 @@
         
         [UIView beginAnimations:@"fff" context:nil];
         [UIView setAnimationDuration:1];
-        _cityDetailInfoScrl.alpha = 1.0;
+        _backgroundCityDetailView.alpha = 1.0;
         tableView.alpha = 0.0;
         
         [UIView commitAnimations];
@@ -221,7 +223,7 @@
     
     if (pinch.state == UIGestureRecognizerStateEnded) {
         [UIView animateWithDuration:0.5 animations:^{
-            _cityDetailInfoScrl.alpha = 0.0;
+            _backgroundCityDetailView.alpha = 0.0;
             _cityMainTableView.alpha = 1.0;
             _cityDetailInfoScrl.bounds = CGRectMake(0, 0, _cityDetailInfoScrl.frame.size.width, 88);
             [_cityMainTableView beginUpdates];
@@ -231,8 +233,8 @@
             _cityMainTableView.scrollEnabled = YES;
             _cityDetailInfoScrl.bounds = CGRectMake(0, 0, _cityDetailInfoScrl.frame.size.width, 548);
             lastPinchScale = 1.;
-            _cityDetailInfoScrl.transform = CGAffineTransformMakeScale(1.0, 1.0);
-            _cityDetailInfoScrlPageCtl.hidden = YES;
+            _backgroundCityDetailView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+            //_cityDetailInfoScrlPageCtl.hidden = YES;
         }];
     }
 }

@@ -19,6 +19,8 @@
     BOOL extended;
     CGFloat lastPinchScale;
     IBOutlet UILabel *_cityName;
+    IBOutlet UIView *_backgroundViewOfCell;
+    IBOutlet UIImageView *_backgroundImage;
 }
 @end
 
@@ -73,6 +75,8 @@
     [_cityDetailInfoScrl release];
     [_cityDetailInfoScrlPageCtl release];
     [_cityName release];
+    [_backgroundViewOfCell release];
+    [_backgroundImage release];
     [super dealloc];
 }
 
@@ -100,13 +104,19 @@
         cell = [array objectAtIndex:0];
     }
 
+    if (indexPath.row != 0) {
+        _backgroundViewOfCell.frame = CGRectMake(_backgroundViewOfCell.frame.origin.x, _backgroundViewOfCell.frame.origin.y - 15, _backgroundViewOfCell.frame.size.width, _backgroundViewOfCell.frame.size.height);
+        
+        _backgroundImage.image = [UIImage imageNamed:@"afternoon.png"];
+    }
+    
+    //_backgroundImage.image = [UIImage imageNamed:@"morning.png"];
+    
     if ([[[WTManager sharedManager].focusDataModelList objectAtIndex:indexPath.row] locationName]) {
         _cityName.text = [[[WTManager sharedManager].focusDataModelList objectAtIndex:indexPath.row] locationName];
     }else{
         _cityName.text = @"--";
     }
-
-
 
     return cell;
 }
@@ -120,7 +130,11 @@
             return extended?88:548;
         }
     }
-    return 88;
+    
+    if (indexPath.row != 0) {
+        return 80;
+    }
+    return 95;
 }
 
 #pragma mark UITableViewDelegate

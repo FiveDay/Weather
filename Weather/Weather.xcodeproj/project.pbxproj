@@ -32,6 +32,8 @@
 		56B116E71956FC5400C6D563 /* WTCitySearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B116E61956FC5400C6D563 /* WTCitySearchViewController.m */; };
 		56B116E9195710E300C6D563 /* CityList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 56B116E8195710E300C6D563 /* CityList.plist */; };
 		56C7A826195FF840004E5806 /* WTSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56C7A825195FF840004E5806 /* WTSearchCell.xib */; };
+		56F1F27D197AB99600649822 /* afternoon.png in Resources */ = {isa = PBXBuildFile; fileRef = 56F1F27C197AB99500649822 /* afternoon.png */; };
+		56F1F27F197AC1D400649822 /* morning.png in Resources */ = {isa = PBXBuildFile; fileRef = 56F1F27E197AC1D400649822 /* morning.png */; };
 		56F282AA1959AEE90031C4BB /* WTCitySearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56F282A91959AEE90031C4BB /* WTCitySearchViewController.xib */; };
 		6D3516B21933011B00A751B8 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D3516B11933011B00A751B8 /* bg.png */; };
 		6D44AEDB19378E8D0093FFEF /* c.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D44AED919378E8D0093FFEF /* c.png */; };
@@ -84,6 +86,8 @@
 		56B116E61956FC5400C6D563 /* WTCitySearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTCitySearchViewController.m; sourceTree = "<group>"; };
 		56B116E8195710E300C6D563 /* CityList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CityList.plist; sourceTree = "<group>"; };
 		56C7A825195FF840004E5806 /* WTSearchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WTSearchCell.xib; sourceTree = "<group>"; };
+		56F1F27C197AB99500649822 /* afternoon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = afternoon.png; sourceTree = "<group>"; };
+		56F1F27E197AC1D400649822 /* morning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = morning.png; sourceTree = "<group>"; };
 		56F282A91959AEE90031C4BB /* WTCitySearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WTCitySearchViewController.xib; sourceTree = "<group>"; };
 		6D3516B11933011B00A751B8 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		6D44AED919378E8D0093FFEF /* c.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = c.png; sourceTree = "<group>"; };
@@ -234,6 +238,8 @@
 		6D3516B01933011B00A751B8 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				56F1F27E197AC1D400649822 /* morning.png */,
+				56F1F27C197AB99500649822 /* afternoon.png */,
 				6D44AED919378E8D0093FFEF /* c.png */,
 				6D44AEDA19378E8D0093FFEF /* f.png */,
 				6D3516B11933011B00A751B8 /* bg.png */,
@@ -318,6 +324,7 @@
 			files = (
 				566BC24B1931B16800E99813 /* InfoPlist.strings in Resources */,
 				566BC2531931B16800E99813 /* Default.png in Resources */,
+				56F1F27D197AB99600649822 /* afternoon.png in Resources */,
 				56B116E9195710E300C6D563 /* CityList.plist in Resources */,
 				566BC2551931B16800E99813 /* Default@2x.png in Resources */,
 				56C7A826195FF840004E5806 /* WTSearchCell.xib in Resources */,
@@ -325,6 +332,7 @@
 				566BC2571931B16800E99813 /* Default-568h@2x.png in Resources */,
 				566BC27F1931C0FF00E99813 /* WTCityMainViewController.xib in Resources */,
 				566BC2851931FF6000E99813 /* WTCityInfoCellView.xib in Resources */,
+				56F1F27F197AC1D400649822 /* morning.png in Resources */,
 				6D3516B21933011B00A751B8 /* bg.png in Resources */,
 				6D44AEDB19378E8D0093FFEF /* c.png in Resources */,
 				6D44AEDC19378E8D0093FFEF /* f.png in Resources */,

@@ -35,6 +35,7 @@
 		56F1F27D197AB99600649822 /* afternoon.png in Resources */ = {isa = PBXBuildFile; fileRef = 56F1F27C197AB99500649822 /* afternoon.png */; };
 		56F1F27F197AC1D400649822 /* morning.png in Resources */ = {isa = PBXBuildFile; fileRef = 56F1F27E197AC1D400649822 /* morning.png */; };
 		56F282AA1959AEE90031C4BB /* WTCitySearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56F282A91959AEE90031C4BB /* WTCitySearchViewController.xib */; };
+		6D135D79197973D700758EDB /* WTCityDetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D135D78197973D700758EDB /* WTCityDetailInfoViewController.m */; };
 		6D3516B21933011B00A751B8 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D3516B11933011B00A751B8 /* bg.png */; };
 		6D44AEDB19378E8D0093FFEF /* c.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D44AED919378E8D0093FFEF /* c.png */; };
 		6D44AEDC19378E8D0093FFEF /* f.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D44AEDA19378E8D0093FFEF /* f.png */; };
@@ -89,6 +90,8 @@
 		56F1F27C197AB99500649822 /* afternoon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = afternoon.png; sourceTree = "<group>"; };
 		56F1F27E197AC1D400649822 /* morning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = morning.png; sourceTree = "<group>"; };
 		56F282A91959AEE90031C4BB /* WTCitySearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WTCitySearchViewController.xib; sourceTree = "<group>"; };
+		6D135D77197973D700758EDB /* WTCityDetailInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTCityDetailInfoViewController.h; sourceTree = "<group>"; };
+		6D135D78197973D700758EDB /* WTCityDetailInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTCityDetailInfoViewController.m; sourceTree = "<group>"; };
 		6D3516B11933011B00A751B8 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		6D44AED919378E8D0093FFEF /* c.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = c.png; sourceTree = "<group>"; };
 		6D44AEDA19378E8D0093FFEF /* f.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f.png; sourceTree = "<group>"; };
@@ -206,6 +209,8 @@
 				566BC27C1931C0FF00E99813 /* WTCityMainViewController.m */,
 				56B116E51956FC5400C6D563 /* WTCitySearchViewController.h */,
 				56B116E61956FC5400C6D563 /* WTCitySearchViewController.m */,
+				6D135D77197973D700758EDB /* WTCityDetailInfoViewController.h */,
+				6D135D78197973D700758EDB /* WTCityDetailInfoViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -403,6 +408,7 @@
 			files = (
 				56B116E0195538D200C6D563 /* WTManager.m in Sources */,
 				566BC24D1931B16800E99813 /* main.m in Sources */,
+				6D135D79197973D700758EDB /* WTCityDetailInfoViewController.m in Sources */,
 				566BC2511931B16800E99813 /* AppDelegate.m in Sources */,
 				56B116DE195538D200C6D563 /* WTClient.m in Sources */,
 				56B116E71956FC5400C6D563 /* WTCitySearchViewController.m in Sources */,

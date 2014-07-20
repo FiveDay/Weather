@@ -16,5 +16,7 @@
 @property (retain, nonatomic) IBOutlet UIView *footView;
 @property (retain, nonatomic) IBOutlet UIPageControl *cityDetailInfoScrlPageCtl;
 @property (retain, nonatomic) IBOutlet UIScrollView *cityDetailInfoScrl;
+//@property (retain, nonatomic) IBOutlet UIScrollView *cityDetailInfoScrl;
+@property (retain, nonatomic) IBOutlet UIView *backgroundCityDetailView;
 
 @end

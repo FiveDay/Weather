@@ -120,25 +120,6 @@
 				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
-			<object class="IBUIScrollView" id="752597510">
-				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">268</int>
-				<array class="NSMutableArray" key="NSSubviews"/>
-				<string key="NSFrameSize">{320, 568}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
-				<string key="NSReuseIdentifierKey">_NS:9</string>
-				<object class="NSColor" key="IBUIBackgroundColor">
-					<int key="NSColorSpace">2</int>
-					<bytes key="NSRGB">MC45MjU0OTAyNjAxIDAuNjM5MjE1NzA3OCAwLjIwMDAwMDAxNzkAA</bytes>
-				</object>
-				<bool key="IBUIClipsSubviews">YES</bool>
-				<bool key="IBUIMultipleTouchEnabled">YES</bool>
-				<array key="IBUIGestureRecognizers" id="0"/>
-				<reference key="IBUISimulatedDestinationMetrics" ref="836702574"/>
-				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-				<bool key="IBUIPagingEnabled">YES</bool>
-			</object>
 			<object class="IBUIView" id="104524353">
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
@@ -158,7 +139,7 @@
 						</object>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
-						<reference key="IBUIGestureRecognizers" ref="0"/>
+						<array key="IBUIGestureRecognizers" id="0"/>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<bool key="IBUIPagingEnabled">YES</bool>
 					</object>
@@ -225,10 +206,8 @@
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="13712480"/>
-				<object class="NSColor" key="IBUIBackgroundColor">
-					<int key="NSColorSpace">1</int>
-					<bytes key="NSRGB">MC43OTgxMTA2NTA1IDAuMDkxMzM0MTkzMTcgMC4xOTU2Nzc0NzE3AA</bytes>
-				</object>
+				<reference key="IBUIBackgroundColor" ref="168400863"/>
+				<bool key="IBUIUserInteractionEnabled">NO</bool>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
 				<reference key="IBUISimulatedDestinationMetrics" ref="836702574"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -426,15 +405,6 @@
 					<int key="connectionID">262</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
-						<string key="label">gestureRecognizers</string>
-						<reference key="source" ref="104524353"/>
-						<reference key="destination" ref="459518667"/>
-						<bool key="addsContentToExistingCollection">YES</bool>
-					</object>
-					<int key="connectionID">297</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="13712480"/>
@@ -563,7 +533,7 @@
 								<int key="contentType">3</int>
 								<bool key="placeholder">NO</bool>
 							</object>
-							<object class="IBNSLayoutConstraint" id="881869766">
+							<object class="IBNSLayoutConstraint" id="451019703">
 								<reference key="firstItem" ref="816432046"/>
 								<int key="firstAttribute">6</int>
 								<int key="relation">0</int>
@@ -581,7 +551,7 @@
 								<int key="contentType">2</int>
 								<bool key="placeholder">NO</bool>
 							</object>
-							<object class="IBNSLayoutConstraint" id="434790641">
+							<object class="IBNSLayoutConstraint" id="619892255">
 								<reference key="firstItem" ref="816432046"/>
 								<int key="firstAttribute">3</int>
 								<int key="relation">0</int>
@@ -617,7 +587,7 @@
 								<int key="contentType">2</int>
 								<bool key="placeholder">NO</bool>
 							</object>
-							<object class="IBNSLayoutConstraint" id="910372637">
+							<object class="IBNSLayoutConstraint" id="263955919">
 								<reference key="firstItem" ref="816432046"/>
 								<int key="firstAttribute">5</int>
 								<int key="relation">0</int>
@@ -679,13 +649,6 @@
 						<int key="objectID">72</int>
 						<reference key="object" ref="960177360"/>
 						<reference key="parent" ref="191373211"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">111</int>
-						<reference key="object" ref="752597510"/>
-						<array class="NSMutableArray" key="children"/>
-						<reference key="parent" ref="0"/>
-						<string key="objectName">ScrollView2</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">148</int>
@@ -1097,7 +1060,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">293</int>
-						<reference key="object" ref="910372637"/>
+						<reference key="object" ref="263955919"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -1107,12 +1070,12 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">295</int>
-						<reference key="object" ref="434790641"/>
+						<reference key="object" ref="619892255"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">296</int>
-						<reference key="object" ref="881869766"/>
+						<reference key="object" ref="451019703"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</array>
@@ -1126,10 +1089,10 @@
 				<string key="1.IBPersistedLastKnownCanvasPosition">{297, 196}</string>
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<array key="1.IBViewMetadataConstraints">
-					<reference ref="910372637"/>
+					<reference ref="263955919"/>
 					<reference ref="358562504"/>
-					<reference ref="434790641"/>
-					<reference ref="881869766"/>
+					<reference ref="619892255"/>
+					<reference ref="451019703"/>
 					<reference ref="665060144"/>
 					<reference ref="529282244"/>
 					<reference ref="960177360"/>
@@ -1138,10 +1101,6 @@
 					<reference ref="783703771"/>
 				</array>
 				<string key="106.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<reference key="111.IBNSViewMetadataGestureRecognizers" ref="0"/>
-				<string key="111.IBPersistedLastKnownCanvasPosition">{-76, 196}</string>
-				<string key="111.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<reference key="111.IBViewMetadataConstraints" ref="0"/>
 				<string key="148.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<array key="148.IBViewMetadataConstraints">
 					<reference ref="255539592"/>

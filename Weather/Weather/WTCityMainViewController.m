@@ -9,6 +9,7 @@
 #import "WTCityMainViewController.h"
 #import "WTManager.h"
 #import "WTCitySearchViewController.h"
+#import "WTCityDetailInfoViewController.h"
 
 @interface WTCityMainViewController ()
 {
@@ -19,6 +20,11 @@
     BOOL extended;
     CGFloat lastPinchScale;
     IBOutlet UILabel *_cityName;
+    NSMutableArray* _currentCityDetailInfoViews;
+    
+    //因为_cityName只表示最后一个创建的tableviewcell上的城市信息，所以，这里需要一个数据
+    //能够记录整个tableview上所有的cell的信息。因此，这里的设计最好还是每个cellView都有
+    //自己的controller来控制.这里使用cell上的subview设置的tag进行调用。
 }
 @end
 
@@ -29,6 +35,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        _currentCityDetailInfoViews = [[NSMutableArray alloc]initWithCapacity:1];
     }
     return self;
 }
@@ -75,6 +82,7 @@
     [_cityName release];
     [_cityDetailInfoScrl release];
     [_backgroundCityDetailView release];
+    [_currentCityDetailInfoViews release];
     [super dealloc];
 }
 
@@ -103,7 +111,15 @@
     }
 
     if ([[[WTManager sharedManager].focusDataModelList objectAtIndex:indexPath.row] locationName]) {
-        _cityName.text = [[[WTManager sharedManager].focusDataModelList objectAtIndex:indexPath.row] locationName];
+        
+        for (UIView* subview in cell.contentView.subviews) {
+            if (subview.tag == 10001) {
+                ((UILabel*)subview).text = [[[WTManager sharedManager].focusDataModelList objectAtIndex:indexPath.row] locationName];
+                
+            }
+        }
+        
+       // _cityName.text = @"deprecate";
     }else{
         _cityName.text = @"--";
     }
@@ -133,18 +149,23 @@
     selectedPath = indexPath;
     [selectedPath retain];
     
-    //_cityDetailInfoScrlPageCtl.hidden = NO;
     _cityDetailInfoScrlPageCtl.currentPage = indexPath.row;
-    //[self.view bringSubviewToFront:_cityDetailInfoScrlPageCtl];
+    
+    _cellOfSizeChanged = [tableView cellForRowAtIndexPath:indexPath];
+    
     
     [self createCityDetailInfoScrlContent];
 
-    _cellOfSizeChanged = [tableView cellForRowAtIndexPath:indexPath];
+    
+    [self.view bringSubviewToFront:_backgroundCityDetailView];
 
     [UIView animateWithDuration:0.5 animations:^{
         
         int offset = 88 * (selectedPath.row);
         tableView.contentOffset = (CGPoint){0,offset};
+        
+        UITableViewCell* selectedCell = [tableView cellForRowAtIndexPath:indexPath];
+        selectedCell.frame = (CGRect){selectedCell.frame.origin,CGRectGetWidth(selectedCell.frame),548};
         
         [tableView beginUpdates];
         [tableView endUpdates];
@@ -152,9 +173,10 @@
         [UIView beginAnimations:@"fff" context:nil];
         [UIView setAnimationDuration:1];
         _backgroundCityDetailView.alpha = 1.0;
-        tableView.alpha = 0.0;
+        //tableView.alpha = 0.0;
         
         [UIView commitAnimations];
+        
         
     }completion:^(BOOL finished){
         extended = YES;
@@ -198,10 +220,40 @@
 
 - (void)createCityDetailInfoScrlContent
 {
-    UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(100, 100, 100, 40)];
-    [lab setText:@"sadfasd"];
+    int iCityFocusedCount = [[WTManager sharedManager].focusDataModelList count];
     
-    [_cityDetailInfoScrl addSubview:lab];
+    for (int iPage=0; iPage<iCityFocusedCount; iPage++) {
+        
+        WTCityDetailInfoViewController* wtCityDetailInfoViewController = [[WTCityDetailInfoViewController alloc]initWithNibName:@"WTCityDetailInfoView" bundle:nil];
+        wtCityDetailInfoViewController.view.frame = (CGRect){iPage*CGRectGetWidth(wtCityDetailInfoViewController.view.frame),0,wtCityDetailInfoViewController.view.frame.size};
+        
+        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:iPage inSection:0];
+        UITableViewCell* cellTmp = [_cityMainTableView cellForRowAtIndexPath:indexPath];
+        
+        for (UIView* subview in cellTmp.contentView.subviews) {
+            if (subview.tag == 10001) {
+                NSString* cityN = ((UILabel*)subview).text;
+                [wtCityDetailInfoViewController loadWTCityDetailInfoViewData:(id)cityN byIndex:iPage];
+            }
+        }
+        
+        
+        
+        [_currentCityDetailInfoViews addObject:wtCityDetailInfoViewController];
+        
+        [self addChildViewController:wtCityDetailInfoViewController];
+        [_backgroundCityDetailView addSubview:wtCityDetailInfoViewController.view];
+    }
+
+}
+
+- (void)removeCityDetailInfoScrlContent
+{
+    for (UIViewController* ctler in self.childViewControllers) {
+        [_currentCityDetailInfoViews removeObject:ctler];
+        [ctler removeFromParentViewController];
+        [ctler.view removeFromSuperview];
+    }
 }
 
 - (IBAction)pinchHandler:(id)sender
@@ -214,11 +266,21 @@
     
     if (pinch.state == UIGestureRecognizerStateChanged) {
         
-        _cityDetailInfoScrl.transform = CGAffineTransformMakeScale(1.0, (pinch.scale));
-        
-        
+        //_backgroundCityDetailView.transform = CGAffineTransformMakeScale(1.0, (pinch.scale));
         
         lastPinchScale = pinch.scale;
+        
+        [self.view bringSubviewToFront:_cityMainTableView];
+        
+        _cellOfSizeChanged.frame = (CGRect){_cellOfSizeChanged.frame.origin,CGRectGetWidth(_cellOfSizeChanged.frame),548*pinch.scale};
+        
+        ((WTCityDetailInfoViewController*)_currentCityDetailInfoViews[selectedPath.row]).view.alpha = pinch.scale ;
+        
+        _cityMainTableView.contentOffset = (CGPoint){0,_cityMainTableView.contentOffset.y*pinch.scale};
+        
+        _backgroundCityDetailView.alpha = pinch.scale;
+
+        
     }
     
     if (pinch.state == UIGestureRecognizerStateEnded) {
@@ -228,13 +290,18 @@
             _cityDetailInfoScrl.bounds = CGRectMake(0, 0, _cityDetailInfoScrl.frame.size.width, 88);
             [_cityMainTableView beginUpdates];
             [_cityMainTableView endUpdates];
+            
+            
         } completion:^(BOOL finished){
             extended = NO;
             _cityMainTableView.scrollEnabled = YES;
             _cityDetailInfoScrl.bounds = CGRectMake(0, 0, _cityDetailInfoScrl.frame.size.width, 548);
             lastPinchScale = 1.;
             _backgroundCityDetailView.transform = CGAffineTransformMakeScale(1.0, 1.0);
-            //_cityDetailInfoScrlPageCtl.hidden = YES;
+
+            [self removeCityDetailInfoScrlContent];
+            
+            
         }];
     }
 }

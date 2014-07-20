@@ -44,18 +44,19 @@
 {
     if (self = [super init]) {
         _searchDataModeList = [[NSMutableArray alloc] init];
-        _focusDataModelList = [[NSMutableArray alloc] init];
         
         _locationManager = [[CLLocationManager alloc] init];
         _locationManager.delegate = self;
+        
         _client = [[WTClient alloc] init];
         
         NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        NSString *path = [rootPath stringByAppendingPathComponent:@"currentDataModelFile.dat"];
+        NSString *path = [rootPath stringByAppendingPathComponent:@"focusDataModelList.dat"];
         NSData *data = [NSData dataWithContentsOfFile:path];//读取文件
         if (data) {
-            self.currentDataModel = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-            [self.focusDataModelList addObject:_currentDataModel];
+            self.focusDataModelList = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        }else{
+            _focusDataModelList = [[NSMutableArray alloc] init];
         }
         
         [[[[RACObserve(self, currentLocation)
@@ -68,7 +69,7 @@
             return [RACSignal merge:@[
                                         [self updateCurrentConditions],
                                     ]];
-               return [RACSignal empty];
+
            }] deliverOn:RACScheduler.mainThreadScheduler]
          subscribeError:^(NSError *error) {
 
@@ -80,11 +81,14 @@
            // Flatten and subscribe to all 3 signals when currentLocation updates
            flattenMap:^(NSString *searchKey) {
                
-               
-               return [RACSignal merge:@[
-                                         [self searchByCityName:searchKey],
-                                         ]];
-               return [RACSignal empty];
+               if([searchKey compare:@""] == NSOrderedSame){
+                   return [RACSignal empty];
+               }else{
+                   return [RACSignal merge:@[
+                                             [self searchByCityName:searchKey],
+                                             ]];
+               }
+
            }] deliverOn:RACScheduler.mainThreadScheduler]
          subscribeError:^(NSError *error) {
              
@@ -97,20 +101,24 @@
 - (RACSignal *)updateCurrentConditions
 {
     return [[self.client fetchCurrentConditionsForLocation:self.currentLocation.coordinate] doNext:^(WTDataModel* dataModel) {
-        [self.focusDataModelList replaceObjectAtIndex:0 withObject:dataModel];
+        if([self.focusDataModelList count] > 0){
+            [self.focusDataModelList replaceObjectAtIndex:0 withObject:dataModel];
+        }else{
+            [self.focusDataModelList addObject:dataModel];
+        }
         self.currentDataModel = dataModel;
         
         NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
         NSString *path = [rootPath stringByAppendingPathComponent:@"currentDataModelFile.dat"];
-        NSData  *data = [NSKeyedArchiver archivedDataWithRootObject:dataModel];
+        NSData  *data = [NSKeyedArchiver archivedDataWithRootObject:self.focusDataModelList];
         [data writeToFile:path atomically:YES];
     }];
 }
 - (RACSignal*)searchByCityName:(NSString*)cityName
 {
     return [[self.client fetchCityDataByCityName:cityName] doNext:^(WTDataModel* dataModel) {
-        [self.searchDataModeList removeAllObjects];
         [self.searchDataModeList addObject:dataModel];
+
         self.isSearchResult = YES;
     }];
 }
@@ -119,9 +127,12 @@
 - (void)findCurrentLocation
 {
     self.isFirstUpdate = YES;
+    
     CLLocation *location = [[CLLocation alloc]initWithLatitude:39.15 longitude:116.05];
     self.currentLocation = location;
+    //tmp delete
     //[self.locationManager startUpdatingLocation];
+    //end
 }
 
 

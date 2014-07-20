@@ -20,6 +20,8 @@
     BOOL extended;
     CGFloat lastPinchScale;
     IBOutlet UILabel *_cityName;
+    IBOutlet UIView *_dataView;
+    IBOutlet UIImageView *_imageViewOfCell;
     NSMutableArray* _currentCityDetailInfoViews;
     
     //因为_cityName只表示最后一个创建的tableviewcell上的城市信息，所以，这里需要一个数据
@@ -49,14 +51,21 @@
     _backgroundCityDetailView.alpha = 0;
     [self.view addSubview:_backgroundCityDetailView];
     
-//    [[WTManager sharedManager] findCurrentLocation];
+    [[WTManager sharedManager] findCurrentLocation];
     
     [[RACObserve([WTManager sharedManager], currentDataModel)
       deliverOn:RACScheduler.mainThreadScheduler]
      subscribeNext:^(WTDataModel *newDataModel) {
          if (newDataModel) {
-             NSIndexPath *path=[NSIndexPath indexPathForRow:0 inSection:0];
-             [_cityMainTableView reloadRowsAtIndexPaths:@[path] withRowAnimation:(UITableViewRowAnimationNone)];
+             if([_cityMainTableView numberOfRowsInSection:0])
+             {
+                 NSIndexPath *path=[NSIndexPath indexPathForRow:0 inSection:0];
+                 [_cityMainTableView reloadRowsAtIndexPaths:@[path] withRowAnimation:(UITableViewRowAnimationNone)];
+             }else{
+                 [_cityMainTableView reloadData];
+             }
+
+
          }
      }];
     [[RACObserve([WTManager sharedManager], isAddFousData)
@@ -84,6 +93,8 @@
     [_cityDetailInfoScrl release];
     [_backgroundCityDetailView release];
     [_currentCityDetailInfoViews release];
+    [_dataView release];
+    [_imageViewOfCell release];
     [super dealloc];
 }
 
@@ -110,17 +121,22 @@
         NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"WTCityInfoCellView" owner:self options:nil];
         cell = [array objectAtIndex:0];
     }
-
+    
+    if(indexPath.row != 0){
+        _dataView.frame = CGRectMake(0, _dataView.frame.origin.y-7, _dataView.frame.size.width, _dataView.frame.size.height);
+        _imageViewOfCell.image = [UIImage imageNamed:@"afternoon.png"];
+    }
+    
     if ([[[WTManager sharedManager].focusDataModelList objectAtIndex:indexPath.row] locationName]) {
+       //???
+//        for (UIView* subview in cell.contentView.subviews) {
+//            if (subview.tag == 10001) {
+//                ((UILabel*)subview).text = [[[WTManager sharedManager].focusDataModelList objectAtIndex:indexPath.row] locationName];
+//                
+//            }
+//        }
         
-        for (UIView* subview in cell.contentView.subviews) {
-            if (subview.tag == 10001) {
-                ((UILabel*)subview).text = [[[WTManager sharedManager].focusDataModelList objectAtIndex:indexPath.row] locationName];
-                
-            }
-        }
-        
-       // _cityName.text = @"deprecate";
+       _cityName.text = [[[WTManager sharedManager].focusDataModelList objectAtIndex:indexPath.row] locationName];
     }else{
         _cityName.text = @"--";
     }
@@ -139,7 +155,7 @@
             return extended?88:548;
         }
     }
-    return 88;
+    return 95;
 }
 
 #pragma mark UITableViewDelegate

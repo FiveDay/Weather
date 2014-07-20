@@ -93,6 +93,12 @@
     [[WTManager sharedManager].focusDataModelList
      addObject:[[WTManager sharedManager].searchDataModeList
                 objectAtIndex:indexPath.row]];
+    
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *path = [rootPath stringByAppendingPathComponent:@"focusDataModelList.dat"];
+    NSData  *data = [NSKeyedArchiver archivedDataWithRootObject:[WTManager sharedManager].focusDataModelList];
+    [data writeToFile:path atomically:YES];
+    
     [self.navigationController popViewControllerAnimated:YES];
     [WTManager sharedManager].isAddFousData = YES;
 }

@@ -27,6 +27,7 @@
     //因为_cityName只表示最后一个创建的tableviewcell上的城市信息，所以，这里需要一个数据
     //能够记录整个tableview上所有的cell的信息。因此，这里的设计最好还是每个cellView都有
     //自己的controller来控制.这里使用cell上的subview设置的tag进行调用。
+    BOOL _cellIsAnimating;
 }
 @end
 
@@ -152,7 +153,7 @@
     {
         if (selectedPath.row == indexPath.row)
         {
-            return extended?88:548;
+            return ((_cellIsAnimating && extended) || (!_cellIsAnimating && !extended))?95:548;
         }
     }
     return 95;
@@ -177,6 +178,7 @@
     [self.view bringSubviewToFront:_backgroundCityDetailView];
 
     [UIView animateWithDuration:0.5 animations:^{
+        _cellIsAnimating = YES;
         
         int offset = 88 * (selectedPath.row);
         tableView.contentOffset = (CGPoint){0,offset};
@@ -196,6 +198,7 @@
         
         
     }completion:^(BOOL finished){
+        _cellIsAnimating = NO;
         extended = YES;
         tableView.scrollEnabled = NO;
         _cityDetailInfoScrl.contentOffset = (CGPoint){(_cityDetailInfoScrlPageCtl.currentPage)*_cityDetailInfoScrl.frame.size.width,0};
@@ -278,7 +281,7 @@
     UIPinchGestureRecognizer* pinch = (UIPinchGestureRecognizer*)sender;
     
     if (pinch.state == UIGestureRecognizerStateBegan) {
-        
+        _cellIsAnimating = YES;
     }
     
     if (pinch.state == UIGestureRecognizerStateChanged) {
@@ -310,6 +313,7 @@
             
             
         } completion:^(BOOL finished){
+            _cellIsAnimating = NO;
             extended = NO;
             _cityMainTableView.scrollEnabled = YES;
             _cityDetailInfoScrl.bounds = CGRectMake(0, 0, _cityDetailInfoScrl.frame.size.width, 548);
@@ -317,6 +321,8 @@
             _backgroundCityDetailView.transform = CGAffineTransformMakeScale(1.0, 1.0);
 
             [self removeCityDetailInfoScrlContent];
+            
+            //_cellOfSizeChanged = nil;
             
             
         }];

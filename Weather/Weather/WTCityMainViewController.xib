@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1552</int>
-		<string key="IBDocument.SystemVersion">14A238x</string>
+		<string key="IBDocument.SystemVersion">14A261i</string>
 		<string key="IBDocument.InterfaceBuilderVersion">6154.17</string>
-		<string key="IBDocument.AppKitVersion">1318.14</string>
-		<string key="IBDocument.HIToolboxVersion">735.00</string>
+		<string key="IBDocument.AppKitVersion">1321.11</string>
+		<string key="IBDocument.HIToolboxVersion">737.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			<string key="NS.object.0">6153.11</string>
@@ -85,7 +85,7 @@
 						<string key="NSFrame">{{138, 494}, {38, 36}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<object class="NSAppearance" key="NSAppearance" id="1019634287">
+						<object class="NSCompositeAppearance" key="NSAppearance" id="1019634287">
 							<string key="NSAppearanceName">NSAppearanceNameAqua</string>
 						</object>
 						<bool key="IBUIOpaque">NO</bool>
@@ -120,7 +120,7 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 			<object class="IBUIView" id="104524353">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUIScrollView" id="13712480">
@@ -129,12 +129,10 @@
 						<array class="NSMutableArray" key="NSSubviews"/>
 						<string key="NSFrameSize">{320, 504}</string>
 						<reference key="NSSuperview" ref="104524353"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="175019271"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<object class="NSColor" key="IBUIBackgroundColor">
-							<int key="NSColorSpace">2</int>
-							<bytes key="NSRGB">MC45MjU0OTAyNjAxIDAuNjM5MjE1NzA3OCAwLjIwMDAwMDAxNzkAA</bytes>
-						</object>
+						<reference key="IBUIBackgroundColor" ref="168400863"/>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
 						<array key="IBUIGestureRecognizers" id="0"/>
@@ -150,6 +148,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{141, 4}, {38, 36}}</string>
 								<reference key="NSSuperview" ref="175019271"/>
+								<reference key="NSWindow"/>
 								<reference key="NSAppearance" ref="1019634287"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -164,6 +163,7 @@
 						</array>
 						<string key="NSFrame">{{0, 504}, {320, 44}}</string>
 						<reference key="NSSuperview" ref="104524353"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="534931162"/>
 						<reference key="NSAppearance" ref="1019634287"/>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -199,6 +199,8 @@
 					</object>
 				</array>
 				<string key="NSFrame">{{0, 20}, {320, 548}}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="13712480"/>
 				<reference key="IBUIBackgroundColor" ref="168400863"/>
 				<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -1213,6 +1215,8 @@
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="_cityName">UILabel</string>
+						<string key="_dataView">UIView</string>
+						<string key="_imageViewOfCell">UIImageView</string>
 						<string key="backgroundCityDetailView">UIView</string>
 						<string key="bgView">UIImageView</string>
 						<string key="cityDetailInfoScrl">UIScrollView</string>
@@ -1225,6 +1229,14 @@
 						<object class="IBToOneOutletInfo" key="_cityName" id="521648203">
 							<string key="name">_cityName</string>
 							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_dataView" id="392625273">
+							<string key="name">_dataView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_imageViewOfCell" id="963804392">
+							<string key="name">_imageViewOfCell</string>
+							<string key="candidateClassName">UIImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="backgroundCityDetailView" id="903588060">
 							<string key="name">backgroundCityDetailView</string>
@@ -1298,14 +1310,16 @@
 						<reference key="openSearchView:" ref="337289214"/>
 						<reference key="pinchHandler:" ref="658687930"/>
 					</dictionary>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">_cityName</string>
-						<string key="NS.object.0">UILabel</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">_cityName</string>
-						<reference key="NS.object.0" ref="521648203"/>
-					</object>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="_cityName">UILabel</string>
+						<string key="_dataView">UIView</string>
+						<string key="_imageViewOfCell">UIImageView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<reference key="_cityName" ref="521648203"/>
+						<reference key="_dataView" ref="392625273"/>
+						<reference key="_imageViewOfCell" ref="963804392"/>
+					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">Weather/WTCityMainViewController.m</string>

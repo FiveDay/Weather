@@ -245,6 +245,9 @@
     for (int iPage=0; iPage<iCityFocusedCount; iPage++) {
         
         WTCityDetailInfoViewController* wtCityDetailInfoViewController = [[WTCityDetailInfoViewController alloc]initWithNibName:@"WTCityDetailInfoView" bundle:nil];
+        
+        wtCityDetailInfoViewController.parentViewControllerDelegate = self;
+        
         wtCityDetailInfoViewController.view.frame = (CGRect){iPage*CGRectGetWidth(wtCityDetailInfoViewController.view.frame),0,wtCityDetailInfoViewController.view.frame.size};
         
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:iPage inSection:0];

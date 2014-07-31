@@ -12,5 +12,7 @@
 //WTCityDetailInfoView use
 @property (retain, nonatomic) IBOutlet UIScrollView *detailTimeScrollView;
 @property (retain, nonatomic) IBOutlet UILabel *cityNameOfWTCityDetailInfo;
+
+@property (retain, nonatomic) UIViewController* parentViewControllerDelegate;
 - (void)loadWTCityDetailInfoViewData:(id)info byIndex:(NSInteger)citySelectedIndex;
 @end

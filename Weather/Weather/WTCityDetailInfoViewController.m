@@ -16,6 +16,7 @@
 @end
 
 @implementation WTCityDetailInfoViewController
+@synthesize parentViewControllerDelegate;
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -60,6 +61,11 @@
     _cityNameOfWTCityDetailInfo.text = citynametmp;
 }
 
+- (IBAction)pinchHandleInDetailInfoView:(id)sender {
+    if (self.parentViewControllerDelegate) {
+        [self.parentViewControllerDelegate performSelector:@selector(pinchHandler:) withObject:sender];
+    }
+}
 
 - (void)dealloc
 {

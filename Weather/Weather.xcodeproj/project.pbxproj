@@ -36,7 +36,6 @@
 		56F1F27F197AC1D400649822 /* morning.png in Resources */ = {isa = PBXBuildFile; fileRef = 56F1F27E197AC1D400649822 /* morning.png */; };
 		56F282AA1959AEE90031C4BB /* WTCitySearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56F282A91959AEE90031C4BB /* WTCitySearchViewController.xib */; };
 		6D135D79197973D700758EDB /* WTCityDetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D135D78197973D700758EDB /* WTCityDetailInfoViewController.m */; };
-		6D1B8BB1198A83B500AA087D /* WTCitySingleTimeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D1B8BB0198A83B500AA087D /* WTCitySingleTimeView.xib */; };
 		6D1B8BB4198A8EB500AA087D /* duoyun_curve.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D1B8BB2198A8EB500AA087D /* duoyun_curve.png */; };
 		6D1B8BB5198A8EB500AA087D /* duoyun_curve@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D1B8BB3198A8EB500AA087D /* duoyun_curve@2x.png */; };
 		6D1B8BB9198A90EE00AA087D /* WTSingleTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D1B8BB7198A90EE00AA087D /* WTSingleTimeViewController.m */; };
@@ -97,7 +96,6 @@
 		56F282A91959AEE90031C4BB /* WTCitySearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WTCitySearchViewController.xib; sourceTree = "<group>"; };
 		6D135D77197973D700758EDB /* WTCityDetailInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTCityDetailInfoViewController.h; sourceTree = "<group>"; };
 		6D135D78197973D700758EDB /* WTCityDetailInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTCityDetailInfoViewController.m; sourceTree = "<group>"; };
-		6D1B8BB0198A83B500AA087D /* WTCitySingleTimeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WTCitySingleTimeView.xib; sourceTree = "<group>"; };
 		6D1B8BB2198A8EB500AA087D /* duoyun_curve.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = duoyun_curve.png; sourceTree = "<group>"; };
 		6D1B8BB3198A8EB500AA087D /* duoyun_curve@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "duoyun_curve@2x.png"; sourceTree = "<group>"; };
 		6D1B8BB6198A90EE00AA087D /* WTSingleTimeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTSingleTimeViewController.h; sourceTree = "<group>"; };
@@ -250,7 +248,6 @@
 				56F282A91959AEE90031C4BB /* WTCitySearchViewController.xib */,
 				56C7A825195FF840004E5806 /* WTSearchCell.xib */,
 				6D1B8BB8198A90EE00AA087D /* WTSingleTimeViewController.xib */,
-				6D1B8BB0198A83B500AA087D /* WTCitySingleTimeView.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -355,7 +352,6 @@
 				56F282AA1959AEE90031C4BB /* WTCitySearchViewController.xib in Resources */,
 				566BC2571931B16800E99813 /* Default-568h@2x.png in Resources */,
 				566BC27F1931C0FF00E99813 /* WTCityMainViewController.xib in Resources */,
-				6D1B8BB1198A83B500AA087D /* WTCitySingleTimeView.xib in Resources */,
 				566BC2851931FF6000E99813 /* WTCityInfoCellView.xib in Resources */,
 				56F1F27F197AC1D400649822 /* morning.png in Resources */,
 				6D3516B21933011B00A751B8 /* bg.png in Resources */,

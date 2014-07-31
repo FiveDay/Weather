@@ -7,6 +7,9 @@
 //
 
 #import "WTCityDetailInfoViewController.h"
+#import "WTSingleTimeViewController.h"
+
+#define SINGLE_LABEL_WIDTH 50
 
 @interface WTCityDetailInfoViewController ()
 
@@ -27,6 +30,20 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    int leftMargin = 15;
+    int rightMargin =15;
+    
+    _detailTimeScrollView.contentSize = (CGSize){SINGLE_LABEL_WIDTH*14+leftMargin+rightMargin,_detailTimeScrollView.frame.size.height};
+    
+    for (int i=0; i<14; i++) {
+        WTSingleTimeViewController *singleTimeViewCtler = [[WTSingleTimeViewController alloc]initWithNibName:@"WTSingleTimeViewController" bundle:nil];
+        
+        singleTimeViewCtler.view.frame = (CGRect){leftMargin+i*SINGLE_LABEL_WIDTH,0,singleTimeViewCtler.view.frame.size};
+        
+        [_detailTimeScrollView addSubview:singleTimeViewCtler.view];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -47,6 +64,7 @@
 - (void)dealloc
 {
     [_cityNameOfWTCityDetailInfo release];
+    [_detailTimeScrollView release];
     [super dealloc];
 }
 

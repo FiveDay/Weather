@@ -36,6 +36,11 @@
 		56F1F27F197AC1D400649822 /* morning.png in Resources */ = {isa = PBXBuildFile; fileRef = 56F1F27E197AC1D400649822 /* morning.png */; };
 		56F282AA1959AEE90031C4BB /* WTCitySearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56F282A91959AEE90031C4BB /* WTCitySearchViewController.xib */; };
 		6D135D79197973D700758EDB /* WTCityDetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D135D78197973D700758EDB /* WTCityDetailInfoViewController.m */; };
+		6D1B8BB1198A83B500AA087D /* WTCitySingleTimeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D1B8BB0198A83B500AA087D /* WTCitySingleTimeView.xib */; };
+		6D1B8BB4198A8EB500AA087D /* duoyun_curve.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D1B8BB2198A8EB500AA087D /* duoyun_curve.png */; };
+		6D1B8BB5198A8EB500AA087D /* duoyun_curve@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D1B8BB3198A8EB500AA087D /* duoyun_curve@2x.png */; };
+		6D1B8BB9198A90EE00AA087D /* WTSingleTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D1B8BB7198A90EE00AA087D /* WTSingleTimeViewController.m */; };
+		6D1B8BBA198A90EE00AA087D /* WTSingleTimeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D1B8BB8198A90EE00AA087D /* WTSingleTimeViewController.xib */; };
 		6D3516B21933011B00A751B8 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D3516B11933011B00A751B8 /* bg.png */; };
 		6D44AEDB19378E8D0093FFEF /* c.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D44AED919378E8D0093FFEF /* c.png */; };
 		6D44AEDC19378E8D0093FFEF /* f.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D44AEDA19378E8D0093FFEF /* f.png */; };
@@ -92,6 +97,12 @@
 		56F282A91959AEE90031C4BB /* WTCitySearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WTCitySearchViewController.xib; sourceTree = "<group>"; };
 		6D135D77197973D700758EDB /* WTCityDetailInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTCityDetailInfoViewController.h; sourceTree = "<group>"; };
 		6D135D78197973D700758EDB /* WTCityDetailInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTCityDetailInfoViewController.m; sourceTree = "<group>"; };
+		6D1B8BB0198A83B500AA087D /* WTCitySingleTimeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WTCitySingleTimeView.xib; sourceTree = "<group>"; };
+		6D1B8BB2198A8EB500AA087D /* duoyun_curve.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = duoyun_curve.png; sourceTree = "<group>"; };
+		6D1B8BB3198A8EB500AA087D /* duoyun_curve@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "duoyun_curve@2x.png"; sourceTree = "<group>"; };
+		6D1B8BB6198A90EE00AA087D /* WTSingleTimeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTSingleTimeViewController.h; sourceTree = "<group>"; };
+		6D1B8BB7198A90EE00AA087D /* WTSingleTimeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTSingleTimeViewController.m; sourceTree = "<group>"; };
+		6D1B8BB8198A90EE00AA087D /* WTSingleTimeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WTSingleTimeViewController.xib; sourceTree = "<group>"; };
 		6D3516B11933011B00A751B8 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		6D44AED919378E8D0093FFEF /* c.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = c.png; sourceTree = "<group>"; };
 		6D44AEDA19378E8D0093FFEF /* f.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f.png; sourceTree = "<group>"; };
@@ -211,6 +222,8 @@
 				56B116E61956FC5400C6D563 /* WTCitySearchViewController.m */,
 				6D135D77197973D700758EDB /* WTCityDetailInfoViewController.h */,
 				6D135D78197973D700758EDB /* WTCityDetailInfoViewController.m */,
+				6D1B8BB6198A90EE00AA087D /* WTSingleTimeViewController.h */,
+				6D1B8BB7198A90EE00AA087D /* WTSingleTimeViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -236,6 +249,8 @@
 				569771A019444435006FD282 /* WTCityDetailInfoView.xib */,
 				56F282A91959AEE90031C4BB /* WTCitySearchViewController.xib */,
 				56C7A825195FF840004E5806 /* WTSearchCell.xib */,
+				6D1B8BB8198A90EE00AA087D /* WTSingleTimeViewController.xib */,
+				6D1B8BB0198A83B500AA087D /* WTCitySingleTimeView.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -243,6 +258,8 @@
 		6D3516B01933011B00A751B8 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				6D1B8BB2198A8EB500AA087D /* duoyun_curve.png */,
+				6D1B8BB3198A8EB500AA087D /* duoyun_curve@2x.png */,
 				56F1F27E197AC1D400649822 /* morning.png */,
 				56F1F27C197AB99500649822 /* afternoon.png */,
 				6D44AED919378E8D0093FFEF /* c.png */,
@@ -329,19 +346,23 @@
 			files = (
 				566BC24B1931B16800E99813 /* InfoPlist.strings in Resources */,
 				566BC2531931B16800E99813 /* Default.png in Resources */,
+				6D1B8BB4198A8EB500AA087D /* duoyun_curve.png in Resources */,
 				56F1F27D197AB99600649822 /* afternoon.png in Resources */,
+				6D1B8BB5198A8EB500AA087D /* duoyun_curve@2x.png in Resources */,
 				56B116E9195710E300C6D563 /* CityList.plist in Resources */,
 				566BC2551931B16800E99813 /* Default@2x.png in Resources */,
 				56C7A826195FF840004E5806 /* WTSearchCell.xib in Resources */,
 				56F282AA1959AEE90031C4BB /* WTCitySearchViewController.xib in Resources */,
 				566BC2571931B16800E99813 /* Default-568h@2x.png in Resources */,
 				566BC27F1931C0FF00E99813 /* WTCityMainViewController.xib in Resources */,
+				6D1B8BB1198A83B500AA087D /* WTCitySingleTimeView.xib in Resources */,
 				566BC2851931FF6000E99813 /* WTCityInfoCellView.xib in Resources */,
 				56F1F27F197AC1D400649822 /* morning.png in Resources */,
 				6D3516B21933011B00A751B8 /* bg.png in Resources */,
 				6D44AEDB19378E8D0093FFEF /* c.png in Resources */,
 				6D44AEDC19378E8D0093FFEF /* f.png in Resources */,
 				569771A119444435006FD282 /* WTCityDetailInfoView.xib in Resources */,
+				6D1B8BBA198A90EE00AA087D /* WTSingleTimeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,6 +428,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				56B116E0195538D200C6D563 /* WTManager.m in Sources */,
+				6D1B8BB9198A90EE00AA087D /* WTSingleTimeViewController.m in Sources */,
 				566BC24D1931B16800E99813 /* main.m in Sources */,
 				6D135D79197973D700758EDB /* WTCityDetailInfoViewController.m in Sources */,
 				566BC2511931B16800E99813 /* AppDelegate.m in Sources */,

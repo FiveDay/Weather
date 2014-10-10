@@ -59,6 +59,13 @@
     if (searchBar.text.length != 0) {
         [WTManager sharedManager].searchKey = searchBar.text;
     }
+    
+    [searchBar resignFirstResponder];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark UITableViewDataSource

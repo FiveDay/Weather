@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">2048</int>
-		<string key="IBDocument.SystemVersion">14A261i</string>
-		<string key="IBDocument.InterfaceBuilderVersion">6154.17</string>
-		<string key="IBDocument.AppKitVersion">1321.11</string>
-		<string key="IBDocument.HIToolboxVersion">737.00</string>
+		<int key="IBDocument.SystemTarget">1552</int>
+		<string key="IBDocument.SystemVersion">14A361c</string>
+		<string key="IBDocument.InterfaceBuilderVersion">5056</string>
+		<string key="IBDocument.AppKitVersion">1339</string>
+		<string key="IBDocument.HIToolboxVersion">755.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">6153.11</string>
+			<string key="NS.object.0">3733</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBNSLayoutConstraint</string>
@@ -51,7 +51,7 @@
 								<reference key="NSNextKeyView" ref="116488803"/>
 								<string key="NSHuggingPriority">{251, 251}</string>
 								<string key="NSAntiCompressionPriority">{750, 750}</string>
-								<object class="NSCompositeAppearance" key="NSAppearance">
+								<object class="NSAppearance" key="NSAppearance">
 									<string key="NSAppearanceName">NSAppearanceNameAqua</string>
 								</object>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -445,7 +445,6 @@
 						<reference key="object" ref="116488803"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="352713354"/>
-							<reference ref="781806323"/>
 							<reference ref="954473594"/>
 							<object class="IBNSLayoutConstraint" id="35027561">
 								<reference key="firstItem" ref="352713354"/>
@@ -610,6 +609,7 @@
 								<bool key="placeholder">NO</bool>
 							</object>
 							<reference ref="223067616"/>
+							<reference ref="781806323"/>
 						</array>
 						<reference key="parent" ref="509457081"/>
 						<string key="objectName">DataView</string>
@@ -993,7 +993,11 @@
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
-		<bool key="IBDocument.previouslyAttemptedUpgradeToXcode5">NO</bool>
+		<bool key="IBDocument.previouslyAttemptedUpgradeToXcode5">YES</bool>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.iPhoneOS</string>
+			<real value="1552" key="NS.object.0"/>
+		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.InterfaceBuilder3</string>
 			<integer value="4600" key="NS.object.0"/>
@@ -1005,5 +1009,6 @@
 			<string key="NS.object.0">{641, 960}</string>
 		</object>
 		<bool key="IBDocument.UseAutolayout">YES</bool>
+		<string key="IBCocoaTouchPluginVersion">3733</string>
 	</data>
 </archive>

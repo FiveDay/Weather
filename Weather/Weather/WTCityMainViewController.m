@@ -180,7 +180,7 @@
     [UIView animateWithDuration:0.5 animations:^{
         _cellIsAnimating = YES;
         
-        int offset = 88 * (selectedPath.row);
+        int offset = 88.0 * (selectedPath.row);
         tableView.contentOffset = (CGPoint){0,offset};
         
         UITableViewCell* selectedCell = [tableView cellForRowAtIndexPath:indexPath];
@@ -193,6 +193,7 @@
         [UIView setAnimationDuration:1];
         _backgroundCityDetailView.alpha = 1.0;
         //tableView.alpha = 0.0;
+        _dataView.hidden = YES;
         
         [UIView commitAnimations];
         
@@ -222,7 +223,7 @@
         }else{
             _cityDetailInfoScrlPageCtl.currentPage = index;
             
-            int secCount = selectedPath.section;
+            NSInteger secCount = selectedPath.section;
             [selectedPath release];
             selectedPath = [NSIndexPath indexPathForRow:index inSection:secCount];
             [selectedPath retain];

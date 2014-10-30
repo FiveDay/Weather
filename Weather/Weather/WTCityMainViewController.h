@@ -18,5 +18,7 @@
 @property (retain, nonatomic) IBOutlet UIScrollView *cityDetailInfoScrl;
 //@property (retain, nonatomic) IBOutlet UIScrollView *cityDetailInfoScrl;
 @property (retain, nonatomic) IBOutlet UIView *backgroundCityDetailView;
+@property (retain, nonatomic) IBOutlet UIView *transparentView;
+@property (retain, nonatomic) IBOutlet UIPanGestureRecognizer *panGestureForTransparentView;
 
 @end

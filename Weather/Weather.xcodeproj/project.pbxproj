@@ -15,8 +15,6 @@
 		566BC24D1931B16800E99813 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 566BC24C1931B16800E99813 /* main.m */; };
 		566BC2511931B16800E99813 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 566BC2501931B16800E99813 /* AppDelegate.m */; };
 		566BC2531931B16800E99813 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 566BC2521931B16800E99813 /* Default.png */; };
-		566BC2551931B16800E99813 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 566BC2541931B16800E99813 /* Default@2x.png */; };
-		566BC2571931B16800E99813 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 566BC2561931B16800E99813 /* Default-568h@2x.png */; };
 		566BC2661931B16900E99813 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 566BC2401931B16800E99813 /* UIKit.framework */; };
 		566BC2671931B16900E99813 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 566BC2421931B16800E99813 /* Foundation.framework */; };
 		566BC26F1931B16900E99813 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 566BC26D1931B16900E99813 /* InfoPlist.strings */; };
@@ -53,6 +51,9 @@
 		6D86B72619F16F0600B78BAE /* information_List@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D86B71C19F16F0600B78BAE /* information_List@2x.png */; };
 		6D86B72719F16F0600B78BAE /* slidebackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6D86B71D19F16F0600B78BAE /* slidebackground.jpg */; };
 		6D86B72819F16F0600B78BAE /* slidebackground@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6D86B71E19F16F0600B78BAE /* slidebackground@2x.jpg */; };
+		6DDC07031A025FCB00D712CA /* FDShimmerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DDC07001A025FCB00D712CA /* FDShimmerLabel.m */; };
+		6DDC07041A025FCB00D712CA /* FDShimmerMaskLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DDC07021A025FCB00D712CA /* FDShimmerMaskLayer.m */; };
+		6DDC070A1A026BFC00D712CA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DDC07091A026BFC00D712CA /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,8 +79,6 @@
 		566BC24F1931B16800E99813 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		566BC2501931B16800E99813 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		566BC2521931B16800E99813 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		566BC2541931B16800E99813 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		566BC2561931B16800E99813 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		566BC2631931B16800E99813 /* WeatherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		566BC26C1931B16900E99813 /* WeatherTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WeatherTests-Info.plist"; sourceTree = "<group>"; };
 		566BC26E1931B16900E99813 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -124,6 +123,11 @@
 		6D86B71C19F16F0600B78BAE /* information_List@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "information_List@2x.png"; sourceTree = "<group>"; };
 		6D86B71D19F16F0600B78BAE /* slidebackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = slidebackground.jpg; sourceTree = "<group>"; };
 		6D86B71E19F16F0600B78BAE /* slidebackground@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "slidebackground@2x.jpg"; sourceTree = "<group>"; };
+		6DDC06FF1A025FCB00D712CA /* FDShimmerLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDShimmerLabel.h; sourceTree = "<group>"; };
+		6DDC07001A025FCB00D712CA /* FDShimmerLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDShimmerLabel.m; sourceTree = "<group>"; };
+		6DDC07011A025FCB00D712CA /* FDShimmerMaskLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDShimmerMaskLayer.h; sourceTree = "<group>"; };
+		6DDC07021A025FCB00D712CA /* FDShimmerMaskLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDShimmerMaskLayer.m; sourceTree = "<group>"; };
+		6DDC07091A026BFC00D712CA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		7B80B79A9F6F423C97298C65 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -187,12 +191,14 @@
 		566BC2461931B16800E99813 /* Weather */ = {
 			isa = PBXGroup;
 			children = (
+				6DDC06FD1A025FB500D712CA /* LibSrc */,
 				56B116D519552D7200C6D563 /* Controller */,
 				56B116D719552D8100C6D563 /* View */,
 				56B116D619552D7B00C6D563 /* Model */,
 				6D3516B01933011B00A751B8 /* Resource */,
 				566BC24F1931B16800E99813 /* AppDelegate.h */,
 				566BC2501931B16800E99813 /* AppDelegate.m */,
+				6DDC07091A026BFC00D712CA /* Images.xcassets */,
 				566BC2471931B16800E99813 /* Supporting Files */,
 			);
 			path = Weather;
@@ -206,8 +212,6 @@
 				566BC24C1931B16800E99813 /* main.m */,
 				566BC24E1931B16800E99813 /* Weather-Prefix.pch */,
 				566BC2521931B16800E99813 /* Default.png */,
-				566BC2541931B16800E99813 /* Default@2x.png */,
-				566BC2561931B16800E99813 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -297,6 +301,25 @@
 			path = Resource;
 			sourceTree = "<group>";
 		};
+		6DDC06FD1A025FB500D712CA /* LibSrc */ = {
+			isa = PBXGroup;
+			children = (
+				6DDC06FE1A025FCB00D712CA /* FDShimmerLabel */,
+			);
+			name = LibSrc;
+			sourceTree = "<group>";
+		};
+		6DDC06FE1A025FCB00D712CA /* FDShimmerLabel */ = {
+			isa = PBXGroup;
+			children = (
+				6DDC06FF1A025FCB00D712CA /* FDShimmerLabel.h */,
+				6DDC07001A025FCB00D712CA /* FDShimmerLabel.m */,
+				6DDC07011A025FCB00D712CA /* FDShimmerMaskLayer.h */,
+				6DDC07021A025FCB00D712CA /* FDShimmerMaskLayer.m */,
+			);
+			path = FDShimmerLabel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -384,10 +407,9 @@
 				6D86B72219F16F0600B78BAE /* buttonBar_function_voice_press@2x.png in Resources */,
 				6D1B8BB5198A8EB500AA087D /* duoyun_curve@2x.png in Resources */,
 				56B116E9195710E300C6D563 /* CityList.plist in Resources */,
-				566BC2551931B16800E99813 /* Default@2x.png in Resources */,
 				56C7A826195FF840004E5806 /* WTSearchCell.xib in Resources */,
+				6DDC070A1A026BFC00D712CA /* Images.xcassets in Resources */,
 				56F282AA1959AEE90031C4BB /* WTCitySearchViewController.xib in Resources */,
-				566BC2571931B16800E99813 /* Default-568h@2x.png in Resources */,
 				566BC27F1931C0FF00E99813 /* WTCityMainViewController.xib in Resources */,
 				6D86B72319F16F0600B78BAE /* icon.png in Resources */,
 				6D86B72119F16F0600B78BAE /* buttonBar_function_voice_press.png in Resources */,
@@ -468,7 +490,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6DDC07031A025FCB00D712CA /* FDShimmerLabel.m in Sources */,
 				56B116E0195538D200C6D563 /* WTManager.m in Sources */,
+				6DDC07041A025FCB00D712CA /* FDShimmerMaskLayer.m in Sources */,
 				6D1B8BB9198A90EE00AA087D /* WTSingleTimeViewController.m in Sources */,
 				566BC24D1931B16800E99813 /* main.m in Sources */,
 				6D135D79197973D700758EDB /* WTCityDetailInfoViewController.m in Sources */,
@@ -576,6 +600,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7B80B79A9F6F423C97298C65 /* Pods.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -591,6 +616,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7B80B79A9F6F423C97298C65 /* Pods.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

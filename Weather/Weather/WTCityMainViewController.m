@@ -11,6 +11,8 @@
 #import "WTCitySearchViewController.h"
 #import "WTCityDetailInfoViewController.h"
 
+static int allDist = 0;
+
 @interface WTCityMainViewController ()
 {
     UITableViewCell* _cellOfSizeChanged;
@@ -28,6 +30,9 @@
     //能够记录整个tableview上所有的cell的信息。因此，这里的设计最好还是每个cellView都有
     //自己的controller来控制.这里使用cell上的subview设置的tag进行调用。
     BOOL _cellIsAnimating;
+    
+    //UIPanGestureRecognizer* oldPan;
+    CGPoint oldPoint;
 }
 @end
 
@@ -46,6 +51,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view from its nib.
     _cityMainTableView.tableFooterView = _footView;
     
@@ -74,7 +80,69 @@
      subscribeNext:^(id isAddFousData) {
              [_cityMainTableView reloadData];
      }];
+    
+    if (!_transparentView.superview) {
+        assert(0);
+    }else{
+        [self.view addSubview:_transparentView.superview];
+    }
+    
 
+}
+
+- (IBAction)panHandler:(UIPanGestureRecognizer *)sender {
+    UIPanGestureRecognizer* curPan = (UIPanGestureRecognizer*)sender;
+    
+    CGPoint curPoint = [curPan locationInView:_transparentView.superview];
+    
+    if (oldPoint.x != 0) {
+        int deltaX = curPoint.x - oldPoint.x;
+        
+        NSLog(@"cur:%f   old:%f",curPoint.x,oldPoint.x);
+        
+        allDist += deltaX;
+        allDist = allDist>=0?allDist:0;
+        
+        float centerTempX = _transparentView.center.x+deltaX;
+        
+        if (centerTempX < self.view.frame.size.width/2) {
+            centerTempX = self.view.frame.size.width/2;
+        }
+        
+        _transparentView.center = (CGPoint){centerTempX,_transparentView.center.y};
+        
+    }
+    
+    oldPoint = curPoint;
+    
+    if (curPan.state == UIGestureRecognizerStateEnded
+        || curPan.state == UIGestureRecognizerStateCancelled) {
+        
+        if (allDist > self.view.frame.size.width/3) {
+            
+            [UIView animateWithDuration:0.5 animations:^{
+                _transparentView.center = (CGPoint){_transparentView.center.x+self.view.frame.size.width/2,_transparentView.center.y};
+                _transparentView.superview.alpha = 0;
+                
+            } completion:^(BOOL finished){
+                _transparentView.center = (CGPoint){_transparentView.center.x+self.view.frame.size.width/2,_transparentView.center.y};
+                
+                _transparentView.superview.alpha = 0;
+            }];
+            
+        }else{
+            
+            [UIView animateWithDuration:0.5 animations:^{
+                _transparentView.center = (CGPoint){self.view.frame.size.width/2,_transparentView.center.y};
+            } completion:^(BOOL finished){
+                _transparentView.center = (CGPoint){self.view.frame.size.width/2,_transparentView.center.y};
+            }];
+            
+        }
+        
+        allDist = 0;
+        oldPoint = CGPointZero;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -96,6 +164,8 @@
     [_currentCityDetailInfoViews release];
     [_dataView release];
     [_imageViewOfCell release];
+    [_transparentView release];
+    [_panGestureForTransparentView release];
     [super dealloc];
 }
 

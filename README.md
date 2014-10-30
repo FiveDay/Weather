@@ -1,4 +1,4 @@
 Weather
 =======
 
-模仿ios系统天气app
+模仿ios7系统天气app

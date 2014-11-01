@@ -21,18 +21,37 @@ static NSString* kcSlideAnimation = @"slide";
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
     // Initialization code
+    
+    [self initializationForMask];
+}
+
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        // Initialization code
+        
+        [self initializationForMask];
+    
+    }
+    return self;
+}
+
+- (void)initializationForMask
+{
     maskLayer = [[FDShimmerMaskLayer alloc]init];
     float maskLayerWidth = 3.0f * CGRectGetWidth(self.frame);
     maskLayer.position = (CGPoint){-CGRectGetWidth(self.frame)/2,CGRectGetHeight(self.frame)/2};
     maskLayer.bounds = CGRectMake(0.0, 0.0, maskLayerWidth, CGRectGetHeight(self.frame));
-    
+    maskLayer.mo
     //maskLayer.backgroundColor = [UIColor redColor].CGColor;
     
     self.layer.mask = maskLayer;
     
     CAAnimation* slideAnimation = [maskLayer animationForKey:kcSlideAnimation];
-    CFTimeInterval slideDuration = 0.8f;
+    CFTimeInterval slideDuration = 1.5f;
     
     if (slideAnimation) {
         //go back animation
@@ -42,38 +61,8 @@ static NSString* kcSlideAnimation = @"slide";
         
         [maskLayer addAnimation:slideAnimation forKey:kcSlideAnimation];
     }
-}
-
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-        maskLayer = [[FDShimmerMaskLayer alloc]init];
-        float maskLayerWidth = 3.0f * CGRectGetWidth(self.frame);
-        maskLayer.position = (CGPoint){-CGRectGetWidth(self.frame)/2,CGRectGetHeight(self.frame)/2};
-        maskLayer.bounds = CGRectMake(0.0, 0.0, maskLayerWidth, CGRectGetHeight(self.frame));
-        
-        //maskLayer.backgroundColor = [UIColor redColor].CGColor;
-        
-        self.layer.mask = maskLayer;
-        
-        CAAnimation* slideAnimation = [maskLayer animationForKey:kcSlideAnimation];
-        CFTimeInterval slideDuration = 1.5f;
-        
-        if (slideAnimation) {
-            //go back animation
-        } else {
-            //nil
-            slideAnimation = [self createFDShimmerSlideAnimation:self duration:slideDuration];
-            
-            [maskLayer addAnimation:slideAnimation forKey:kcSlideAnimation];
-        }
-
-        
     
-    }
-    return self;
+
 }
 
 /*

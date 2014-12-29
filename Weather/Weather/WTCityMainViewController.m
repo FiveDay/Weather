@@ -13,7 +13,7 @@
 
 static int allDist = 0;
 
-@interface WTCityMainViewController ()
+@interface WTCityMainViewController ()<UIGestureRecognizerDelegate>
 {
     UITableViewCell* _cellOfSizeChanged;
     int idx;
@@ -33,6 +33,8 @@ static int allDist = 0;
     
     //UIPanGestureRecognizer* oldPan;
     CGPoint oldPoint;
+    
+    UIPinchGestureRecognizer* zhangnanPinch;
 }
 @end
 
@@ -56,7 +58,7 @@ static int allDist = 0;
     _cityMainTableView.tableFooterView = _footView;
     
     _backgroundCityDetailView.alpha = 0;
-    [self.view addSubview:_backgroundCityDetailView];
+    //[self.view addSubview:_backgroundCityDetailView];
     
     [[WTManager sharedManager] findCurrentLocation];
     
@@ -87,6 +89,8 @@ static int allDist = 0;
         [self.view addSubview:_transparentView.superview];
     }
     
+    zhangnanPinch = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(pinchHandler:)];
+    [_cityDetailInfoScrl addGestureRecognizer:zhangnanPinch];
 
 }
 
@@ -120,22 +124,26 @@ static int allDist = 0;
         
         if (allDist > self.view.frame.size.width/3) {
             
+            __block typeof(self) weakSelf = self;
+            
             [UIView animateWithDuration:0.5 animations:^{
-                _transparentView.center = (CGPoint){_transparentView.center.x+self.view.frame.size.width/2,_transparentView.center.y};
-                _transparentView.superview.alpha = 0;
+                weakSelf.transparentView.center = (CGPoint){weakSelf.transparentView.center.x+weakSelf.view.frame.size.width/2,weakSelf.transparentView.center.y};
+                weakSelf.transparentView.superview.alpha = 0;
                 
             } completion:^(BOOL finished){
-                _transparentView.center = (CGPoint){_transparentView.center.x+self.view.frame.size.width/2,_transparentView.center.y};
+                weakSelf.transparentView.center = (CGPoint){weakSelf.transparentView.center.x+self.view.frame.size.width/2,weakSelf.transparentView.center.y};
                 
-                _transparentView.superview.alpha = 0;
+                weakSelf.transparentView.superview.alpha = 0;
             }];
             
         }else{
             
+            __block typeof(self) weakSelf = self;
+            
             [UIView animateWithDuration:0.5 animations:^{
-                _transparentView.center = (CGPoint){self.view.frame.size.width/2,_transparentView.center.y};
+                weakSelf.transparentView.center = (CGPoint){weakSelf.view.frame.size.width/2,weakSelf.transparentView.center.y};
             } completion:^(BOOL finished){
-                _transparentView.center = (CGPoint){self.view.frame.size.width/2,_transparentView.center.y};
+                weakSelf.transparentView.center = (CGPoint){self.view.frame.size.width/2,weakSelf.transparentView.center.y};
             }];
             
         }
@@ -223,7 +231,8 @@ static int allDist = 0;
     {
         if (selectedPath.row == indexPath.row)
         {
-            return ((_cellIsAnimating && extended) || (!_cellIsAnimating && !extended))?95:548;
+            int cellHeight = _cellOfSizeChanged.frame.size.height;
+            return ((_cellIsAnimating && extended) || (!_cellIsAnimating && !extended))?(cellHeight<95?95:cellHeight):568;
         }
     }
     return 95;
@@ -244,8 +253,10 @@ static int allDist = 0;
     
     [self createCityDetailInfoScrlContent];
 
+    UITableViewCell* selectedCell = [tableView cellForRowAtIndexPath:indexPath];
     
-    [self.view bringSubviewToFront:_backgroundCityDetailView];
+    [selectedCell addSubview:_backgroundCityDetailView];
+    [selectedCell.contentView.superview setClipsToBounds:YES];
 
     [UIView animateWithDuration:0.5 animations:^{
         _cellIsAnimating = YES;
@@ -254,7 +265,7 @@ static int allDist = 0;
         tableView.contentOffset = (CGPoint){0,offset};
         
         UITableViewCell* selectedCell = [tableView cellForRowAtIndexPath:indexPath];
-        selectedCell.frame = (CGRect){selectedCell.frame.origin,CGRectGetWidth(selectedCell.frame),548};
+        selectedCell.frame = (CGRect){selectedCell.frame.origin,CGRectGetWidth(selectedCell.frame),568};
         
         [tableView beginUpdates];
         [tableView endUpdates];
@@ -311,7 +322,7 @@ static int allDist = 0;
 
 - (void)createCityDetailInfoScrlContent
 {
-    int iCityFocusedCount = [[WTManager sharedManager].focusDataModelList count];
+    NSInteger iCityFocusedCount = [[WTManager sharedManager].focusDataModelList count];
     
     for (int iPage=0; iPage<iCityFocusedCount; iPage++) {
         
@@ -366,22 +377,55 @@ static int allDist = 0;
         
         [self.view bringSubviewToFront:_cityMainTableView];
         
-        _cellOfSizeChanged.frame = (CGRect){_cellOfSizeChanged.frame.origin,CGRectGetWidth(_cellOfSizeChanged.frame),548*pinch.scale};
+        if (568*pinch.scale < 95) {
+            return ;
+        }
+        
+
+        _cellOfSizeChanged.layer.shouldRasterize = YES;
+        _backgroundCityDetailView.layer.shouldRasterize = YES;
+        _cellOfSizeChanged.layer.rasterizationScale = 1.0 - pinch.scale;
+        _backgroundCityDetailView.layer.rasterizationScale = pinch.scale;
+
+        
+
+        BOOL sysAnimateable = [UIView areAnimationsEnabled];
+        [UIView setAnimationsEnabled:NO];
+        [_cityMainTableView beginUpdates];
+        
+        [_cityMainTableView endUpdates];
+        [UIView setAnimationsEnabled:sysAnimateable];
+        
+        
         
         ((WTCityDetailInfoViewController*)_currentCityDetailInfoViews[selectedPath.row]).view.alpha = pinch.scale ;
         
-        _cityMainTableView.contentOffset = (CGPoint){0,_cityMainTableView.contentOffset.y*pinch.scale};
+        _cellOfSizeChanged.frame = (CGRect){_cellOfSizeChanged.frame.origin,CGRectGetWidth(_cellOfSizeChanged.frame),568*pinch.scale};
+        
+        
+        float ydiff = 568 - _cellOfSizeChanged.frame.size.height;
+        _cityMainTableView.contentOffset = (CGPoint){0,_cityMainTableView.contentOffset.y*pinch.scale/*_cityMainTableView.contentOffset.y+ydiff/2.0f*/};
         
         _backgroundCityDetailView.alpha = pinch.scale;
+
+        _cellOfSizeChanged.layer.shouldRasterize = NO;
+        _backgroundCityDetailView.layer.shouldRasterize = NO;
+        
 
         
     }
     
-    if (pinch.state == UIGestureRecognizerStateEnded) {
+    if (pinch.state == UIGestureRecognizerStateEnded || pinch.state == UIGestureRecognizerStateCancelled) {
         [UIView animateWithDuration:0.5 animations:^{
             _backgroundCityDetailView.alpha = 0.0;
             _cityMainTableView.alpha = 1.0;
             _cityDetailInfoScrl.bounds = CGRectMake(0, 0, _cityDetailInfoScrl.frame.size.width, 88);
+            
+            if (_cellOfSizeChanged)
+            {
+                _cellOfSizeChanged.frame = (CGRect){_cellOfSizeChanged.frame.origin,_cellOfSizeChanged.frame.size.width,95};
+            }
+            
             [_cityMainTableView beginUpdates];
             [_cityMainTableView endUpdates];
             
@@ -390,17 +434,29 @@ static int allDist = 0;
             _cellIsAnimating = NO;
             extended = NO;
             _cityMainTableView.scrollEnabled = YES;
-            _cityDetailInfoScrl.bounds = CGRectMake(0, 0, _cityDetailInfoScrl.frame.size.width, 548);
+            _cityDetailInfoScrl.bounds = CGRectMake(0, 0, _cityDetailInfoScrl.frame.size.width, 568);
             lastPinchScale = 1.;
             _backgroundCityDetailView.transform = CGAffineTransformMakeScale(1.0, 1.0);
 
+            _cityMainTableView.contentOffset = (CGPoint){0,0};
+
             [self removeCityDetailInfoScrlContent];
             
-            //_cellOfSizeChanged = nil;
+            if (_cellOfSizeChanged)
+            {
+                _cellOfSizeChanged.frame = (CGRect){_cellOfSizeChanged.frame.origin,_cellOfSizeChanged.frame.size.width,95};
+            }
             
             
         }];
     }
+
+}
+
+#pragma mark UIGestureRecognizerDelegate
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
 }
 
 #pragma mark Action

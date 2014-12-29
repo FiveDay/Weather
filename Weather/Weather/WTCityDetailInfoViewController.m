@@ -45,6 +45,8 @@
         [_detailTimeScrollView addSubview:singleTimeViewCtler.view];
     }
     
+    
+    
 }
 
 - (void)didReceiveMemoryWarning

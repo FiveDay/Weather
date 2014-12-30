@@ -300,14 +300,39 @@ static int allDist = 0;
         
         if ((index) == _cityDetailInfoScrlPageCtl.currentPage)
         {
-            
+            //没有变化
         }else{
+            //滑动产生了焦点索引变化
             _cityDetailInfoScrlPageCtl.currentPage = index;
+            
+            NSIndexPath* oldSelectedIndexPath = [selectedPath copy];
             
             NSInteger secCount = selectedPath.section;
             [selectedPath release];
             selectedPath = [NSIndexPath indexPathForRow:index inSection:secCount];
             [selectedPath retain];
+            
+            //according to focuseindex changing,we need to fix the tableview's contentoffset.
+            
+            UITableViewCell* oldSelectedCell = [_cityMainTableView cellForRowAtIndexPath:oldSelectedIndexPath];
+            oldSelectedCell.frame = (CGRect){oldSelectedCell.frame.origin,CGRectGetWidth(oldSelectedCell.frame),95};
+            
+            _cityMainTableView.contentOffset = (CGPoint){_cityMainTableView.contentOffset.x,95*selectedPath.row};
+            
+            BOOL animateable = [UIView areAnimationsEnabled];
+            [UIView setAnimationsEnabled:NO];
+            [_cityMainTableView reloadRowsAtIndexPaths:@[oldSelectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+            
+            [UIView setAnimationsEnabled:animateable];
+            
+            _cellOfSizeChanged = [_cityMainTableView cellForRowAtIndexPath:selectedPath];
+            _cellOfSizeChanged.frame = (CGRect){_cellOfSizeChanged.frame.origin,CGRectGetWidth(_cellOfSizeChanged.frame),568};
+            
+            [oldSelectedIndexPath release];
+            
+            [_backgroundCityDetailView removeFromSuperview];
+            [_cellOfSizeChanged addSubview:_backgroundCityDetailView];
+            
             
         }
         
@@ -347,7 +372,9 @@ static int allDist = 0;
         [_currentCityDetailInfoViews addObject:wtCityDetailInfoViewController];
         
         [self addChildViewController:wtCityDetailInfoViewController];
-        [_backgroundCityDetailView addSubview:wtCityDetailInfoViewController.view];
+        [_cityDetailInfoScrl addSubview:wtCityDetailInfoViewController.view];
+        
+        [wtCityDetailInfoViewController release];
     }
 
 }
@@ -402,16 +429,12 @@ static int allDist = 0;
         
         _cellOfSizeChanged.frame = (CGRect){_cellOfSizeChanged.frame.origin,CGRectGetWidth(_cellOfSizeChanged.frame),568*pinch.scale};
         
-        
-        float ydiff = 568 - _cellOfSizeChanged.frame.size.height;
-        _cityMainTableView.contentOffset = (CGPoint){0,_cityMainTableView.contentOffset.y*pinch.scale/*_cityMainTableView.contentOffset.y+ydiff/2.0f*/};
+        _cityMainTableView.contentOffset = (CGPoint){0,_cityMainTableView.contentOffset.y*pinch.scale};
         
         _backgroundCityDetailView.alpha = pinch.scale;
 
         _cellOfSizeChanged.layer.shouldRasterize = NO;
         _backgroundCityDetailView.layer.shouldRasterize = NO;
-        
-
         
     }
     
@@ -429,7 +452,6 @@ static int allDist = 0;
             [_cityMainTableView beginUpdates];
             [_cityMainTableView endUpdates];
             
-            
         } completion:^(BOOL finished){
             _cellIsAnimating = NO;
             extended = NO;
@@ -446,8 +468,6 @@ static int allDist = 0;
             {
                 _cellOfSizeChanged.frame = (CGRect){_cellOfSizeChanged.frame.origin,_cellOfSizeChanged.frame.size.width,95};
             }
-            
-            
         }];
     }
 

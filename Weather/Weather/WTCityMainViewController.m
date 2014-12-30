@@ -160,6 +160,10 @@ static int allDist = 0;
 }
 
 - (void)dealloc {
+    [_cityDetailInfoScrl removeGestureRecognizer:zhangnanPinch];
+    [zhangnanPinch release];
+    zhangnanPinch = nil;
+    
     [_cityMainTableView release];
     [_cityMainView release];
     [_bgView release];
@@ -167,7 +171,6 @@ static int allDist = 0;
     [_cityDetailInfoScrl release];
     [_cityDetailInfoScrlPageCtl release];
     [_cityName release];
-    [_cityDetailInfoScrl release];
     [_backgroundCityDetailView release];
     [_currentCityDetailInfoViews release];
     [_dataView release];

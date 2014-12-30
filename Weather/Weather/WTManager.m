@@ -130,7 +130,8 @@
     
     CLLocation *location = [[CLLocation alloc]initWithLatitude:39.15 longitude:116.05];
     self.currentLocation = location;
-    //tmp delete
+    //TODO: 需要调查删除的原因。
+    //zhangnan, tmp delete
     //[self.locationManager startUpdatingLocation];
     //end
 }

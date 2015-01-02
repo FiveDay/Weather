@@ -21,9 +21,12 @@ static int allDist = 0;
     NSIndexPath* selectedPath;
     BOOL extended;
     CGFloat lastPinchScale;
-    IBOutlet UILabel *_cityName;
-    IBOutlet UIView *_dataView;
-    IBOutlet UIImageView *_imageViewOfCell;
+    NSMutableArray* cityNameOnCell;
+    NSMutableArray* dataViewOnCell;
+    NSMutableArray* imageViewOfCellOnCell;
+//    IBOutlet UILabel *_cityName;
+//    IBOutlet UIView *_dataView;
+//    IBOutlet UIImageView *_imageViewOfCell;
     NSMutableArray* _currentCityDetailInfoViews;
     
     //因为_cityName只表示最后一个创建的tableviewcell上的城市信息，所以，这里需要一个数据
@@ -80,7 +83,8 @@ static int allDist = 0;
     [[RACObserve([WTManager sharedManager], isAddFousData)
       deliverOn:RACScheduler.mainThreadScheduler]
      subscribeNext:^(id isAddFousData) {
-             [_cityMainTableView reloadData];
+         //dispatch_async(dispatch_get_main_queue(), ^{[_cityMainTableView reloadData];});
+         [_cityMainTableView reloadData];
      }];
     
     if (!_transparentView.superview) {
@@ -170,11 +174,11 @@ static int allDist = 0;
     [_footView release];
     [_cityDetailInfoScrl release];
     [_cityDetailInfoScrlPageCtl release];
-    [_cityName release];
+    [cityNameOnCell release];
     [_backgroundCityDetailView release];
     [_currentCityDetailInfoViews release];
-    [_dataView release];
-    [_imageViewOfCell release];
+    [dataViewOnCell release];
+    [imageViewOfCellOnCell release];
     [_transparentView release];
     [_panGestureForTransparentView release];
     [super dealloc];
@@ -185,7 +189,7 @@ static int allDist = 0;
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
-    int iCityFocusedCount = [[WTManager sharedManager].focusDataModelList count];
+    NSUInteger iCityFocusedCount = [[WTManager sharedManager].focusDataModelList count];
     
     if (_cityDetailInfoScrlPageCtl.numberOfPages != iCityFocusedCount) {
         _cityDetailInfoScrl.contentSize = (CGSize){self.view.bounds.size.width*iCityFocusedCount,self.view.bounds.size.height};
@@ -205,26 +209,21 @@ static int allDist = 0;
     }
     
     if(indexPath.row != 0){
-        _dataView.frame = CGRectMake(0, _dataView.frame.origin.y-7, _dataView.frame.size.width, _dataView.frame.size.height);
-        _imageViewOfCell.image = [UIImage imageNamed:@"afternoon.png"];
+        //((UIView*)dataViewOnCell[indexPath.row]).frame = CGRectMake(0, ((UIView*)dataViewOnCell[indexPath.row]).frame.origin.y-7, ((UIView*)dataViewOnCell[indexPath.row]).frame.size.width, ((UIView*)dataViewOnCell[indexPath.row]).frame.size.height);
+        //((UIImageView*)imageViewOfCellOnCell[indexPath.row]).image = [UIImage imageNamed:@"afternoon.png"];
+        
+        ((UIImageView*)[cell viewWithTag:10000]).image = [UIImage imageNamed:@"afternoon.png"];
+        
     }
     
     if ([[[WTManager sharedManager].focusDataModelList objectAtIndex:indexPath.row] locationName]) {
-       //???
-//        for (UIView* subview in cell.contentView.subviews) {
-//            if (subview.tag == 10001) {
-//                ((UILabel*)subview).text = [[[WTManager sharedManager].focusDataModelList objectAtIndex:indexPath.row] locationName];
-//                
-//            }
-//        }
+       //((UILabel*)cityNameOnCell[indexPath.row]).text
+       ((UILabel*)[cell viewWithTag:10001]).text = [[[WTManager sharedManager].focusDataModelList objectAtIndex:indexPath.row] locationName];
         
-       _cityName.text = [[[WTManager sharedManager].focusDataModelList objectAtIndex:indexPath.row] locationName];
     }else{
-        _cityName.text = @"--";
+        ((UILabel*)[cell viewWithTag:10001]).text = @"--";
     }
-
-
-
+    
     return cell;
 }
 
@@ -277,7 +276,7 @@ static int allDist = 0;
         [UIView setAnimationDuration:1];
         _backgroundCityDetailView.alpha = 1.0;
         //tableView.alpha = 0.0;
-        _dataView.hidden = YES;
+        ((UIView*)dataViewOnCell[indexPath.row]).hidden = YES;
         
         [UIView commitAnimations];
         

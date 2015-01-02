@@ -21,20 +21,10 @@ static int allDist = 0;
     NSIndexPath* selectedPath;
     BOOL extended;
     CGFloat lastPinchScale;
-    NSMutableArray* cityNameOnCell;
-    NSMutableArray* dataViewOnCell;
-    NSMutableArray* imageViewOfCellOnCell;
-//    IBOutlet UILabel *_cityName;
-//    IBOutlet UIView *_dataView;
-//    IBOutlet UIImageView *_imageViewOfCell;
     NSMutableArray* _currentCityDetailInfoViews;
     
-    //因为_cityName只表示最后一个创建的tableviewcell上的城市信息，所以，这里需要一个数据
-    //能够记录整个tableview上所有的cell的信息。因此，这里的设计最好还是每个cellView都有
-    //自己的controller来控制.这里使用cell上的subview设置的tag进行调用。
     BOOL _cellIsAnimating;
     
-    //UIPanGestureRecognizer* oldPan;
     CGPoint oldPoint;
     
     UIPinchGestureRecognizer* zhangnanPinch;
@@ -174,11 +164,8 @@ static int allDist = 0;
     [_footView release];
     [_cityDetailInfoScrl release];
     [_cityDetailInfoScrlPageCtl release];
-    [cityNameOnCell release];
     [_backgroundCityDetailView release];
     [_currentCityDetailInfoViews release];
-    [dataViewOnCell release];
-    [imageViewOfCellOnCell release];
     [_transparentView release];
     [_panGestureForTransparentView release];
     [super dealloc];
@@ -209,15 +196,12 @@ static int allDist = 0;
     }
     
     if(indexPath.row != 0){
-        //((UIView*)dataViewOnCell[indexPath.row]).frame = CGRectMake(0, ((UIView*)dataViewOnCell[indexPath.row]).frame.origin.y-7, ((UIView*)dataViewOnCell[indexPath.row]).frame.size.width, ((UIView*)dataViewOnCell[indexPath.row]).frame.size.height);
-        //((UIImageView*)imageViewOfCellOnCell[indexPath.row]).image = [UIImage imageNamed:@"afternoon.png"];
-        
+    
         ((UIImageView*)[cell viewWithTag:10000]).image = [UIImage imageNamed:@"afternoon.png"];
         
     }
     
     if ([[[WTManager sharedManager].focusDataModelList objectAtIndex:indexPath.row] locationName]) {
-       //((UILabel*)cityNameOnCell[indexPath.row]).text
        ((UILabel*)[cell viewWithTag:10001]).text = [[[WTManager sharedManager].focusDataModelList objectAtIndex:indexPath.row] locationName];
         
     }else{
@@ -276,7 +260,8 @@ static int allDist = 0;
         [UIView setAnimationDuration:1];
         _backgroundCityDetailView.alpha = 1.0;
         //tableView.alpha = 0.0;
-        ((UIView*)dataViewOnCell[indexPath.row]).hidden = YES;
+
+        [selectedCell viewWithTag:10009].hidden = YES;
         
         [UIView commitAnimations];
         
@@ -434,6 +419,10 @@ static int allDist = 0;
         _cityMainTableView.contentOffset = (CGPoint){0,_cityMainTableView.contentOffset.y*pinch.scale};
         
         _backgroundCityDetailView.alpha = pinch.scale;
+        
+        [_cellOfSizeChanged viewWithTag:10009].hidden = NO;
+        
+        [_cellOfSizeChanged viewWithTag:10009].alpha = 1.0-pinch.scale;
 
         _cellOfSizeChanged.layer.shouldRasterize = NO;
         _backgroundCityDetailView.layer.shouldRasterize = NO;
@@ -445,6 +434,10 @@ static int allDist = 0;
             _backgroundCityDetailView.alpha = 0.0;
             _cityMainTableView.alpha = 1.0;
             _cityDetailInfoScrl.bounds = CGRectMake(0, 0, _cityDetailInfoScrl.frame.size.width, 88);
+            
+            if ([_cellOfSizeChanged viewWithTag:10009].alpha < 1.0f) {
+                [_cellOfSizeChanged viewWithTag:10009].alpha = 1.0f;
+            }
             
             if (_cellOfSizeChanged)
             {
@@ -469,6 +462,8 @@ static int allDist = 0;
             if (_cellOfSizeChanged)
             {
                 _cellOfSizeChanged.frame = (CGRect){_cellOfSizeChanged.frame.origin,_cellOfSizeChanged.frame.size.width,95};
+                
+                [_cellOfSizeChanged viewWithTag:10009].alpha = 1.0f;
             }
         }];
     }

@@ -123,6 +123,7 @@
 		6D86B71C19F16F0600B78BAE /* information_List@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "information_List@2x.png"; sourceTree = "<group>"; };
 		6D86B71D19F16F0600B78BAE /* slidebackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = slidebackground.jpg; sourceTree = "<group>"; };
 		6D86B71E19F16F0600B78BAE /* slidebackground@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "slidebackground@2x.jpg"; sourceTree = "<group>"; };
+		6DB6E4D91A6AA8E700B86345 /* WeatherGlobalValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WeatherGlobalValue.h; sourceTree = "<group>"; };
 		6DDC06FF1A025FCB00D712CA /* FDShimmerLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDShimmerLabel.h; sourceTree = "<group>"; };
 		6DDC07001A025FCB00D712CA /* FDShimmerLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDShimmerLabel.m; sourceTree = "<group>"; };
 		6DDC07011A025FCB00D712CA /* FDShimmerMaskLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDShimmerMaskLayer.h; sourceTree = "<group>"; };
@@ -246,6 +247,7 @@
 				6D135D78197973D700758EDB /* WTCityDetailInfoViewController.m */,
 				6D1B8BB6198A90EE00AA087D /* WTSingleTimeViewController.h */,
 				6D1B8BB7198A90EE00AA087D /* WTSingleTimeViewController.m */,
+				6DB6E4D91A6AA8E700B86345 /* WeatherGlobalValue.h */,
 			);
 			name = Controller;
 			sourceTree = "<group>";

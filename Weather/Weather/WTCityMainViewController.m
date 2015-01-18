@@ -10,6 +10,7 @@
 #import "WTManager.h"
 #import "WTCitySearchViewController.h"
 #import "WTCityDetailInfoViewController.h"
+#import "WeatherGlobalValue.h"
 
 static int allDist = 0;
 
@@ -251,7 +252,7 @@ static int allDist = 0;
         tableView.contentOffset = (CGPoint){0,offset};
         
         UITableViewCell* selectedCell = [tableView cellForRowAtIndexPath:indexPath];
-        selectedCell.frame = (CGRect){selectedCell.frame.origin,CGRectGetWidth(selectedCell.frame),568};
+        selectedCell.frame = (CGRect){selectedCell.frame.origin,CGRectGetWidth(selectedCell.frame),SCREEN_HEIGHT};
         
         [tableView beginUpdates];
         [tableView endUpdates];
@@ -342,7 +343,7 @@ static int allDist = 0;
         
         wtCityDetailInfoViewController.parentViewControllerDelegate = self;
         
-        wtCityDetailInfoViewController.view.frame = (CGRect){iPage*CGRectGetWidth(wtCityDetailInfoViewController.view.frame),0,wtCityDetailInfoViewController.view.frame.size};
+        wtCityDetailInfoViewController.view.frame = (CGRect){iPage*CGRectGetWidth(wtCityDetailInfoViewController.view.frame),0+20,wtCityDetailInfoViewController.view.frame.size};
         
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:iPage inSection:0];
         UITableViewCell* cellTmp = [_cityMainTableView cellForRowAtIndexPath:indexPath];
@@ -360,7 +361,11 @@ static int allDist = 0;
         
         [self addChildViewController:wtCityDetailInfoViewController];
         [_cityDetailInfoScrl addSubview:wtCityDetailInfoViewController.view];
-        
+        //_cityDetailInfoScrl.layoutMargins = UIEdgeInsetsMake(20, 0, 0, 0);
+//        _cityDetailInfoScrl.layer.borderWidth = 1.f;
+//        _cityDetailInfoScrl.layer.borderColor = [UIColor redColor].CGColor;
+//        wtCityDetailInfoViewController.view.layer.borderColor = [UIColor blueColor].CGColor;
+//        wtCityDetailInfoViewController.view.layer.borderWidth = 1.f;
         [wtCityDetailInfoViewController release];
     }
 

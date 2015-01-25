@@ -180,7 +180,7 @@ static int allDist = 0;
     NSUInteger iCityFocusedCount = [[WTManager sharedManager].focusDataModelList count];
     
     if (_cityDetailInfoScrlPageCtl.numberOfPages != iCityFocusedCount) {
-        _cityDetailInfoScrl.contentSize = (CGSize){self.view.bounds.size.width*iCityFocusedCount,self.view.bounds.size.height};
+        _cityDetailInfoScrl.contentSize = (CGSize){self.view.bounds.size.width*iCityFocusedCount,_cityDetailInfoScrl.bounds.size.height};
         _cityDetailInfoScrlPageCtl.numberOfPages = iCityFocusedCount;
     }
     
@@ -200,6 +200,8 @@ static int allDist = 0;
     
         ((UIImageView*)[cell viewWithTag:10000]).image = [UIImage imageNamed:@"afternoon.png"];
         
+    }else{
+        ((UIImageView*)[cell viewWithTag:10000]).image = [UIImage imageNamed:@"morning.png"];
     }
     
     if ([[[WTManager sharedManager].focusDataModelList objectAtIndex:indexPath.row] locationName]) {
@@ -248,7 +250,7 @@ static int allDist = 0;
     [UIView animateWithDuration:0.5 animations:^{
         _cellIsAnimating = YES;
         
-        int offset = 88.0 * (selectedPath.row);
+        int offset = 95.0 * (selectedPath.row);
         tableView.contentOffset = (CGPoint){0,offset};
         
         UITableViewCell* selectedCell = [tableView cellForRowAtIndexPath:indexPath];
@@ -318,7 +320,8 @@ static int allDist = 0;
             
             [oldSelectedIndexPath release];
             
-            [_backgroundCityDetailView removeFromSuperview];
+            //?????怎么处理这里？
+            //[_backgroundCityDetailView removeFromSuperview];
             [_cellOfSizeChanged addSubview:_backgroundCityDetailView];
             
             
@@ -343,7 +346,7 @@ static int allDist = 0;
         
         wtCityDetailInfoViewController.parentViewControllerDelegate = self;
         
-        wtCityDetailInfoViewController.view.frame = (CGRect){iPage*CGRectGetWidth(wtCityDetailInfoViewController.view.frame),0+20,wtCityDetailInfoViewController.view.frame.size};
+        wtCityDetailInfoViewController.view.frame = (CGRect){iPage*CGRectGetWidth(wtCityDetailInfoViewController.view.frame),0,wtCityDetailInfoViewController.view.frame.size};
         
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:iPage inSection:0];
         UITableViewCell* cellTmp = [_cityMainTableView cellForRowAtIndexPath:indexPath];
@@ -361,11 +364,7 @@ static int allDist = 0;
         
         [self addChildViewController:wtCityDetailInfoViewController];
         [_cityDetailInfoScrl addSubview:wtCityDetailInfoViewController.view];
-        //_cityDetailInfoScrl.layoutMargins = UIEdgeInsetsMake(20, 0, 0, 0);
-//        _cityDetailInfoScrl.layer.borderWidth = 1.f;
-//        _cityDetailInfoScrl.layer.borderColor = [UIColor redColor].CGColor;
-//        wtCityDetailInfoViewController.view.layer.borderColor = [UIColor blueColor].CGColor;
-//        wtCityDetailInfoViewController.view.layer.borderWidth = 1.f;
+
         [wtCityDetailInfoViewController release];
     }
 
@@ -438,7 +437,7 @@ static int allDist = 0;
         [UIView animateWithDuration:0.5 animations:^{
             _backgroundCityDetailView.alpha = 0.0;
             _cityMainTableView.alpha = 1.0;
-            _cityDetailInfoScrl.bounds = CGRectMake(0, 0, _cityDetailInfoScrl.frame.size.width, 88);
+            _cityDetailInfoScrl.bounds = CGRectMake(0, 0, _cityDetailInfoScrl.frame.size.width, 95);
             
             if ([_cellOfSizeChanged viewWithTag:10009].alpha < 1.0f) {
                 [_cellOfSizeChanged viewWithTag:10009].alpha = 1.0f;
@@ -456,7 +455,7 @@ static int allDist = 0;
             _cellIsAnimating = NO;
             extended = NO;
             _cityMainTableView.scrollEnabled = YES;
-            _cityDetailInfoScrl.bounds = CGRectMake(0, 0, _cityDetailInfoScrl.frame.size.width, 568);
+            _cityDetailInfoScrl.bounds = CGRectMake(0, 0, _cityDetailInfoScrl.frame.size.width, 504);
             lastPinchScale = 1.;
             _backgroundCityDetailView.transform = CGAffineTransformMakeScale(1.0, 1.0);
 

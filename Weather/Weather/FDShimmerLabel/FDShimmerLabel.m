@@ -46,8 +46,6 @@ static NSString* kcSlideAnimation = @"slide";
     maskLayer.position = (CGPoint){-CGRectGetWidth(self.frame)/2,CGRectGetHeight(self.frame)/2};
     maskLayer.bounds = CGRectMake(0.0, 0.0, maskLayerWidth, CGRectGetHeight(self.frame));
     
-    //maskLayer.backgroundColor = [UIColor redColor].CGColor;
-    
     self.layer.mask = maskLayer;
     
     CAAnimation* slideAnimation = [maskLayer animationForKey:kcSlideAnimation];

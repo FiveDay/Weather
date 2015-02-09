@@ -125,8 +125,6 @@
 - (IBAction)panHandlerForLockView:(UIPanGestureRecognizer *)sender {
     UIPanGestureRecognizer* curPan = (UIPanGestureRecognizer*)sender;
     
-    //CGPoint curPoint = [curPan locationInView:_lockView];
-    
     CGPoint translation = [sender translationInView:self.view];
     CGPoint center = self.lockView.center;
     _transparentView.center = (CGPoint){center.x + translation.x ,_transparentView.center.y};
@@ -140,14 +138,11 @@
             
             [UIView animateWithDuration:0.5 animations:^{
                 weakSelf.transparentView.center =
-                (CGPoint){weakSelf.transparentView.center.x+weakSelf.view.frame.size.width/2,weakSelf.transparentView.center.y};
-                weakSelf.lockView.alpha = 0;
+                (CGPoint){center.x + weakSelf.lockView.frame.size.width/2, weakSelf.transparentView.center.y};
                 
             } completion:^(BOOL finished){
                 weakSelf.transparentView.center =
-                (CGPoint){weakSelf.transparentView.center.x+self.view.frame.size.width/2,weakSelf.transparentView.center.y};
-                
-                weakSelf.lockView.alpha = 0;
+                (CGPoint){center.x+weakSelf.lockView.frame.size.width/2, weakSelf.transparentView.center.y};
                 
                 [weakSelf unShowLockView];
             }];
@@ -157,9 +152,9 @@
             __block typeof(self) weakSelf = self;
             
             [UIView animateWithDuration:0.5 animations:^{
-                weakSelf.transparentView.center = (CGPoint){weakSelf.view.frame.size.width/2,weakSelf.transparentView.center.y};
+                weakSelf.transparentView.center = (CGPoint){center.x, weakSelf.transparentView.center.y};
             } completion:^(BOOL finished){
-                weakSelf.transparentView.center = (CGPoint){self.view.frame.size.width/2,weakSelf.transparentView.center.y};
+                weakSelf.transparentView.center = (CGPoint){center.x, weakSelf.transparentView.center.y};
             }];
             
         }

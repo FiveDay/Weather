@@ -10,15 +10,20 @@
 
 @interface WTCityMainViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
-@property (retain, nonatomic) IBOutlet UITableView *cityMainTableView;
+//mainView
 @property (retain, nonatomic) IBOutlet UIView *cityMainView;
+@property (retain, nonatomic) IBOutlet UITableView *cityMainTableView;
 @property (retain, nonatomic) IBOutlet UIImageView *bgView;
 @property (retain, nonatomic) IBOutlet UIView *footView;
-@property (retain, nonatomic) IBOutlet UIPageControl *cityDetailInfoScrlPageCtl;
+
+
+//scrollView
+@property (retain, nonatomic) IBOutlet UIView *scrollMainView;
 @property (retain, nonatomic) IBOutlet UIScrollView *cityDetailInfoScrl;
-//@property (retain, nonatomic) IBOutlet UIScrollView *cityDetailInfoScrl;
-@property (retain, nonatomic) IBOutlet UIView *backgroundCityDetailView;
+@property (retain, nonatomic) IBOutlet UIPageControl *cityDetailInfoScrlPageCtl;
+
+//lockView
 @property (retain, nonatomic) IBOutlet UIView *transparentView;
-@property (retain, nonatomic) IBOutlet UIPanGestureRecognizer *panGestureForTransparentView;
+@property (retain, nonatomic) IBOutlet UIView *lockView;
 
 @end

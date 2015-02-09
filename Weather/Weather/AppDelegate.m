@@ -24,9 +24,12 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
     WTCityMainViewController* mainViewCtrl = [[WTCityMainViewController alloc] initWithNibName:@"WTCityMainViewController" bundle:nil];
+    
     self.viewController = [[[UINavigationController alloc] initWithRootViewController:mainViewCtrl] autorelease];
+    
     self.viewController.navigationBarHidden = YES;
     self.window.rootViewController = self.viewController;
+    
     [self.window makeKeyAndVisible];
     return YES;
 }

@@ -12,9 +12,7 @@
 #import "WTCityDetailInfoViewController.h"
 #import "WeatherGlobalValue.h"
 
-static int allDist = 0;
-
-@interface WTCityMainViewController ()<UIGestureRecognizerDelegate>
+@interface WTCityMainViewController ()
 {
     UITableViewCell* _cellOfSizeChanged;
     int idx;
@@ -26,9 +24,6 @@ static int allDist = 0;
     
     BOOL _cellIsAnimating;
     
-    CGPoint oldPoint;
-    
-    UIPinchGestureRecognizer* zhangnanPinch;
 }
 @end
 
@@ -49,9 +44,12 @@ static int allDist = 0;
     [super viewDidLoad];
     
     // Do any additional setup after loading the view from its nib.
+    
+    [self showLockView];
+    
     _cityMainTableView.tableFooterView = _footView;
     
-    _backgroundCityDetailView.alpha = 0;
+    _scrollMainView.alpha = 0;
     //[self.view addSubview:_backgroundCityDetailView];
     
     [[WTManager sharedManager] findCurrentLocation];
@@ -78,57 +76,80 @@ static int allDist = 0;
          [_cityMainTableView reloadData];
      }];
     
-    if (!_transparentView.superview) {
-        assert(0);
-    }else{
-        [self.view addSubview:_transparentView.superview];
-    }
     
-    zhangnanPinch = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(pinchHandler:)];
-    [_cityDetailInfoScrl addGestureRecognizer:zhangnanPinch];
+
 
 }
 
-- (IBAction)panHandler:(UIPanGestureRecognizer *)sender {
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc {
+    
+    //mainView
+    [_cityMainView release];
+    [_cityMainTableView release];
+    [_bgView release];
+    [_footView release];
+    
+    //scrollMainView
+    [_scrollMainView release];
+    [_cityDetailInfoScrl release];
+    [_cityDetailInfoScrlPageCtl release];
+    [_currentCityDetailInfoViews release];
+    
+    //lockView
+    [_transparentView release];
+    [_lockView release];
+    
+    [super dealloc];
+}
+
+#pragma mark LockView
+
+- (void)showLockView
+{
+    [_cityMainView addSubview:_lockView];
+}
+
+- (void)unShowLockView
+{
+    [_lockView removeFromSuperview];
+}
+
+- (IBAction)panHandlerForLockView:(UIPanGestureRecognizer *)sender {
     UIPanGestureRecognizer* curPan = (UIPanGestureRecognizer*)sender;
     
-    CGPoint curPoint = [curPan locationInView:_transparentView.superview];
+    //CGPoint curPoint = [curPan locationInView:_lockView];
     
-    if (oldPoint.x != 0) {
-        int deltaX = curPoint.x - oldPoint.x;
-        
-        NSLog(@"cur:%f   old:%f",curPoint.x,oldPoint.x);
-        
-        allDist += deltaX;
-        allDist = allDist>=0?allDist:0;
-        
-        float centerTempX = _transparentView.center.x+deltaX;
-        
-        if (centerTempX < self.view.frame.size.width/2) {
-            centerTempX = self.view.frame.size.width/2;
-        }
-        
-        _transparentView.center = (CGPoint){centerTempX,_transparentView.center.y};
-        
-    }
-    
-    oldPoint = curPoint;
-    
+    CGPoint translation = [sender translationInView:self.view];
+    CGPoint center = self.lockView.center;
+    _transparentView.center = (CGPoint){center.x + translation.x ,_transparentView.center.y};
+   
     if (curPan.state == UIGestureRecognizerStateEnded
         || curPan.state == UIGestureRecognizerStateCancelled) {
         
-        if (allDist > self.view.frame.size.width/3) {
+        if (translation.x > self.view.frame.size.width/3) {
             
             __block typeof(self) weakSelf = self;
             
             [UIView animateWithDuration:0.5 animations:^{
-                weakSelf.transparentView.center = (CGPoint){weakSelf.transparentView.center.x+weakSelf.view.frame.size.width/2,weakSelf.transparentView.center.y};
-                weakSelf.transparentView.superview.alpha = 0;
+                weakSelf.transparentView.center =
+                (CGPoint){weakSelf.transparentView.center.x+weakSelf.view.frame.size.width/2,weakSelf.transparentView.center.y};
+                weakSelf.lockView.alpha = 0;
                 
             } completion:^(BOOL finished){
-                weakSelf.transparentView.center = (CGPoint){weakSelf.transparentView.center.x+self.view.frame.size.width/2,weakSelf.transparentView.center.y};
+                weakSelf.transparentView.center =
+                (CGPoint){weakSelf.transparentView.center.x+self.view.frame.size.width/2,weakSelf.transparentView.center.y};
                 
-                weakSelf.transparentView.superview.alpha = 0;
+                weakSelf.lockView.alpha = 0;
+                
+                [weakSelf unShowLockView];
             }];
             
         }else{
@@ -142,39 +163,12 @@ static int allDist = 0;
             }];
             
         }
-        
-        allDist = 0;
-        oldPoint = CGPointZero;
     }
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)dealloc {
-    [_cityDetailInfoScrl removeGestureRecognizer:zhangnanPinch];
-    [zhangnanPinch release];
-    zhangnanPinch = nil;
-    
-    [_cityMainTableView release];
-    [_cityMainView release];
-    [_bgView release];
-    [_footView release];
-    [_cityDetailInfoScrl release];
-    [_cityDetailInfoScrlPageCtl release];
-    [_backgroundCityDetailView release];
-    [_currentCityDetailInfoViews release];
-    [_transparentView release];
-    [_panGestureForTransparentView release];
-    [super dealloc];
 }
 
 #pragma mark UITableViewDataSource
 
--(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
     NSUInteger iCityFocusedCount = [[WTManager sharedManager].focusDataModelList count];
@@ -244,7 +238,7 @@ static int allDist = 0;
 
     UITableViewCell* selectedCell = [tableView cellForRowAtIndexPath:indexPath];
     
-    [selectedCell addSubview:_backgroundCityDetailView];
+    [selectedCell addSubview:_scrollMainView];
     [selectedCell.contentView.superview setClipsToBounds:YES];
 
     [UIView animateWithDuration:0.5 animations:^{
@@ -261,7 +255,7 @@ static int allDist = 0;
         
         [UIView beginAnimations:@"fff" context:nil];
         [UIView setAnimationDuration:1];
-        _backgroundCityDetailView.alpha = 1.0;
+        _scrollMainView.alpha = 1.0;
         //tableView.alpha = 0.0;
 
         [selectedCell viewWithTag:10009].hidden = YES;
@@ -322,7 +316,7 @@ static int allDist = 0;
             
             //?????怎么处理这里？
             //[_backgroundCityDetailView removeFromSuperview];
-            [_cellOfSizeChanged addSubview:_backgroundCityDetailView];
+            [_cellOfSizeChanged addSubview:_scrollMainView];
             
             
         }
@@ -334,7 +328,7 @@ static int allDist = 0;
     return ;
 }
 
-#pragma mark init ScrollView
+#pragma mark ScrollView
 
 - (void)createCityDetailInfoScrlContent
 {
@@ -379,7 +373,7 @@ static int allDist = 0;
     }
 }
 
-- (IBAction)pinchHandler:(id)sender
+- (IBAction)pinchHandlerForScrollView:(id)sender
 {
     UIPinchGestureRecognizer* pinch = (UIPinchGestureRecognizer*)sender;
     
@@ -401,9 +395,9 @@ static int allDist = 0;
         
 
         _cellOfSizeChanged.layer.shouldRasterize = YES;
-        _backgroundCityDetailView.layer.shouldRasterize = YES;
+        _cityDetailInfoScrl.layer.shouldRasterize = YES;
         _cellOfSizeChanged.layer.rasterizationScale = 1.0 - pinch.scale;
-        _backgroundCityDetailView.layer.rasterizationScale = pinch.scale;
+        _cityDetailInfoScrl.layer.rasterizationScale = pinch.scale;
 
         
 
@@ -422,22 +416,22 @@ static int allDist = 0;
         
         _cityMainTableView.contentOffset = (CGPoint){0,_cityMainTableView.contentOffset.y*pinch.scale};
         
-        _backgroundCityDetailView.alpha = pinch.scale;
+        _scrollMainView.alpha = pinch.scale;
         
         [_cellOfSizeChanged viewWithTag:10009].hidden = NO;
         
         [_cellOfSizeChanged viewWithTag:10009].alpha = 1.0-pinch.scale;
 
         _cellOfSizeChanged.layer.shouldRasterize = NO;
-        _backgroundCityDetailView.layer.shouldRasterize = NO;
+        _scrollMainView.layer.shouldRasterize = NO;
         
     }
     
     if (pinch.state == UIGestureRecognizerStateEnded || pinch.state == UIGestureRecognizerStateCancelled) {
         [UIView animateWithDuration:0.5 animations:^{
-            _backgroundCityDetailView.alpha = 0.0;
+            _scrollMainView.alpha = 0.0;
             _cityMainTableView.alpha = 1.0;
-            _cityDetailInfoScrl.bounds = CGRectMake(0, 0, _cityDetailInfoScrl.frame.size.width, 95);
+            _scrollMainView.bounds = CGRectMake(0, 0, _scrollMainView.frame.size.width, 95);
             
             if ([_cellOfSizeChanged viewWithTag:10009].alpha < 1.0f) {
                 [_cellOfSizeChanged viewWithTag:10009].alpha = 1.0f;
@@ -455,9 +449,9 @@ static int allDist = 0;
             _cellIsAnimating = NO;
             extended = NO;
             _cityMainTableView.scrollEnabled = YES;
-            _cityDetailInfoScrl.bounds = CGRectMake(0, 0, _cityDetailInfoScrl.frame.size.width, 504);
+            _scrollMainView.bounds = CGRectMake(0, 0, _scrollMainView.frame.size.width, 504);
             lastPinchScale = 1.;
-            _backgroundCityDetailView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+            _scrollMainView.transform = CGAffineTransformMakeScale(1.0, 1.0);
 
             _cityMainTableView.contentOffset = (CGPoint){0,0};
 
@@ -474,13 +468,7 @@ static int allDist = 0;
 
 }
 
-#pragma mark UIGestureRecognizerDelegate
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-{
-    return YES;
-}
-
-#pragma mark Action
+#pragma mark Button action
 - (IBAction)cfBtnClicked:(id)sender
 {
     UIButton* btn = (UIButton*)sender;
@@ -499,4 +487,5 @@ static int allDist = 0;
     [controller release];
     controller = nil;
 }
+
 @end

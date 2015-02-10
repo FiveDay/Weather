@@ -87,6 +87,7 @@
     //mainView
     [_cityMainView release];
     [_cityMainTableView release];
+    [_dataViewOfCell release];
     [_bgView release];
     [_footView release];
     
@@ -100,6 +101,7 @@
     [_transparentView release];
     [_lockView release];
     
+
     [super dealloc];
 }
 
@@ -181,6 +183,8 @@
     if(indexPath.row != 0){
     
         ((UIImageView*)[cell viewWithTag:10000]).image = [UIImage imageNamed:@"afternoon.png"];
+        //cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y, cell.frame.size.width, 60);
+//        _dataViewOfCell.frame = CGRectMake(_dataViewOfCell.frame.origin.x, _dataViewOfCell.frame.origin.y -100, _dataViewOfCell.frame.size.width, _dataViewOfCell.frame.size.height);
         
     }else{
         ((UIImageView*)[cell viewWithTag:10000]).image = [UIImage imageNamed:@"morning.png"];
@@ -198,15 +202,21 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    if (_cellOfSizeChanged != nil)
-    {
-        if (selectedPath.row == indexPath.row)
-        {
-            int cellHeight = _cellOfSizeChanged.frame.size.height;
-            return ((_cellIsAnimating && extended) || (!_cellIsAnimating && !extended))?(cellHeight<95?95:cellHeight):568;
-        }
+//    if (_cellOfSizeChanged != nil)
+//    {
+//        if (selectedPath.row == indexPath.row)
+//        {
+//            int cellHeight = _cellOfSizeChanged.frame.size.height;
+//            return ((_cellIsAnimating && extended)
+//                    || (!_cellIsAnimating && !extended))?(cellHeight<95?95:cellHeight):568;
+//        }
+//    }
+//    
+    if (indexPath.row != 0) {
+
+        return 66;
     }
-    return 95;
+    return 96;
 }
 
 #pragma mark UITableViewDelegate

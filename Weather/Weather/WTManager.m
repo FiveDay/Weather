@@ -28,7 +28,7 @@
 
 @implementation WTManager
 
-@synthesize focusDataModelList;
+@synthesize focusDataModelList, searchDataModeList;
 
 + (instancetype)sharedManager
 {
@@ -45,7 +45,7 @@
 - (id)init
 {
     if (self = [super init]) {
-        _searchDataModeList = [[NSMutableArray alloc] init];
+        self.searchDataModeList = [[NSMutableArray alloc] init];
         
         _locationManager = [[CLLocationManager alloc] init];
         _locationManager.delegate = self;

@@ -13,6 +13,7 @@
 //mainView
 @property (retain, nonatomic) IBOutlet UIView *cityMainView;
 @property (retain, nonatomic) IBOutlet UITableView *cityMainTableView;
+@property (retain, nonatomic) IBOutlet UIView *dataViewOfCell;
 @property (retain, nonatomic) IBOutlet UIImageView *bgView;
 @property (retain, nonatomic) IBOutlet UIView *footView;
 

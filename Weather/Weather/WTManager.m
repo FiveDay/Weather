@@ -27,7 +27,9 @@
 @end
 
 @implementation WTManager
-//@synthesize focusDataModelList=_focusDataModelList;
+
+@synthesize focusDataModelList;
+
 + (instancetype)sharedManager
 {
     
@@ -54,11 +56,9 @@
         NSString *path = [rootPath stringByAppendingPathComponent:@"focusDataModelList.dat"];
         NSData *data = [NSData dataWithContentsOfFile:path];//读取文件
         if (data) {
-            //正常情况下，读用变量，写用属性，但对于init来说，和属性的get方法的重写，属于特例。
-            //因为如果在继承的环境下，使用属性很可能直接调用了子类改写的接口，导致异常产生。
             self.focusDataModelList = [NSKeyedUnarchiver unarchiveObjectWithData:data];
         }else{
-            _focusDataModelList = [[NSMutableArray alloc] init];
+            self.focusDataModelList = [[NSMutableArray alloc] init];
         }
         
         [[[[RACObserve(self, currentLocation)
@@ -69,7 +69,7 @@
                
 
             return [RACSignal merge:@[
-                                        [self updateCurrentConditions],
+                                        [self requestCurrentDataModel],
                                     ]];
 
            }] deliverOn:RACScheduler.mainThreadScheduler]
@@ -87,7 +87,7 @@
                    return [RACSignal empty];
                }else{
                    return [RACSignal merge:@[
-                                             [self searchByCityName:searchKey],
+                                             [self requestDataModelByCityName:searchKey],
                                              ]];
                }
 
@@ -100,25 +100,9 @@
     return self;
 }
 
-//- (NSMutableArray*)focusDataModelList
-//{
-//    @synchronized(self){
-//        return _focusDataModelList;
-//    }
-//}
-//
-//- (void)setFocusDataModelList:(NSMutableArray *)focusDataModelList
-//{
-////    if ([focusDataModelList isEqual:_focusDataModelList]) {
-////        return;
-////    }
-//    @synchronized(self){
-//        _focusDataModelList = focusDataModelList;
-//    }
-//}
+#pragma mark signal function
 
-#pragma mark Internal function
-- (RACSignal *)updateCurrentConditions
+- (RACSignal *)requestCurrentDataModel
 {
     return [[self.client fetchCurrentConditionsForLocation:self.currentLocation.coordinate] doNext:^(WTDataModel* dataModel) {
         if([self.focusDataModelList count] > 0){
@@ -134,7 +118,7 @@
         [data writeToFile:path atomically:YES];
     }];
 }
-- (RACSignal*)searchByCityName:(NSString*)cityName
+- (RACSignal*)requestDataModelByCityName:(NSString*)cityName
 {
     return [[self.client fetchCityDataByCityName:cityName] doNext:^(WTDataModel* dataModel) {
         [self.searchDataModeList addObject:dataModel];
@@ -143,21 +127,21 @@
     }];
 }
 
-#pragma mark Interface function
+#pragma mark Data Model Interface function
+
 - (void)findCurrentLocation
 {
     self.isFirstUpdate = YES;
     
     CLLocation *location = [[CLLocation alloc]initWithLatitude:39.15 longitude:116.05];
     self.currentLocation = location;
-    //TODO: 需要调查删除的原因。
-    //zhangnan, tmp delete
+
     [self.locationManager startUpdatingLocation];
-    //end
 }
 
 
 #pragma mark CLLocationManagerDelegate
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     if (self.isFirstUpdate) {

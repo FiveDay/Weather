@@ -107,7 +107,7 @@
     [data writeToFile:path atomically:YES];
     
     [self.navigationController popViewControllerAnimated:YES];
-    [WTManager sharedManager].isAddFousData = YES;
+    
 }
 
 @end

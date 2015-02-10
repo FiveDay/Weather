@@ -50,10 +50,10 @@
     _cityMainTableView.tableFooterView = _footView;
     
     _scrollMainView.alpha = 0;
-    //[self.view addSubview:_backgroundCityDetailView];
     
     [[WTManager sharedManager] findCurrentLocation];
     
+    //observe currentDataModel
     [[RACObserve([WTManager sharedManager], currentDataModel)
       deliverOn:RACScheduler.mainThreadScheduler]
      subscribeNext:^(WTDataModel *newDataModel) {
@@ -66,22 +66,15 @@
                  [_cityMainTableView reloadData];
              }
 
-
          }
      }];
-    [[RACObserve([WTManager sharedManager], isAddFousData)
-      deliverOn:RACScheduler.mainThreadScheduler]
-     subscribeNext:^(id isAddFousData) {
-         //dispatch_async(dispatch_get_main_queue(), ^{[_cityMainTableView reloadData];});
-         [_cityMainTableView reloadData];
-     }];
-    
-    
-
-
+ 
 }
 
-
+- (void)viewWillAppear:(BOOL)animated
+{
+    [_cityMainTableView reloadData];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -168,10 +161,10 @@
 
     NSUInteger iCityFocusedCount = [[WTManager sharedManager].focusDataModelList count];
     
-    if (_cityDetailInfoScrlPageCtl.numberOfPages != iCityFocusedCount) {
-        _cityDetailInfoScrl.contentSize = (CGSize){self.view.bounds.size.width*iCityFocusedCount,_cityDetailInfoScrl.bounds.size.height};
-        _cityDetailInfoScrlPageCtl.numberOfPages = iCityFocusedCount;
-    }
+//    if (_cityDetailInfoScrlPageCtl.numberOfPages != iCityFocusedCount) {
+//        _cityDetailInfoScrl.contentSize = (CGSize){self.view.bounds.size.width*iCityFocusedCount,_cityDetailInfoScrl.bounds.size.height};
+//        _cityDetailInfoScrlPageCtl.numberOfPages = iCityFocusedCount;
+//    }
     
     return iCityFocusedCount;
 }
@@ -220,250 +213,249 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [selectedPath release];
-    selectedPath = indexPath;
-    [selectedPath retain];
-    
-    _cityDetailInfoScrlPageCtl.currentPage = indexPath.row;
-    
-    _cellOfSizeChanged = [tableView cellForRowAtIndexPath:indexPath];
-    
-    
-    [self createCityDetailInfoScrlContent];
-
-    UITableViewCell* selectedCell = [tableView cellForRowAtIndexPath:indexPath];
-    
-    [selectedCell addSubview:_scrollMainView];
-    [selectedCell.contentView.superview setClipsToBounds:YES];
-
-    [UIView animateWithDuration:0.5 animations:^{
-        _cellIsAnimating = YES;
-        
-        int offset = 95.0 * (selectedPath.row);
-        tableView.contentOffset = (CGPoint){0,offset};
-        
-        UITableViewCell* selectedCell = [tableView cellForRowAtIndexPath:indexPath];
-        selectedCell.frame = (CGRect){selectedCell.frame.origin,CGRectGetWidth(selectedCell.frame),SCREEN_HEIGHT};
-        
-        [tableView beginUpdates];
-        [tableView endUpdates];
-        
-        [UIView beginAnimations:@"fff" context:nil];
-        [UIView setAnimationDuration:1];
-        _scrollMainView.alpha = 1.0;
-        //tableView.alpha = 0.0;
-
-        [selectedCell viewWithTag:10009].hidden = YES;
-        
-        [UIView commitAnimations];
-        
-        
-    }completion:^(BOOL finished){
-        _cellIsAnimating = NO;
-        extended = YES;
-        tableView.scrollEnabled = NO;
-        _cityDetailInfoScrl.contentOffset = (CGPoint){(_cityDetailInfoScrlPageCtl.currentPage)*_cityDetailInfoScrl.frame.size.width,0};
-    }];
-
-}
-
-
-
-#pragma mark UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if ([scrollView isEqual:_cityDetailInfoScrl]) {
-         
-        int index = fabs(scrollView.contentOffset.x) /scrollView.frame.size.width;
-        
-        if ((index) == _cityDetailInfoScrlPageCtl.currentPage)
-        {
-            //没有变化
-        }else{
-            //滑动产生了焦点索引变化
-            _cityDetailInfoScrlPageCtl.currentPage = index;
-            
-            NSIndexPath* oldSelectedIndexPath = [selectedPath copy];
-            
-            NSInteger secCount = selectedPath.section;
-            [selectedPath release];
-            selectedPath = [NSIndexPath indexPathForRow:index inSection:secCount];
-            [selectedPath retain];
-            
-            //according to focuseindex changing,we need to fix the tableview's contentoffset.
-            
-            UITableViewCell* oldSelectedCell = [_cityMainTableView cellForRowAtIndexPath:oldSelectedIndexPath];
-            oldSelectedCell.frame = (CGRect){oldSelectedCell.frame.origin,CGRectGetWidth(oldSelectedCell.frame),95};
-            
-            _cityMainTableView.contentOffset = (CGPoint){_cityMainTableView.contentOffset.x,95*selectedPath.row};
-            
-            BOOL animateable = [UIView areAnimationsEnabled];
-            [UIView setAnimationsEnabled:NO];
-            [_cityMainTableView reloadRowsAtIndexPaths:@[oldSelectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-            
-            [UIView setAnimationsEnabled:animateable];
-            
-            _cellOfSizeChanged = [_cityMainTableView cellForRowAtIndexPath:selectedPath];
-            _cellOfSizeChanged.frame = (CGRect){_cellOfSizeChanged.frame.origin,CGRectGetWidth(_cellOfSizeChanged.frame),568};
-            
-            [oldSelectedIndexPath release];
-            
-            //?????怎么处理这里？
-            //[_backgroundCityDetailView removeFromSuperview];
-            [_cellOfSizeChanged addSubview:_scrollMainView];
-            
-            
-        }
-        
-        
-        return ;
-    }
-    
-    return ;
-}
-
-#pragma mark ScrollView
-
-- (void)createCityDetailInfoScrlContent
-{
-    NSInteger iCityFocusedCount = [[WTManager sharedManager].focusDataModelList count];
-    
-    for (int iPage=0; iPage<iCityFocusedCount; iPage++) {
-        
-        WTCityDetailInfoViewController* wtCityDetailInfoViewController = [[WTCityDetailInfoViewController alloc]initWithNibName:@"WTCityDetailInfoView" bundle:nil];
-        
-        wtCityDetailInfoViewController.parentViewControllerDelegate = self;
-        
-        wtCityDetailInfoViewController.view.frame = (CGRect){iPage*CGRectGetWidth(wtCityDetailInfoViewController.view.frame),0,wtCityDetailInfoViewController.view.frame.size};
-        
-        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:iPage inSection:0];
-        UITableViewCell* cellTmp = [_cityMainTableView cellForRowAtIndexPath:indexPath];
-        
-        for (UIView* subview in cellTmp.contentView.subviews) {
-            if (subview.tag == 10001) {
-                NSString* cityN = ((UILabel*)subview).text;
-                [wtCityDetailInfoViewController loadWTCityDetailInfoViewData:(id)cityN byIndex:iPage];
-            }
-        }
-        
-        
-        
-        [_currentCityDetailInfoViews addObject:wtCityDetailInfoViewController];
-        
-        [self addChildViewController:wtCityDetailInfoViewController];
-        [_cityDetailInfoScrl addSubview:wtCityDetailInfoViewController.view];
-
-        [wtCityDetailInfoViewController release];
-    }
+//    [selectedPath release];
+//    selectedPath = indexPath;
+//    [selectedPath retain];
+//    
+//    _cityDetailInfoScrlPageCtl.currentPage = indexPath.row;
+//    
+//    _cellOfSizeChanged = [tableView cellForRowAtIndexPath:indexPath];
+//    
+//    
+//    [self createCityDetailInfoScrlContent];
+//
+//    UITableViewCell* selectedCell = [tableView cellForRowAtIndexPath:indexPath];
+//    
+//    [selectedCell addSubview:_scrollMainView];
+//    [selectedCell.contentView.superview setClipsToBounds:YES];
+//
+//    [UIView animateWithDuration:0.5 animations:^{
+//        _cellIsAnimating = YES;
+//        
+//        int offset = 95.0 * (selectedPath.row);
+//        tableView.contentOffset = (CGPoint){0,offset};
+//        
+//        UITableViewCell* selectedCell = [tableView cellForRowAtIndexPath:indexPath];
+//        selectedCell.frame = (CGRect){selectedCell.frame.origin,CGRectGetWidth(selectedCell.frame),SCREEN_HEIGHT};
+//        
+//        [tableView beginUpdates];
+//        [tableView endUpdates];
+//        
+//        [UIView beginAnimations:@"fff" context:nil];
+//        [UIView setAnimationDuration:1];
+//        _scrollMainView.alpha = 1.0;
+//        //tableView.alpha = 0.0;
+//
+//        [selectedCell viewWithTag:10009].hidden = YES;
+//        
+//        [UIView commitAnimations];
+//        
+//        
+//    }completion:^(BOOL finished){
+//        _cellIsAnimating = NO;
+//        extended = YES;
+//        tableView.scrollEnabled = NO;
+//        _cityDetailInfoScrl.contentOffset = (CGPoint){(_cityDetailInfoScrlPageCtl.currentPage)*_cityDetailInfoScrl.frame.size.width,0};
+//    }];
 
 }
 
-- (void)removeCityDetailInfoScrlContent
-{
-    for (UIViewController* ctler in self.childViewControllers) {
-        [_currentCityDetailInfoViews removeObject:ctler];
-        [ctler removeFromParentViewController];
-        [ctler.view removeFromSuperview];
-    }
-}
 
-- (IBAction)pinchHandlerForScrollView:(id)sender
-{
-    UIPinchGestureRecognizer* pinch = (UIPinchGestureRecognizer*)sender;
-    
-    if (pinch.state == UIGestureRecognizerStateBegan) {
-        _cellIsAnimating = YES;
-    }
-    
-    if (pinch.state == UIGestureRecognizerStateChanged) {
-        
-        //_backgroundCityDetailView.transform = CGAffineTransformMakeScale(1.0, (pinch.scale));
-        
-        lastPinchScale = pinch.scale;
-        
-        [self.view bringSubviewToFront:_cityMainTableView];
-        
-        if (568*pinch.scale < 95) {
-            return ;
-        }
-        
+//
+//#pragma mark UIScrollViewDelegate
+//
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    if ([scrollView isEqual:_cityDetailInfoScrl]) {
+//         
+//        int index = fabs(scrollView.contentOffset.x) /scrollView.frame.size.width;
+//        
+//        if ((index) == _cityDetailInfoScrlPageCtl.currentPage)
+//        {
+//            //没有变化
+//        }else{
+//            //滑动产生了焦点索引变化
+//            _cityDetailInfoScrlPageCtl.currentPage = index;
+//            
+//            NSIndexPath* oldSelectedIndexPath = [selectedPath copy];
+//            
+//            NSInteger secCount = selectedPath.section;
+//            [selectedPath release];
+//            selectedPath = [NSIndexPath indexPathForRow:index inSection:secCount];
+//            [selectedPath retain];
+//            
+//            //according to focuseindex changing,we need to fix the tableview's contentoffset.
+//            
+//            UITableViewCell* oldSelectedCell = [_cityMainTableView cellForRowAtIndexPath:oldSelectedIndexPath];
+//            oldSelectedCell.frame = (CGRect){oldSelectedCell.frame.origin,CGRectGetWidth(oldSelectedCell.frame),95};
+//            
+//            _cityMainTableView.contentOffset = (CGPoint){_cityMainTableView.contentOffset.x,95*selectedPath.row};
+//            
+//            BOOL animateable = [UIView areAnimationsEnabled];
+//            [UIView setAnimationsEnabled:NO];
+//            [_cityMainTableView reloadRowsAtIndexPaths:@[oldSelectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+//            
+//            [UIView setAnimationsEnabled:animateable];
+//            
+//            _cellOfSizeChanged = [_cityMainTableView cellForRowAtIndexPath:selectedPath];
+//            _cellOfSizeChanged.frame = (CGRect){_cellOfSizeChanged.frame.origin,CGRectGetWidth(_cellOfSizeChanged.frame),568};
+//            
+//            [oldSelectedIndexPath release];
+//            
+//            //?????怎么处理这里？
+//            [_cellOfSizeChanged addSubview:_scrollMainView];
+//            
+//            
+//        }
+//        
+//        
+//        return ;
+//    }
+//    
+//    return ;
+//}
+//
+//#pragma mark ScrollView
+//
+//- (void)createCityDetailInfoScrlContent
+//{
+//    NSInteger iCityFocusedCount = [[WTManager sharedManager].focusDataModelList count];
+//    
+//    for (int iPage=0; iPage<iCityFocusedCount; iPage++) {
+//        
+//        WTCityDetailInfoViewController* wtCityDetailInfoViewController = [[WTCityDetailInfoViewController alloc]initWithNibName:@"WTCityDetailInfoView" bundle:nil];
+//        
+//        wtCityDetailInfoViewController.parentViewControllerDelegate = self;
+//        
+//        wtCityDetailInfoViewController.view.frame = (CGRect){iPage*CGRectGetWidth(wtCityDetailInfoViewController.view.frame),0,wtCityDetailInfoViewController.view.frame.size};
+//        
+//        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:iPage inSection:0];
+//        UITableViewCell* cellTmp = [_cityMainTableView cellForRowAtIndexPath:indexPath];
+//        
+//        for (UIView* subview in cellTmp.contentView.subviews) {
+//            if (subview.tag == 10001) {
+//                NSString* cityN = ((UILabel*)subview).text;
+//                [wtCityDetailInfoViewController loadWTCityDetailInfoViewData:(id)cityN byIndex:iPage];
+//            }
+//        }
+//        
+//        
+//        
+//        [_currentCityDetailInfoViews addObject:wtCityDetailInfoViewController];
+//        
+//        [self addChildViewController:wtCityDetailInfoViewController];
+//        [_cityDetailInfoScrl addSubview:wtCityDetailInfoViewController.view];
+//
+//        [wtCityDetailInfoViewController release];
+//    }
+//
+//}
+//
+//- (void)removeCityDetailInfoScrlContent
+//{
+//    for (UIViewController* ctler in self.childViewControllers) {
+//        [_currentCityDetailInfoViews removeObject:ctler];
+//        [ctler removeFromParentViewController];
+//        [ctler.view removeFromSuperview];
+//    }
+//}
+//
+//- (IBAction)pinchHandlerForScrollView:(id)sender
+//{
+//    UIPinchGestureRecognizer* pinch = (UIPinchGestureRecognizer*)sender;
+//    
+//    if (pinch.state == UIGestureRecognizerStateBegan) {
+//        _cellIsAnimating = YES;
+//    }
+//    
+//    if (pinch.state == UIGestureRecognizerStateChanged) {
+//        
+//        
+//        lastPinchScale = pinch.scale;
+//        
+//        [self.view bringSubviewToFront:_cityMainTableView];
+//        
+//        if (568*pinch.scale < 95) {
+//            return ;
+//        }
+//        
+//
+//        _cellOfSizeChanged.layer.shouldRasterize = YES;
+//        _cityDetailInfoScrl.layer.shouldRasterize = YES;
+//        _cellOfSizeChanged.layer.rasterizationScale = 1.0 - pinch.scale;
+//        _cityDetailInfoScrl.layer.rasterizationScale = pinch.scale;
+//
+//        
+//
+//        BOOL sysAnimateable = [UIView areAnimationsEnabled];
+//        [UIView setAnimationsEnabled:NO];
+//        [_cityMainTableView beginUpdates];
+//        
+//        [_cityMainTableView endUpdates];
+//        [UIView setAnimationsEnabled:sysAnimateable];
+//        
+//        
+//        
+//        ((WTCityDetailInfoViewController*)_currentCityDetailInfoViews[selectedPath.row]).view.alpha = pinch.scale ;
+//        
+//        _cellOfSizeChanged.frame = (CGRect){_cellOfSizeChanged.frame.origin,CGRectGetWidth(_cellOfSizeChanged.frame),568*pinch.scale};
+//        
+//        _cityMainTableView.contentOffset = (CGPoint){0,_cityMainTableView.contentOffset.y*pinch.scale};
+//        
+//        _scrollMainView.alpha = pinch.scale;
+//        
+//        [_cellOfSizeChanged viewWithTag:10009].hidden = NO;
+//        
+//        [_cellOfSizeChanged viewWithTag:10009].alpha = 1.0-pinch.scale;
+//
+//        _cellOfSizeChanged.layer.shouldRasterize = NO;
+//        _scrollMainView.layer.shouldRasterize = NO;
+//        
+//    }
+//    
+//    if (pinch.state == UIGestureRecognizerStateEnded || pinch.state == UIGestureRecognizerStateCancelled) {
+//        [UIView animateWithDuration:0.5 animations:^{
+//            _scrollMainView.alpha = 0.0;
+//            _cityMainTableView.alpha = 1.0;
+//            _scrollMainView.bounds = CGRectMake(0, 0, _scrollMainView.frame.size.width, 95);
+//            
+//            if ([_cellOfSizeChanged viewWithTag:10009].alpha < 1.0f) {
+//                [_cellOfSizeChanged viewWithTag:10009].alpha = 1.0f;
+//            }
+//            
+//            if (_cellOfSizeChanged)
+//            {
+//                _cellOfSizeChanged.frame = (CGRect){_cellOfSizeChanged.frame.origin,_cellOfSizeChanged.frame.size.width,95};
+//            }
+//            
+//            [_cityMainTableView beginUpdates];
+//            [_cityMainTableView endUpdates];
+//            
+//        } completion:^(BOOL finished){
+//            _cellIsAnimating = NO;
+//            extended = NO;
+//            _cityMainTableView.scrollEnabled = YES;
+//            _scrollMainView.bounds = CGRectMake(0, 0, _scrollMainView.frame.size.width, 504);
+//            lastPinchScale = 1.;
+//            _scrollMainView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+//
+//            _cityMainTableView.contentOffset = (CGPoint){0,0};
+//
+//            [self removeCityDetailInfoScrlContent];
+//            
+//            if (_cellOfSizeChanged)
+//            {
+//                _cellOfSizeChanged.frame = (CGRect){_cellOfSizeChanged.frame.origin,_cellOfSizeChanged.frame.size.width,95};
+//                
+//                [_cellOfSizeChanged viewWithTag:10009].alpha = 1.0f;
+//            }
+//        }];
+//    }
+//
+//}
 
-        _cellOfSizeChanged.layer.shouldRasterize = YES;
-        _cityDetailInfoScrl.layer.shouldRasterize = YES;
-        _cellOfSizeChanged.layer.rasterizationScale = 1.0 - pinch.scale;
-        _cityDetailInfoScrl.layer.rasterizationScale = pinch.scale;
+#pragma mark Button action in foot view
 
-        
-
-        BOOL sysAnimateable = [UIView areAnimationsEnabled];
-        [UIView setAnimationsEnabled:NO];
-        [_cityMainTableView beginUpdates];
-        
-        [_cityMainTableView endUpdates];
-        [UIView setAnimationsEnabled:sysAnimateable];
-        
-        
-        
-        ((WTCityDetailInfoViewController*)_currentCityDetailInfoViews[selectedPath.row]).view.alpha = pinch.scale ;
-        
-        _cellOfSizeChanged.frame = (CGRect){_cellOfSizeChanged.frame.origin,CGRectGetWidth(_cellOfSizeChanged.frame),568*pinch.scale};
-        
-        _cityMainTableView.contentOffset = (CGPoint){0,_cityMainTableView.contentOffset.y*pinch.scale};
-        
-        _scrollMainView.alpha = pinch.scale;
-        
-        [_cellOfSizeChanged viewWithTag:10009].hidden = NO;
-        
-        [_cellOfSizeChanged viewWithTag:10009].alpha = 1.0-pinch.scale;
-
-        _cellOfSizeChanged.layer.shouldRasterize = NO;
-        _scrollMainView.layer.shouldRasterize = NO;
-        
-    }
-    
-    if (pinch.state == UIGestureRecognizerStateEnded || pinch.state == UIGestureRecognizerStateCancelled) {
-        [UIView animateWithDuration:0.5 animations:^{
-            _scrollMainView.alpha = 0.0;
-            _cityMainTableView.alpha = 1.0;
-            _scrollMainView.bounds = CGRectMake(0, 0, _scrollMainView.frame.size.width, 95);
-            
-            if ([_cellOfSizeChanged viewWithTag:10009].alpha < 1.0f) {
-                [_cellOfSizeChanged viewWithTag:10009].alpha = 1.0f;
-            }
-            
-            if (_cellOfSizeChanged)
-            {
-                _cellOfSizeChanged.frame = (CGRect){_cellOfSizeChanged.frame.origin,_cellOfSizeChanged.frame.size.width,95};
-            }
-            
-            [_cityMainTableView beginUpdates];
-            [_cityMainTableView endUpdates];
-            
-        } completion:^(BOOL finished){
-            _cellIsAnimating = NO;
-            extended = NO;
-            _cityMainTableView.scrollEnabled = YES;
-            _scrollMainView.bounds = CGRectMake(0, 0, _scrollMainView.frame.size.width, 504);
-            lastPinchScale = 1.;
-            _scrollMainView.transform = CGAffineTransformMakeScale(1.0, 1.0);
-
-            _cityMainTableView.contentOffset = (CGPoint){0,0};
-
-            [self removeCityDetailInfoScrlContent];
-            
-            if (_cellOfSizeChanged)
-            {
-                _cellOfSizeChanged.frame = (CGRect){_cellOfSizeChanged.frame.origin,_cellOfSizeChanged.frame.size.width,95};
-                
-                [_cellOfSizeChanged viewWithTag:10009].alpha = 1.0f;
-            }
-        }];
-    }
-
-}
-
-#pragma mark Button action
 - (IBAction)cfBtnClicked:(id)sender
 {
     UIButton* btn = (UIButton*)sender;

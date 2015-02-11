@@ -14,16 +14,17 @@
         <tableViewCell autoresizesSubviews="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="WTCityInfoCellViewIdentifier" rowHeight="96" id="3">
             <rect key="frame" x="0.0" y="0.0" width="330" height="96"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3" id="vsq-8c-lrm">
+            <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3" id="vsq-8c-lrm">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="95"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView appearanceType="aqua" clipsSubviews="YES" userInteractionEnabled="NO" tag="10000" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="morning.png" id="125">
-                        <rect key="frame" x="0.0" y="0.0" width="330" height="96"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="slidebackground.jpg" id="125">
+                        <rect key="frame" x="0.0" y="0.0" width="340" height="95"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </imageView>
-                    <view tag="10009" contentMode="scaleToFill" id="4" userLabel="DataView">
-                        <rect key="frame" x="0.0" y="0.0" width="330" height="96"/>
+                    <view opaque="NO" tag="10009" contentMode="scaleToFill" id="4" userLabel="DataView">
+                        <rect key="frame" x="0.0" y="0.0" width="340" height="95"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" tag="10002" contentMode="left" text="下午" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="12">
@@ -58,6 +59,7 @@
                         <gestureRecognizers/>
                     </view>
                 </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <gestureRecognizers/>
@@ -74,7 +76,7 @@
         </pinchGestureRecognizer>
     </objects>
     <resources>
-        <image name="morning.png" width="641" height="960"/>
+        <image name="slidebackground.jpg" width="768" height="1004"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

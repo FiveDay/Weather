@@ -17,17 +17,21 @@
     UITableViewCell* _cellOfSizeChanged;
     int idx;
     NSIndexPath* _pathOfSizeChanged;
-    NSIndexPath* selectedPath;
-    BOOL extended;
     CGFloat lastPinchScale;
     NSMutableArray* _currentCityDetailInfoViews;
     
     BOOL _cellIsAnimating;
     
+    NSIndexPath* _selectedCellPath;
+
 }
+@property(nonatomic, strong) NSIndexPath* selectedCellPath;
+@property(nonatomic, assign) BOOL extended;
 @end
 
 @implementation WTCityMainViewController
+
+@synthesize selectedCellPath;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -46,6 +50,8 @@
     // Do any additional setup after loading the view from its nib.
     
     [self showLockView];
+    
+    _extended = false;
     
     _cityMainTableView.tableFooterView = _footView;
     
@@ -180,16 +186,7 @@
         cell = [array objectAtIndex:0];
     }
     
-    if(indexPath.row != 0){
-    
-        ((UIImageView*)[cell viewWithTag:10000]).image = [UIImage imageNamed:@"afternoon.png"];
-        //cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y, cell.frame.size.width, 60);
-//        _dataViewOfCell.frame = CGRectMake(_dataViewOfCell.frame.origin.x, _dataViewOfCell.frame.origin.y -100, _dataViewOfCell.frame.size.width, _dataViewOfCell.frame.size.height);
-        
-    }else{
-        ((UIImageView*)[cell viewWithTag:10000]).image = [UIImage imageNamed:@"morning.png"];
-    }
-    
+    //data bind
     if ([[[WTManager sharedManager].focusDataModelList objectAtIndex:indexPath.row] locationName]) {
        ((UILabel*)[cell viewWithTag:10001]).text = [[[WTManager sharedManager].focusDataModelList objectAtIndex:indexPath.row] locationName];
         
@@ -204,14 +201,15 @@
 {
 //    if (_cellOfSizeChanged != nil)
 //    {
-//        if (selectedPath.row == indexPath.row)
-//        {
+        if (_extended && self.selectedCellPath.row == indexPath.row)
+        {
 //            int cellHeight = _cellOfSizeChanged.frame.size.height;
 //            return ((_cellIsAnimating && extended)
 //                    || (!_cellIsAnimating && !extended))?(cellHeight<95?95:cellHeight):568;
-//        }
+            return SCREEN_HEIGHT;
+        }
 //    }
-//    
+    
     if (indexPath.row != 0) {
 
         return 80;
@@ -223,9 +221,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    [selectedPath release];
-//    selectedPath = indexPath;
-//    [selectedPath retain];
+    self.selectedCellPath = indexPath;
+    if (_extended) {
+        _extended = false;
+    }else{
+        _extended = true;
+    }
 //    
 //    _cityDetailInfoScrlPageCtl.currentPage = indexPath.row;
 //    
@@ -234,23 +235,27 @@
 //    
 //    [self createCityDetailInfoScrlContent];
 //
-//    UITableViewCell* selectedCell = [tableView cellForRowAtIndexPath:indexPath];
+//      UITableViewCell* selectedCell = [tableView cellForRowAtIndexPath:indexPath];
 //    
 //    [selectedCell addSubview:_scrollMainView];
 //    [selectedCell.contentView.superview setClipsToBounds:YES];
 //
-//    [UIView animateWithDuration:0.5 animations:^{
-//        _cellIsAnimating = YES;
-//        
-//        int offset = 95.0 * (selectedPath.row);
-//        tableView.contentOffset = (CGPoint){0,offset};
-//        
-//        UITableViewCell* selectedCell = [tableView cellForRowAtIndexPath:indexPath];
+    [tableView beginUpdates];
+    [tableView endUpdates];
+    
+    [UIView animateWithDuration:0.5 animations:^{
+
+        
+
+       // _cellIsAnimating = YES;
+        
+        int offset = 96.0 * (indexPath.row);
+        tableView.contentOffset = (CGPoint){0,offset};
+//
 //        selectedCell.frame = (CGRect){selectedCell.frame.origin,CGRectGetWidth(selectedCell.frame),SCREEN_HEIGHT};
-//        
-//        [tableView beginUpdates];
-//        [tableView endUpdates];
-//        
+        
+
+        
 //        [UIView beginAnimations:@"fff" context:nil];
 //        [UIView setAnimationDuration:1];
 //        _scrollMainView.alpha = 1.0;
@@ -260,13 +265,14 @@
 //        
 //        [UIView commitAnimations];
 //        
-//        
-//    }completion:^(BOOL finished){
+        
+    }completion:^(BOOL finished){
 //        _cellIsAnimating = NO;
 //        extended = YES;
 //        tableView.scrollEnabled = NO;
 //        _cityDetailInfoScrl.contentOffset = (CGPoint){(_cityDetailInfoScrlPageCtl.currentPage)*_cityDetailInfoScrl.frame.size.width,0};
-//    }];
+    }
+     ];
 
 }
 

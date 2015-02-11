@@ -51,7 +51,7 @@
     
     _scrollMainView.alpha = 0;
     
-    [[WTManager sharedManager] findCurrentLocation];
+   // [[WTManager sharedManager] findCurrentLocation];
     
     //observe currentDataModel
     [[RACObserve([WTManager sharedManager], currentDataModel)
@@ -214,7 +214,7 @@
 //    
     if (indexPath.row != 0) {
 
-        return 66;
+        return 80;
     }
     return 96;
 }
